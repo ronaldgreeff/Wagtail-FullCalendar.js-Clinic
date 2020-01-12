@@ -8,7 +8,13 @@ from wagtail.documents import urls as wagtaildocs_urls
 
 from search import views as search_views
 
+# REST Stuff
+from django.urls import include, path
+from rest_framework import routers
+from .. scheduler import views as schedule_views
+
 urlpatterns = [
+
     url(r'^django-admin/', admin.site.urls),
 
     url(r'^admin/', include(wagtailadmin_urls)),
