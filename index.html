@@ -46,8 +46,11 @@ document.addEventListener('DOMContentLoaded', function() {
       alert('a day has been clicked!');
     }
   });
-
   calendar.render();
+
+  calendar.on('dateClick', function(info) {
+    console.log('clicked on ' + info.dateStr);
+  });
 });
 
     </script>

@@ -9,11 +9,21 @@ from wagtail.documents import urls as wagtaildocs_urls
 from search import views as search_views
 
 # REST Stuff
-from django.urls import include, path
-from rest_framework import routers
-from .. scheduler import views as schedule_views
+# from django.urls import include, path
+# from rest_framework import routers
+# from .. scheduler import views as schedule_views
+
+# Wagtail API Stuff
+# urls.py
+
+from . api import api_router
 
 urlpatterns = [
+    url(r'^api/v2/', api_router.urls),
+
+    # Ensure that the api_router line appears above the default Wagtail page serving route
+    url(r'', include(wagtail_urls)),
+    #~
 
     url(r'^django-admin/', admin.site.urls),
 
