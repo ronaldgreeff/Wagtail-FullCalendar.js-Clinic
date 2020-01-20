@@ -8,28 +8,35 @@ from wagtail.documents import urls as wagtaildocs_urls
 
 from search import views as search_views
 
-# REST Stuff
-# from django.urls import include, path
-# from rest_framework import routers
-# from .. scheduler import views as schedule_views
+# DRF
+from django.urls import include, path
+from rest_framework import routers
+from scheduler import views
 
-# Wagtail API Stuff
-# urls.py
+router = routers.DefaultRouter()
+router.register(r'users', views.UserViewSet)
+router.register(r'groups', views.GroupViewSet)
+#~
 
 from . api import api_router
 
 urlpatterns = [
-    url(r'^api/v2/', api_router.urls),
+    # DRF's
+    url(r'^api/', include(router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
-    # Ensure that the api_router line appears above the default Wagtail page serving route
-    url(r'', include(wagtail_urls)),
-    #~
+    # wagtail's:
+    # ^api/v2/ ^pages/
+    # ^api/v2/ ^images/
+    # ^api/v2/ ^documents/
+    # ^static/(?P<path>.*)$
+    # ^media/(?P<path>.*)$
+    url(r'^api/v2/', api_router.urls),
 
     url(r'^django-admin/', admin.site.urls),
 
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
-
     url(r'^search/$', search_views.search, name='search'),
 
     # For anything not caught by a more specific rule above, hand over to
