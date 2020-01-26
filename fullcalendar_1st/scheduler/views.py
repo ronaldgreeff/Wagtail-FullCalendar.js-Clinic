@@ -1,6 +1,11 @@
+from django.views.generic import TemplateView
+
+class PickerView(TemplateView):
+    template_name = "scheduler/pickdatetime.html"
+
+
 from django.shortcuts import render
 
-# Create your views here.
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from scheduler.serializers import UserSerializer, GroupSerializer

@@ -16,6 +16,9 @@ router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
 #~
+# PickDateTime
+from scheduler.views import PickerView
+#~
 
 from . api import api_router
 
@@ -33,11 +36,12 @@ urlpatterns = [
 
     url(r'^django-admin/', admin.site.urls),
 
+    # datetimepicker
+    url(r'pick/', PickerView.as_view()),
+
     # Wagtail's def. page serving mechanism - last pattern in list:
     url(r'', include(wagtail_urls)),
-
 ]
-
 
 if settings.DEBUG:
     from django.conf.urls.static import static
