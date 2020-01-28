@@ -11,16 +11,11 @@ from search import views as search_views
 # DRF
 from rest_framework import routers
 from scheduler import views
+from . api import api_router
 
 router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
-router.register(r'groups', views.GroupViewSet)
-#~
-# PickDateTime
-from scheduler.views import PickerView
-#~
+router.register(r'events', views.EventsViewSet)
 
-from . api import api_router
 
 urlpatterns = [
     # DRF's
@@ -35,9 +30,6 @@ urlpatterns = [
     url(r'^search/$', search_views.search, name='search'),
 
     url(r'^django-admin/', admin.site.urls),
-
-    # datetimepicker as implemented in django. Not required for wagtail (done through admin)
-    # url(r'pick/', PickerView.as_view()),
 
     # Wagtail's def. page serving mechanism - last pattern in list:
     url(r'', include(wagtail_urls)),

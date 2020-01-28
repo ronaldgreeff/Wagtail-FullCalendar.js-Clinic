@@ -11,7 +11,7 @@ class DateForm(forms.Form):
     email =  forms.EmailField()
 
     # def __init__():
-    # block existing events
+    # TODO block out existing events on the front-end
 
     def save(self, commit=True):
 

@@ -40,16 +40,12 @@ class CalendarEvent(models.Model):
         return self.title
 
 
+
 class PickDateTimePage(Page):
     intro = RichTextField(blank=True)
     guidance = RichTextField(blank=True)
     thankyou_page_title = models.CharField(
         max_length=255, help_text="Title text to use for the 'thank you' page")
-
-    # Note that there's nothing here for specifying the actual form fields -
-    # those are still defined in forms.py. There's no benefit to making these
-    # editable within the Wagtail admin, since you'd need to make changes to
-    # the code to make them work anyway.
 
     content_panels = Page.content_panels + [
         FieldPanel('intro', classname="intro_text"),
@@ -71,7 +67,19 @@ class PickDateTimePage(Page):
         else:
             form = DateForm()
 
-        return render(request, 'scheduler/pickdatetime.html', {
+        return render(request, 'scheduler/pickdatetime.html', { # TODO: confirmation.html
             'page': self,
             'form': form,
         })
+
+
+class SecretarySchedulePage(Page):
+    pass
+
+class DoctorSchedulePage(Page):
+
+    def serve(self, request):
+
+        return render(request, 'scheduler/schedule.html', {
+                    'calendar_config_options': 0,
+                })
