@@ -10,10 +10,17 @@ from wagtail.core.models import Page
 from wagtail.core.fields import RichTextField
 from wagtail.admin.edit_handlers import FieldPanel
 
+
+class Service(models.Model):
+    name = models.CharField(max_length=50)
+    duration = models.IntegerField()
+
+
 class Enquirer(models.Model):
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
     email = models.EmailField(max_length=255)
+
 
 class CalendarEvent(models.Model):
     """The event set a record for an
@@ -36,6 +43,7 @@ class CalendarEvent(models.Model):
     :type all_day: bool.
     """
     enquirer = models.ForeignKey(Enquirer, on_delete='CASCADE')
+    service = models.ForeignKey(Service, on_delete='CASCADE')
     title = models.CharField(max_length=255)
     start = models.DateTimeField()
     end = models.DateTimeField()
