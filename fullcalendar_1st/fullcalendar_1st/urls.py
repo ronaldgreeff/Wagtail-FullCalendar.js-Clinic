@@ -36,8 +36,8 @@ urlpatterns = [
 
     url(r'^django-admin/', admin.site.urls),
 
-    # datetimepicker
-    url(r'pick/', PickerView.as_view()),
+    # datetimepicker as implemented in django. Not required for wagtail (done through admin)
+    # url(r'pick/', PickerView.as_view()),
 
     # Wagtail's def. page serving mechanism - last pattern in list:
     url(r'', include(wagtail_urls)),

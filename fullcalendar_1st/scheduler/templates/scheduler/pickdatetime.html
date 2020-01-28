@@ -13,6 +13,16 @@
 
         {{ form.as_p }}
 
-        <p><input type="submit" value="Suggest my flavour"></p>
+        <p><input type="submit" value="Schedule"></p>
     </form>
+
+
+<script>
+  $(function () {
+    $("#id_datetime").datetimepicker({
+      format: 'd/m/Y H:i',
+    });
+  });
+</script>
+
 {% endblock %}
