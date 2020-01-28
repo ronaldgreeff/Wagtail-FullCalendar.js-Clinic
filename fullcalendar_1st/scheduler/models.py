@@ -12,9 +12,11 @@ from wagtail.admin.edit_handlers import FieldPanel
 
 
 class Service(models.Model):
-    name = models.CharField(max_length=50)
-    duration = models.IntegerField()
+    name = models.CharField(default='appointment', max_length=50)
+    duration = models.IntegerField(default=60,)
 
+    def __str__(self):
+        return '{0} ({1}mins)'.format(self.name, self.duration)
 
 class Enquirer(models.Model):
     first_name = models.CharField(max_length=20)
@@ -23,25 +25,6 @@ class Enquirer(models.Model):
 
 
 class CalendarEvent(models.Model):
-    """The event set a record for an
-    activity that will be scheduled at a
-    specified date and time.
-
-    It could be on a date and time
-    to start and end, but can also be all day.
-
-    :param title: Title of event
-    :type title: str.
-
-    :param start: Start date of event
-    :type start: datetime.
-
-    :param end: End date of event
-    :type end: datetime.
-
-    :param all_day: Define event for all day
-    :type all_day: bool.
-    """
     enquirer = models.ForeignKey(Enquirer, on_delete='CASCADE')
     service = models.ForeignKey(Service, on_delete='CASCADE')
     title = models.CharField(max_length=255)
@@ -53,7 +36,7 @@ class CalendarEvent(models.Model):
         verbose_name = 'CalendarEvent'
         verbose_name_plural = 'CalendarEvents'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
 

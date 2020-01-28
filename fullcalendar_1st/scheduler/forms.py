@@ -1,5 +1,6 @@
 from django import forms
-from scheduler.models import Service
+from scheduler.models import Service, Enquirer, CalendarEvent
+from datetime import timedelta
 
 class DateForm(forms.Form):
 
@@ -9,6 +10,32 @@ class DateForm(forms.Form):
     last_name = forms.CharField()
     email =  forms.EmailField()
 
-    def save(self):
+    # def __init__():
+    # block existing events
+
+    def save(self, commit=True):
 
         data = self.cleaned_data
+
+        enquirer = Enquirer.objects.create(
+            first_name=data['first_name'],
+            last_name=data['last_name'],
+            email=data['email'])
+
+        requested_service_name = getattr(
+            data['service'], 'name')
+        requested_service_duration = getattr(
+            data['service'], 'duration')
+
+        requested_service = Service.objects.get(
+            name=requested_service_name)
+
+        new_event = CalendarEvent.objects.create(
+            enquirer = enquirer,
+            service = requested_service,
+            title = requested_service_name,
+            start = data['datetime'],
+            end = data['datetime'] + timedelta(
+                minutes=requested_service_duration))
+
+        new_event.save()
