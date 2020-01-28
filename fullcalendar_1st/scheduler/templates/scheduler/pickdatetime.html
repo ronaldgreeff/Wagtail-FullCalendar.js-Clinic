@@ -1,25 +1,18 @@
 {% extends "base.html" %}
-{% block body_class %}template-homepage{% endblock %}
+{% load wagtailcore_tags %}
+
+{% block body_class %}template-suggest{% endblock %}
 
 {% block content %}
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <h1>{{ page.title }}</h1>
 
-<!-- XDSoft DateTimePicker -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>
+    {{ page.intro | richtext }}
 
-form should go here
-{{ form.date }}
+    <form action="." method="POST">
+        {% csrf_token %}
 
-<script>
-$(document).ready(function () {
-  $(function () {
-    $("#id_date").datetimepicker({
-      format: 'd/m/Y H:i',
-    });
-  });
-});
-</script>
+        {{ form.as_p }}
 
+        <p><input type="submit" value="Suggest my flavour"></p>
+    </form>
 {% endblock %}
