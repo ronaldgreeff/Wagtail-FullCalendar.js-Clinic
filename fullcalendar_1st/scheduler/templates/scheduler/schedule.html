@@ -1,17 +1,58 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags %}
-
+{% load static %}
 {% block body_class %}template-suggest{% endblock %}
 
+{% block extra_css %}
+  <link href="{% static 'fullcalendar/packages/core/main.css' %}" rel='stylesheet' />
+  <link href="{% static 'fullcalendar/packages/daygrid/main.css' %}" rel='stylesheet' />
+  <link href="{% static 'fullcalendar/packages/timeGrid/main.css' %}" rel='stylesheet' />
+  <link href="{% static 'fullcalendar/packages/list/main.css' %}" rel='stylesheet' />
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'fullcalendar/packages/core/main.js' %}"></script>
+  <script src="{% static 'fullcalendar/packages/daygrid/main.js' %}"></script>
+  <script src="{% static 'fullcalendar/packages/interaction/main.js' %}"></script>
+  <script src="{% static 'fullcalendar/packages/timeGrid/main.js' %}"></script>
+  <script src="{% static 'fullcalendar/packages/list/main.js' %}"></script>
+{% endblock %}
+
 {% block content %}
-    <h1>{{ page.title }}</h1>
+  <h1>{{ page.title }}</h1>
 
-    <div id="calendar"></div>
 
-<script>
-$(document).ready(function() {
-  $('#calendar').fullCalendar({{ calendar_config_options }});
-});
-</script>
+  <div id="calendar"></div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
+        defaultView: 'dayGridMonth',
+        defaultDate: '2019-11-07',
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        events: '../api/events/',
+        dateClick: function() {
+          alert('a day has been clicked!');
+        }
+      });
+      calendar.render();
+
+      calendar.on('dateClick', function(info) {
+        console.log('clicked on ' + info.dateStr);
+      });
+    });
+  </script>
+
+  <script>
+  $(document).ready(function() {
+    // $('#calendar').fullCalendar();
+  });
+  </script>
 
 {% endblock %}
