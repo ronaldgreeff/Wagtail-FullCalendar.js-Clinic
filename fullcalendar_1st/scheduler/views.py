@@ -6,9 +6,18 @@ from scheduler.serializers import CalendarEventSerializer
 from scheduler.models import CalendarEvent
 
 
-class EventsViewSet(viewsets.ModelViewSet):
+class LoadEventsView(viewsets.ModelViewSet): # ApiView
     """
     API endpoint that allows groups to be viewed or edited.
     """
     queryset = CalendarEvent.objects.all()
     serializer_class = CalendarEventSerializer
+
+# class InsertEventView(ApiView):
+# 	pass
+
+# class UpdateEventView(ApiView):
+# 	pass
+
+# class DeleteEventView(ApiView):
+# 	pass

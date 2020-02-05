@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% load static %}
+{% block body_class %}template-suggest{% endblock %}
+
+{% block extra_css %}
+  <link href="{% static 'fullcalendar/packages/core/main.css' %}" rel='stylesheet' />
+  <link href="{% static 'fullcalendar/packages/daygrid/main.css' %}" rel='stylesheet' />
+  <link href="{% static 'fullcalendar/packages/timeGrid/main.css' %}" rel='stylesheet' />
+  <link href="{% static 'fullcalendar/packages/list/main.css' %}" rel='stylesheet' />
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'fullcalendar/packages/core/main.js' %}"></script>
+  <script src="{% static 'fullcalendar/packages/daygrid/main.js' %}"></script>
+  <script src="{% static 'fullcalendar/packages/interaction/main.js' %}"></script>
+  <script src="{% static 'fullcalendar/packages/timeGrid/main.js' %}"></script>
+  <script src="{% static 'fullcalendar/packages/list/main.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+  <h1>{{ page.title }}</h1>
+
+
+  <div id="calendar"></div>
+  <script src="{% static 'js/fullcalendar_doctor_schedule.js' %}"></script>
+
+  <script>
+  $(document).ready(function() {
+    // $('#calendar').fullCalendar();
+  });
+  </script>
+
+{% endblock %}

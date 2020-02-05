@@ -14,7 +14,10 @@ from scheduler import views
 from . api import api_router
 
 router = routers.DefaultRouter()
-router.register(r'events', views.EventsViewSet)
+router.register(r'load', views.LoadEventsView)
+router.register(r'insert', views.LoadEventsView)
+router.register(r'update', views.LoadEventsView)
+router.register(r'delete', views.LoadEventsView)
 
 
 urlpatterns = [

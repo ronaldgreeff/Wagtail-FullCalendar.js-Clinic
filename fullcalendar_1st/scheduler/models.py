@@ -31,6 +31,7 @@ class CalendarEvent(models.Model):
     start = models.DateTimeField()
     end = models.DateTimeField()
     all_day = models.BooleanField(default=False)
+    # is timestamp useful?
 
     class Meta:
         verbose_name = 'CalendarEvent'
@@ -38,7 +39,6 @@ class CalendarEvent(models.Model):
 
     def __str__(self):
         return self.title
-
 
 
 class PickDateTimePage(Page):
@@ -67,19 +67,25 @@ class PickDateTimePage(Page):
         else:
             form = DateForm()
 
-        return render(request, 'scheduler/pickdatetime.html', { # TODO: confirmation.html
+        return render(request, 'scheduler/appointment_confirmation.html', { # TODO: confirmation.html
             'page': self,
             'form': form,
         })
 
 
 class SecretarySchedulePage(Page):
-    pass
-
-class DoctorSchedulePage(Page):
 
     def serve(self, request):
 
-        return render(request, 'scheduler/schedule.html', {
+        return render(request, 'scheduler/secretary_schedule.html', {
                     'calendar_config_options': 0,
                 })
+
+class DoctorSchedulePage(Page):
+    pass
+
+    # def serve(self, request):
+
+    #     return render(request, 'scheduler/doctor_schedule.html', {
+    #                 'calendar_config_options': 0,
+    #             })
