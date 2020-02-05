@@ -15,15 +15,17 @@ from . api import api_router
 
 router = routers.DefaultRouter()
 router.register(r'load', views.LoadEventsView)
-router.register(r'insert', views.LoadEventsView)
-router.register(r'update', views.LoadEventsView)
-router.register(r'delete', views.LoadEventsView)
+# router.register(r'insert', views.LoadEventsView)
+# router.register(r'update', views.LoadEventsView)
+# router.register(r'delete', views.LoadEventsView)
 
 
 urlpatterns = [
     # DRF's
     url(r'^api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+
+    # API Views
 
     # Wagtail's:
     url(r'^api/v2/', api_router.urls),

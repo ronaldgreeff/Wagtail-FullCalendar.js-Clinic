@@ -12,12 +12,19 @@ class LoadEventsView(viewsets.ModelViewSet): # ApiView
     """
     queryset = CalendarEvent.objects.all()
     serializer_class = CalendarEventSerializer
+    # jsonencode serializer.data
+    # HttpResonse(JSON)
 
 # class InsertEventView(ApiView):
-# 	pass
+#	if request.POST.data isvalid
+# 	calendar_event = CalendarEvent()
+#	title, start, end, allday
 
 # class UpdateEventView(ApiView):
-# 	pass
+# 	CalendarEvent.objects.get(id=id)
+#	for i in request.POST.data
+#		event[i] = data[i]
+#	event.save()
 
 # class DeleteEventView(ApiView):
-# 	pass
+# 	Calendar.objects.delete(id=id)
