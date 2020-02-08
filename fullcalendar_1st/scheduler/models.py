@@ -25,8 +25,8 @@ class Enquirer(models.Model):
 
 
 class CalendarEvent(models.Model):
-    enquirer = models.ForeignKey(Enquirer, on_delete='CASCADE')
-    service = models.ForeignKey(Service, on_delete='CASCADE')
+    enquirer = models.ForeignKey(Enquirer, on_delete='CASCADE', null=True)
+    service = models.ForeignKey(Service, on_delete='CASCADE', null=True)
     title = models.CharField(max_length=255)
     start = models.DateTimeField()
     end = models.DateTimeField()
