@@ -17,9 +17,6 @@
         <meta name="description" content="" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <!-- jQuery -->
-        <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
-
         {# Global stylesheets #}
         <link rel="stylesheet" type="text/css" href="{% static 'css/fullcalendar_1st.css' %}">
 
@@ -34,8 +31,7 @@
         {% block content %}{% endblock %}
 
         {# Global javascript #}
-
-        <script type="text/javascript" src="{% static 'js/fullcalendar_1st.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/jquery-3.4.1.js' %}"></script>
 
         {% block extra_js %}
             {# Override this in templates to add extra javascript #}

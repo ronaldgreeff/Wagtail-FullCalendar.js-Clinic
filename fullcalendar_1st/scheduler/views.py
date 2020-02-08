@@ -5,6 +5,11 @@ from rest_framework import viewsets
 from scheduler.serializers import CalendarEventSerializer
 from scheduler.models import CalendarEvent
 
+#####################################
+#
+# It's wagtail - views are in models
+#
+#####################################
 
 class LoadEventsView(viewsets.ModelViewSet): # ApiView
     """

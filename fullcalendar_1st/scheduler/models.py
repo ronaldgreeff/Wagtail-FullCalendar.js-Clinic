@@ -67,7 +67,7 @@ class PickDateTimePage(Page):
         else:
             form = DateForm()
 
-        return render(request, 'scheduler/appointment_confirmation.html', { # TODO: confirmation.html
+        return render(request, 'scheduler/appointment_confirmation.html', {
             'page': self,
             'form': form,
         })
@@ -83,7 +83,6 @@ class SecretarySchedulePage(Page):
 
 class DoctorSchedulePage(Page):
     pass
-
     # def serve(self, request):
 
     #     return render(request, 'scheduler/doctor_schedule.html', {
