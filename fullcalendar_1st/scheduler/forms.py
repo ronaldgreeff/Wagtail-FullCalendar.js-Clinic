@@ -2,7 +2,7 @@ from django import forms
 from scheduler.models import Service, Enquirer, CalendarEvent
 from datetime import timedelta
 
-class DateForm(forms.Form):
+class DatePickerForm(forms.Form): #DatePickerForm
 
     service = forms.ModelChoiceField(queryset=Service.objects.all())
     datetime = forms.DateTimeField(input_formats=['%d/%m/%Y %H:%M'])
@@ -39,3 +39,11 @@ class DateForm(forms.Form):
                 minutes=requested_service_duration))
 
         new_event.save()
+
+# # DatePickerForm as a widget instead
+# from .widgets import XDSoftDateTimePickerInput
+# class DateForm(forms.Form):
+#     date = forms.DateTimeField(
+#         input_formats=['%d/%m/%Y %H:%M'], 
+#         widget=XDSoftDateTimePickerInput()
+#     )
