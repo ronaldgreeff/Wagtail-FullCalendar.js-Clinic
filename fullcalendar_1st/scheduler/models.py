@@ -11,6 +11,12 @@ from wagtail.core.fields import RichTextField
 from wagtail.admin.edit_handlers import FieldPanel
 
 
+# class Account():
+# doctor, secretary, patient
+# once an enquirer's appointment is confirmed, they become a patient
+# a patient should be assigned to either a service, doctor or both - depending on the clinic
+
+
 class Service(models.Model):
     name = models.CharField(default='appointment', max_length=50)
     duration = models.IntegerField(default=60,)
@@ -23,15 +29,17 @@ class Enquirer(models.Model):
     last_name = models.CharField(max_length=20)
     email = models.EmailField(max_length=255)
 
+    def __str__(self):
+        return '{0} {1} ({2})'.format(self.first_name, self.last_name, self.email)
 
 class CalendarEvent(models.Model):
+    # account (patient, doctor, ...)
     enquirer = models.ForeignKey(Enquirer, on_delete='CASCADE', null=True)
     service = models.ForeignKey(Service, on_delete='CASCADE', null=True)
     title = models.CharField(max_length=255)
     start = models.DateTimeField()
     end = models.DateTimeField()
     all_day = models.BooleanField(default=False)
-    # is timestamp useful?
 
     class Meta:
         verbose_name = 'CalendarEvent'
@@ -41,7 +49,11 @@ class CalendarEvent(models.Model):
         return self.title
 
 
-class PickDateTimePage(Page):
+# TODO
+# Should be Enquiry (currently CalendarEvent), Appointment, Event
+
+
+class EnquirePage(Page):
     intro = RichTextField(blank=True)
     guidance = RichTextField(blank=True)
     thankyou_page_title = models.CharField(
@@ -54,24 +66,23 @@ class PickDateTimePage(Page):
     ]
 
     def serve(self, request):
-        from scheduler.forms import DateForm #DatePickerForm
+        from scheduler.forms import EnquirerForm
 
         if request.method == 'POST':
-            form = DateForm(request.POST) #DatePickerForm(request.POST)
+            form = EnquirerForm(request.POST)
             if form.is_valid():
                 saved_form = form.save()
-                return render(request, 'scheduler/pickdatetime.html', {
+                return render(request, 'scheduler/appointment_confirmation.html', {
                     'page': self,
                     'saved_form': saved_form,
                 })
         else:
-            form = DateForm() #DatePickerForm()
+            form = EnquirerForm()
 
-        return render(request, 'scheduler/pickdatetime.html', {
+        return render(request, 'scheduler/enquire_page.html', {
             'page': self,
             'form': form,
         })
-
 
 class SecretarySchedulePage(Page):
 
@@ -83,8 +94,3 @@ class SecretarySchedulePage(Page):
 
 class DoctorSchedulePage(Page):
     pass
-    # def serve(self, request):
-
-    #     return render(request, 'scheduler/doctor_schedule.html', {
-    #                 'calendar_config_options': 0,
-    #             })
