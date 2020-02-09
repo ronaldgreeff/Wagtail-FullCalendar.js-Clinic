@@ -54,10 +54,10 @@ class PickDateTimePage(Page):
     ]
 
     def serve(self, request):
-        from scheduler.forms import DatePickerForm
+        from scheduler.forms import DateForm #DatePickerForm
 
         if request.method == 'POST':
-            form = DatePickerForm(request.POST)
+            form = DateForm(request.POST) #DatePickerForm(request.POST)
             if form.is_valid():
                 saved_form = form.save()
                 return render(request, 'scheduler/pickdatetime.html', {
@@ -65,7 +65,7 @@ class PickDateTimePage(Page):
                     'saved_form': saved_form,
                 })
         else:
-            form = DatePickerForm()
+            form = DateForm() #DatePickerForm()
 
         return render(request, 'scheduler/pickdatetime.html', {
             'page': self,
