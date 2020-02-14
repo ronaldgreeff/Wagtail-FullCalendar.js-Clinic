@@ -7,87 +7,62 @@ from wagtail.core.models import Page
 from wagtail.core.fields import RichTextField
 from wagtail.admin.edit_handlers import FieldPanel
 
-from django.contrib.auth.models import AbstractUser
-from django.core.validators import RegexValidator
+from users.models import Enquirer
 from django.utils import timezone
 
-# https://groups.google.com/forum/#!topic/wagtail/OCdYtdnW5IM
+from users.models import User
 
 
-# class Enquirer(models.Model):
-#     first_name = models.CharField(max_length=20)
-#     last_name = models.CharField(max_length=20)
-#     email = models.EmailField(max_length=255)
-#     phone_regex = RegexValidator(
-#         regex=r'^\+?1?\d{9,15}$',
-#         message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
-#     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True)
+class Service(models.Model):
+    name = models.CharField(default='appointment', max_length=50)
+    duration = models.IntegerField(default=60,)
 
-#     def __str__(self):
-#         return '{0} {1} ({2})'.format(self.first_name, self.last_name, self.email)
-
-# class Service(models.Model):
-#     name = models.CharField(default='appointment', max_length=50)
-#     duration = models.IntegerField(default=60,)
-
-#     def __str__(self):
-#         return '{0} ({1}mins)'.format(self.name, self.duration)
+    def __str__(self):
+        return '{0} ({1}mins)'.format(self.name, self.duration)
 
 
-class User(AbstractUser):
-    pass
-    # is_owner = models.BooleanField(default=False) # is_staff + full authorization
-    # is_administrator = models.BooleanField(default=False) # is_staff + semi authorization
-    # is_patient = models.BooleanField(default=False) # no authorization
-    # phone_regex = RegexValidator(
-    #     regex=r'^\+?1?\d{9,15}$',
-    #     message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
-    # phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True)
+class TimeStampedModel(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
 
 
+class Enquiry(TimeStampedModel):
+    enquirer = models.ForeignKey(Enquirer, on_delete='CASCADE', null=True)
+    service = models.ForeignKey(Service, on_delete='CASCADE', null=True)
+    start = models.DateTimeField()
+    end = models.DateTimeField()
 
-# class TimeStampedModel(models.Model):
-#     created = models.DateTimeField(auto_now_add=True)
-#     updated = models.DateTimeField(auto_now=True)
+    class Meta:
+        verbose_name = 'Enquiry'
+        verbose_name_plural = 'Enquiries'
 
-#     class Meta:
-#         abstract = True
+    def __str__(self):
+        return '{0} {1} - {2}'.format(self.service, self.start, self.end)
 
+# an enquiry turns to an appointment once confirmed by an administrator
 
-# class Enquiry(TimeStampedModel):
-#     enquirer = models.ForeignKey(Enquirer, on_delete='CASCADE', null=True)
-#     service = models.ForeignKey(Service, on_delete='CASCADE', null=True)
-#     start = models.DateTimeField()
-#     end = models.DateTimeField()
+class Appointment(TimeStampedModel):
+    service = models.ForeignKey(Service, on_delete='CASCADE', null=True)
+    doctor = models.OneToOneField(User, on_delete='CASCADE', null=False)
+    start = models.DateTimeField()
+    end = models.DateTimeField()
 
-#     class Meta:
-#         verbose_name = 'Enquiry'
-#         verbose_name_plural = 'Enquiries'
-
-#     def __str__(self):
-#         return '{0} {1} - {2}'.format(self.service, self.start, self.end)
-
-# # an enquiry turns to an appointment once confirmed by an administrator
-
-# class Appointment(TimeStampedModel):
-#     service = models.ForeignKey(Service, on_delete='CASCADE', null=True)
-#     doctor = models.OneToOneField(User, on_delete='CASCADE', null=False)
-#     start = models.DateTimeField()
-#     end = models.DateTimeField()
-
-#     def __str__(self):
-#         return '({0}) {1} {2} - {3}'.format(self.doctor, self.service, self.start, self.end)
+    def __str__(self):
+        return '({0}) {1} {2} - {3}'.format(self.doctor, self.service, self.start, self.end)
 
 
-# class Event(TimeStampedModel):
-#     title = models.CharField(max_length=255)
-#     start = models.DateTimeField()
-#     end = models.DateTimeField()
-#     all_day = models.BooleanField(default=False)
-#     users = models.ManyToManyField(User)
+class Event(TimeStampedModel):
+    title = models.CharField(max_length=255)
+    start = models.DateTimeField()
+    end = models.DateTimeField()
+    all_day = models.BooleanField(default=False)
+    users = models.ManyToManyField(User)
 
-#     def __str__(self):
-#         return '{0} {1} - {2}'.format(self.title, self.start, self.end)
+    def __str__(self):
+        return '{0} {1} - {2}'.format(self.title, self.start, self.end)
 
 
 

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     'modelcluster',
     'taggit',
+    'users',
     'scheduler',
 
     'django.contrib.admin',
@@ -53,7 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-# AUTH_USER_MODEL = 'scheduler.User'
+AUTH_USER_MODEL = 'users.User'
 
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',

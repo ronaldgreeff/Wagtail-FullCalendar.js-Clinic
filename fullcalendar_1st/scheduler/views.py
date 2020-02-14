@@ -2,8 +2,8 @@ from django.shortcuts import render
 
 # from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
-# from scheduler.serializers import EnquirySerializer
-# from scheduler.models import Enquiry
+from scheduler.serializers import EnquirySerializer
+from scheduler.models import Enquiry
 
 #####################################
 #
