@@ -30,7 +30,7 @@ class TimeStampedModel(models.Model):
 
 
 class Enquiry(TimeStampedModel):
-    enquirer = models.ForeignKey(Enquirer, on_delete='CASCADE', null=True)
+    enquirer = models.OneToOneField(Enquirer, on_delete='CASCADE', null=True)
     service = models.ForeignKey(Service, on_delete='CASCADE', null=True)
     start = models.DateTimeField()
     end = models.DateTimeField()
