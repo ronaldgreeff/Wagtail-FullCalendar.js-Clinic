@@ -1,7 +1,13 @@
 from django import forms
-from scheduler.models import Service, Enquirer, CalendarEvent
+from django.forms import formset_factory
+
+from scheduler.models import Service, Enquiry, Appointment, Event
+from users.models import Enquirer, User
+
 from datetime import timedelta
 from .widgets import XDSoftDateTimePickerInput
+
+
 
 class EnquirerForm(forms.Form):
     service = forms.ModelChoiceField(queryset=Service.objects.all())
@@ -39,6 +45,7 @@ class EnquirerForm(forms.Form):
 
         new_event.save()
 
+
 class AppointmentForm(forms.Form):
     title = forms.CharField()
     start = forms.DateField()
@@ -48,6 +55,11 @@ class AppointmentForm(forms.Form):
     service = forms.ModelChoiceField(queryset=Service.objects.all())
     # doctor = forms.ModelChoiceField(queryset=)
     # patient = forms.ModelChoiceField(queryset=)
+
+
+# TODO formset factory
+# https://docs.djangoproject.com/en/2.2/topics/forms/formsets/
+
 
 class EventForm(forms.Form):
     title = forms.CharField()
