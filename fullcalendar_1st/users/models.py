@@ -21,6 +21,7 @@ class Enquirer(models.Model):
 
 class User(AbstractUser):
     is_owner = models.BooleanField(default=False) # is_staff + full authorization
+    is_doctor = models.BooleanField(default=False) # is_staff + semi authorization
     is_administrator = models.BooleanField(default=False) # is_staff + semi authorization
     is_patient = models.BooleanField(default=False) # no authorization
     phone_regex = RegexValidator(

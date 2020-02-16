@@ -53,12 +53,16 @@ class AppointmentForm(forms.Form):
     recurring = forms.BooleanField()
     recurrance= forms.IntegerField()
     service = forms.ModelChoiceField(queryset=Service.objects.all())
-    # doctor = forms.ModelChoiceField(queryset=)
-    # patient = forms.ModelChoiceField(queryset=)
+    doctor = forms.ModelChoiceField(queryset=User.objects.filter(is_doctor=True))
+    patient = forms.ModelChoiceField(queryset=User.objects.filter(is_patient=True))
 
-
-# TODO formset factory
+# TODO move formset factory
 # https://docs.djangoproject.com/en/2.2/topics/forms/formsets/
+# TO wagtail admin view
+# https://docs.wagtail.io/en/v2.7.1/reference/contrib/modeladmin/primer.html#changing-what-appears-in-the-listing
+
+AppointmentFormSet = formset_factory(AppointmentForm, extra=1)
+appointment_formset = AppointmentFormSet(initial=Enquiry.objects.values())
 
 
 class EventForm(forms.Form):
