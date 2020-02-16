@@ -29,6 +29,8 @@ INSTALLED_APPS = [
     'wagtail.api.v2',
     'rest_framework',
 
+    'wagtail.contrib.modeladmin',
+
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
     'wagtail.embeds',
