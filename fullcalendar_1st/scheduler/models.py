@@ -52,7 +52,9 @@ class Enquiry(TimeStampedModel):
 
 class Appointment(TimeStampedModel):
     service = models.ForeignKey(Service, on_delete='CASCADE', null=True)
+    # doctor = models.OneToOneField(Doctor, on_delete='CASCADE', null=False)
     doctor = models.OneToOneField(User, on_delete='CASCADE', null=False)
+    # patient = models.OneToOneField(Patient, on_delete='CASCADE', null=False)
     start = models.DateTimeField()
     end = models.DateTimeField()
 

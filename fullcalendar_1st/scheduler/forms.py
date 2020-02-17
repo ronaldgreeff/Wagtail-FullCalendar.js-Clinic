@@ -1,5 +1,4 @@
 from django import forms
-from django.forms import formset_factory
 
 from scheduler.models import Service, Enquiry, Appointment, Event
 from users.models import Enquirer, User
@@ -55,15 +54,6 @@ class AppointmentForm(forms.Form):
     service = forms.ModelChoiceField(queryset=Service.objects.all())
     doctor = forms.ModelChoiceField(queryset=User.objects.filter(is_doctor=True))
     patient = forms.ModelChoiceField(queryset=User.objects.filter(is_patient=True))
-
-# TODO move formset factory
-# https://docs.djangoproject.com/en/2.2/topics/forms/formsets/
-# TO wagtail admin view
-# https://docs.wagtail.io/en/v2.7.1/reference/contrib/modeladmin/primer.html#changing-what-appears-in-the-listing
-# https://docs.wagtail.io/en/v2.7.1/reference/contrib/modeladmin/index.html
-
-AppointmentFormSet = formset_factory(AppointmentForm, extra=1)
-appointment_formset = AppointmentFormSet(initial=Enquiry.objects.values())
 
 
 class EventForm(forms.Form):
