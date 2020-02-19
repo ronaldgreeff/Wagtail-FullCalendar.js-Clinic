@@ -25,4 +25,4 @@ class Doctor(models.Model):
 class Patient(models.Model):
     user =  models.OneToOneField(User, on_delete='CASCADE', null=True)
     is_confirmed = models.BooleanField(default=False)
-    documents = wagtail.docs # ! review security considerations ! #
+    # documents = wagtail.docs # ! review security considerations ! #

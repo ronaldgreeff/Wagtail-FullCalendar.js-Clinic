@@ -7,7 +7,6 @@ from wagtail.core.models import Page
 from wagtail.core.fields import RichTextField
 from wagtail.admin.edit_handlers import FieldPanel
 
-from users.models import Enquirer
 from django.utils import timezone
 
 from users.models import User, Doctor, Patient

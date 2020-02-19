@@ -1,7 +1,7 @@
 from django import forms
 
-from scheduler.models import Service, Enquiry, Appointment, Event
-from users.models import User
+from scheduler.models import Service, Appointment, Event
+from users.models import User, Doctor, Patient
 
 from datetime import timedelta
 from .widgets import XDSoftDateTimePickerInput
@@ -59,4 +59,4 @@ class AppointmentForm(BaseEventForm):
 
 
 class EventForm(BaseEventForm):
-    users = forms.MultipleChoiceField(User)
+    users = forms.MultipleChoiceField(choices=[])
