@@ -1,11 +1,10 @@
 from django import forms
 
 from scheduler.models import Service, Enquiry, Appointment, Event
-from users.models import Enquirer, User
+from users.models import User
 
 from datetime import timedelta
 from .widgets import XDSoftDateTimePickerInput
-
 
 
 class EnquirerForm(forms.Form):
@@ -45,21 +44,19 @@ class EnquirerForm(forms.Form):
         new_event.save()
 
 
-class AppointmentForm(forms.Form):
+class BaseEventForm(forms.Form):
     title = forms.CharField()
     start = forms.DateField()
     end = forms.DateField()
     recurring = forms.BooleanField()
     recurrance= forms.IntegerField()
+
+
+class AppointmentForm(BaseEventForm):
     service = forms.ModelChoiceField(queryset=Service.objects.all())
     doctor = forms.ModelChoiceField(queryset=User.objects.filter(is_doctor=True))
     patient = forms.ModelChoiceField(queryset=User.objects.filter(is_patient=True))
 
 
-class EventForm(forms.Form):
-    title = forms.CharField()
-    start = forms.DateField()
-    end = forms.DateField()
-    event_type = forms.ChoiceField()
-    recurring = forms.BooleanField()
-    recurrance= forms.IntegerField()
+class EventForm(BaseEventForm):
+    users = forms.MultipleChoiceField(User)

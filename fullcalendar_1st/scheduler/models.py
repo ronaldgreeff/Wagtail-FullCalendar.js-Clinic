@@ -10,7 +10,7 @@ from wagtail.admin.edit_handlers import FieldPanel
 from users.models import Enquirer
 from django.utils import timezone
 
-from users.models import User
+from users.models import User, Doctor, Patient
 
 
 class Service(models.Model):
@@ -35,31 +35,16 @@ class TimeStampedModel(models.Model):
         abstract = True
 
 
-class Enquiry(TimeStampedModel):
-    enquirer = models.OneToOneField(Enquirer, on_delete='CASCADE', null=True)
-    service = models.ForeignKey(Service, on_delete='CASCADE', null=True)
-    start = models.DateTimeField()
-    end = models.DateTimeField()
-
-    class Meta:
-        verbose_name = 'Enquiry'
-        verbose_name_plural = 'Enquiries'
-
-    def __str__(self):
-        return '{0} {1} - {2}'.format(self.service, self.start, self.end)
-
-# an enquiry turns to an appointment once confirmed by an administrator
-
 class Appointment(TimeStampedModel):
     service = models.ForeignKey(Service, on_delete='CASCADE', null=True)
-    # doctor = models.OneToOneField(Doctor, on_delete='CASCADE', null=False)
-    doctor = models.OneToOneField(User, on_delete='CASCADE', null=False)
-    # patient = models.OneToOneField(Patient, on_delete='CASCADE', null=False)
+    doctor = models.OneToOneField(Doctor, on_delete='CASCADE', null=False)
+    patient = models.OneToOneField(Patient, on_delete='CASCADE', null=False)
     start = models.DateTimeField()
     end = models.DateTimeField()
 
     def __str__(self):
-        return '({0}) {1} {2} - {3}'.format(self.doctor, self.service, self.start, self.end)
+        return '({0}) {1} {2} - {3}'.format(
+            self.doctor, self.service, self.start, self.end)
 
 
 class Event(TimeStampedModel):
@@ -70,7 +55,8 @@ class Event(TimeStampedModel):
     users = models.ManyToManyField(User)
 
     def __str__(self):
-        return '{0} {1} - {2}'.format(self.title, self.start, self.end)
+        return '{0} {1} - {2}'.format(
+            self.title, self.start, self.end)
 
 
 
