@@ -2,8 +2,8 @@ from django.shortcuts import render
 
 # from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
-from scheduler.serializers import EnquirySerializer
-from scheduler.models import Enquiry
+from scheduler.serializers import EventSerializer
+from scheduler.models import Appointment, Event
 
 #####################################
 #
@@ -15,8 +15,8 @@ class LoadEventsView(viewsets.ModelViewSet): # ApiView
     """
     API endpoint that allows groups to be viewed or edited.
     """
-    queryset = Enquiry.objects.all()
-    serializer_class = EnquirySerializer
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
     # jsonencode serializer.data
     # HttpResonse(JSON)
 

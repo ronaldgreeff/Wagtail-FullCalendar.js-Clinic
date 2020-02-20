@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from scheduler.models import Enquiry
+from scheduler.models import TimeStampedModel, Appointment, Event
 
-class EnquirySerializer(serializers.ModelSerializer):
+class EventSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Enquiry
+        model = Event
         fields = '__all__'

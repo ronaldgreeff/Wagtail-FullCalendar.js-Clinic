@@ -19,7 +19,7 @@ class User(AbstractUser):
 
 class Doctor(models.Model):
     user = models.OneToOneField(User, on_delete='CASCADE', null=True)
-    services = models.ManyToManyField(User)
+    services = models.ManyToManyField(User, related_name='doctors')
 
 
 class Patient(models.Model):
