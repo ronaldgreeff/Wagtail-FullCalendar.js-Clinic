@@ -9,17 +9,30 @@ from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register
 
 from wagtail.contrib.modeladmin.views import IndexView
 
-# TODO this code probably doesn't belong in wagtail_hooks anymore - move after working
 
-class EnquiryIndexView(IndexView):
+
+class AppointmentIndexView(IndexView):
     AppointmentFormSet = formset_factory(AppointmentForm, extra=1)
     appointment_formset = AppointmentFormSet(initial=Appointment.objects.values())
 
-class EnquiryAdmin(ModelAdmin):
+class AppointmentAdmin(ModelAdmin):
     model = Appointment
-    list_display = ('enquirer', 'service', 'start', 'end')
+    list_display = ['service', 'start', 'end']
     list_per_page = 10
-    index_view_class = EnquiryIndexView
+    # index_view_class = AppointmentIndexView
+
+
+modeladmin_register(AppointmentAdmin)
+
+
+
+
+
+# class EnquiryAdmin(ModelAdmin):
+#     model = Appointment
+#     list_display = ('enquirer', 'service', 'start', 'end')
+#     list_per_page = 10
+#     index_view_class = EnquiryIndexView
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # formset factory
@@ -30,11 +43,3 @@ class EnquiryAdmin(ModelAdmin):
 # https://docs.wagtail.io/en/v2.7.1/reference/contrib/modeladmin/primer.html#modeladmin-overriding-templates
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-class AppointmentAdmin(ModelAdmin):
-    model = Appointment
-    list_display = ('service', 'doctor', 'start', 'end')
-    list_per_page = 10
-
-
-modeladmin_register(EnquiryAdmin)
-modeladmin_register(AppointmentAdmin)
