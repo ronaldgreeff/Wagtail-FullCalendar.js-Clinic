@@ -9,18 +9,18 @@ from wagtail.admin.edit_handlers import FieldPanel
 
 from django.utils import timezone
 
-from users.models import User, Doctor, Patient
+from users.models import Doctor, Patient
 
 
 class Service(models.Model):
-    name = models.CharField(default='appointment', max_length=50)
+    name = models.CharField(default='Appointment', max_length=50)
     duration = models.IntegerField(default=60,)
 
-    # for modeladmin - see .wagtail_hooks
-    panels = [
-        FieldPanel('name'),
-        FieldPanel('duration'),
-    ]
+    # # for modeladmin - see .wagtail_hooks
+    # panels = [
+    #     FieldPanel('name'),
+    #     FieldPanel('duration'),
+    # ]
 
     def __str__(self):
         return '{0} ({1}mins)'.format(self.name, self.duration)
@@ -51,7 +51,7 @@ class Event(TimeStampedModel):
     start = models.DateTimeField()
     end = models.DateTimeField()
     all_day = models.BooleanField(default=False)
-    users = models.ManyToManyField(User)
+    users = models.ManyToManyField('users.User')
 
     def __str__(self):
         return '{0} {1} - {2}'.format(

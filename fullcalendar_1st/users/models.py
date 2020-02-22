@@ -3,7 +3,6 @@ from django.db import models
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import AbstractUser
 
-
 # https://groups.google.com/forum/#!topic/wagtail/OCdYtdnW5IM
 
 class User(AbstractUser):
@@ -19,7 +18,7 @@ class User(AbstractUser):
 
 class Doctor(models.Model):
     user = models.OneToOneField(User, on_delete='CASCADE', null=True)
-    services = models.ManyToManyField(User, related_name='doctors')
+    services = models.ManyToManyField('scheduler.Service')
 
 
 class Patient(models.Model):

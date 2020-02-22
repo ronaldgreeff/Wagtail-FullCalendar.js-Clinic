@@ -1,7 +1,7 @@
 from django import forms
 
-from scheduler.models import Service, Appointment, Event
-from users.models import User, Doctor, Patient
+from scheduler.models import Service, Event#, Appointment
+from users.models import User#, Doctor, Patient
 
 from datetime import timedelta
 from .widgets import XDSoftDateTimePickerInput

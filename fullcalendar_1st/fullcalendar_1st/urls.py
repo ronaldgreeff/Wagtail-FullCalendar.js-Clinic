@@ -10,14 +10,11 @@ from search import views as search_views
 
 # DRF
 from rest_framework import routers
-from scheduler import views
+# from scheduler import views
 from . api import api_router
 
 router = routers.DefaultRouter()
-router.register(r'load', views.LoadEventsView)
-# router.register(r'insert', views.LoadEventsView)
-# router.register(r'update', views.LoadEventsView)
-# router.register(r'delete', views.LoadEventsView)
+# router.register(r'load', views.LoadEventsView)
 
 
 urlpatterns = [

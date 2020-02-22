@@ -1,5 +1,5 @@
-from scheduler.models import Service, Appointment, Event
-from users.models import User, Doctor, Patient
+from scheduler.models import Service, Event#, Appointment
+from users.models import User#, Doctor, Patient
 
 from scheduler.forms import EnquirerForm, AppointmentForm
 from django.forms import formset_factory
@@ -10,36 +10,32 @@ from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register
 from wagtail.contrib.modeladmin.views import IndexView
 
 
+class ServiceAdmin(ModelAdmin):
+    model = Service
 
-class AppointmentIndexView(IndexView):
-    AppointmentFormSet = formset_factory(AppointmentForm, extra=1)
-    appointment_formset = AppointmentFormSet(initial=Appointment.objects.values())
-
-class AppointmentAdmin(ModelAdmin):
-    model = Appointment
-    list_display = ['service', 'start', 'end']
-    list_per_page = 10
-    # index_view_class = AppointmentIndexView
+class EventAdmin(ModelAdmin):
+    model = Event
 
 
-modeladmin_register(AppointmentAdmin)
+# class AppointmentIndexView(IndexView):
+#     AppointmentFormSet = formset_factory(AppointmentForm, extra=1)
+#     appointment_formset = AppointmentFormSet(initial=Appointment.objects.values())
 
-
-
-
-
-# class EnquiryAdmin(ModelAdmin):
+# class AppointmentAdmin(ModelAdmin):
 #     model = Appointment
-#     list_display = ('enquirer', 'service', 'start', 'end')
+#     list_display = ['service', 'start', 'end']
 #     list_per_page = 10
-#     index_view_class = EnquiryIndexView
+#     index_view_class = AppointmentIndexView
 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# formset factory
-# https://docs.djangoproject.com/en/2.2/topics/forms/formsets/
-# customising wagtail admin view
-# https://docs.wagtail.io/en/v2.7.1/reference/contrib/modeladmin/index.html
-# https://docs.wagtail.io/en/v2.7.1/reference/contrib/modeladmin/primer.html#modeladmin-overriding-views
-# https://docs.wagtail.io/en/v2.7.1/reference/contrib/modeladmin/primer.html#modeladmin-overriding-templates
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# class DoctorAdmin(ModelAdmin):
+#     model = Doctor
 
+# class PatientAdmin(ModelAdmin):
+#     model = Patient
+
+
+# modeladmin_register(AppointmentAdmin)
+# modeladmin_register(EventAdmin)
+# modeladmin_register(ServiceAdmin)
+# modeladmin_register(DoctorAdmin)
+# modeladmin_register(PatientAdmin)
