@@ -14,7 +14,7 @@ run makemigrations + migrate
 
 Add scheduler app to settings
 run makemigrations + migrate
-*
+
 myusers.models - comment back Doctor & Patient classes
 run makemigrations + migrate
 
