@@ -16,12 +16,6 @@ class Service(models.Model):
     name = models.CharField(default='Appointment', max_length=50)
     duration = models.IntegerField(default=60,)
 
-    # # for modeladmin - see .wagtail_hooks
-    # panels = [
-    #     FieldPanel('name'),
-    #     FieldPanel('duration'),
-    # ]
-
     def __str__(self):
         return '{0} ({1}mins)'.format(self.name, self.duration)
 

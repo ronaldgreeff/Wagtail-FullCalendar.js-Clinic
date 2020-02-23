@@ -3,7 +3,6 @@ from django.db import models
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import AbstractUser
 
-# https://groups.google.com/forum/#!topic/wagtail/OCdYtdnW5IM
 
 class User(AbstractUser):
     is_owner = models.BooleanField(default=False) # is_staff + full authorization
