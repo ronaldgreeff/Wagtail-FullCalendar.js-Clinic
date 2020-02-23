@@ -1,6 +1,6 @@
 from django.contrib import admin
 from scheduler.models import Service, Event#, Appointment
-from users.models import User#, Doctor, Patient
+from myusers.models import User#, Doctor, Patient
 
 admin.site.register(Event)
 admin.site.register(Service)

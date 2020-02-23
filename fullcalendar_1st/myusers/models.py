@@ -16,12 +16,12 @@ class User(AbstractUser):
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True)
 
 
-class Doctor(models.Model):
-    user = models.OneToOneField(User, on_delete='CASCADE', null=True)
-    services = models.ManyToManyField('scheduler.Service')
+# class Doctor(models.Model):
+#     user = models.OneToOneField(User, on_delete='CASCADE', primary_key=True)
+#     services = models.ManyToManyField('scheduler.Service')
 
 
-class Patient(models.Model):
-    user =  models.OneToOneField(User, on_delete='CASCADE', null=True)
-    is_confirmed = models.BooleanField(default=False)
-    # documents = wagtail.docs # ! review security considerations ! #
+# class Patient(models.Model):
+#     user =  models.OneToOneField(User, on_delete='CASCADE', primary_key=True)
+#     is_confirmed = models.BooleanField(default=False)
+#     # documents = wagtail.docs # ! review security considerations ! #

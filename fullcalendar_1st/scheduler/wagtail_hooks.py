@@ -1,5 +1,5 @@
 from scheduler.models import Service, Event#, Appointment
-from users.models import User#, Doctor, Patient
+from myusers.models import User#, Doctor, Patient
 
 from scheduler.forms import EnquirerForm, AppointmentForm
 from django.forms import formset_factory
@@ -29,13 +29,15 @@ class EventAdmin(ModelAdmin):
 
 # class DoctorAdmin(ModelAdmin):
 #     model = Doctor
+#     list_display = '__all__'
 
 # class PatientAdmin(ModelAdmin):
 #     model = Patient
+#     list_display = '__all__'
 
 
+modeladmin_register(ServiceAdmin)
+modeladmin_register(EventAdmin)
 # modeladmin_register(AppointmentAdmin)
-# modeladmin_register(EventAdmin)
-# modeladmin_register(ServiceAdmin)
 # modeladmin_register(DoctorAdmin)
 # modeladmin_register(PatientAdmin)

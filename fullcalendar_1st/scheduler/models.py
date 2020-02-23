@@ -9,7 +9,7 @@ from wagtail.admin.edit_handlers import FieldPanel
 
 from django.utils import timezone
 
-from users.models import Doctor, Patient
+# from myusers.models import Doctor, Patient
 
 
 class Service(models.Model):
@@ -34,16 +34,16 @@ class TimeStampedModel(models.Model):
         abstract = True
 
 
-class Appointment(TimeStampedModel):
-    service = models.ForeignKey(Service, on_delete='CASCADE', null=True)
-    doctor = models.OneToOneField(Doctor, on_delete='CASCADE', null=False)
-    patient = models.OneToOneField(Patient, on_delete='CASCADE', null=False)
-    start = models.DateTimeField()
-    end = models.DateTimeField()
+# class Appointment(TimeStampedModel):
+#     service = models.ForeignKey(Service, on_delete='CASCADE', null=True)
+#     doctor = models.OneToOneField(Doctor, on_delete='CASCADE', null=False)
+#     patient = models.OneToOneField(Patient, on_delete='CASCADE', null=False)
+#     start = models.DateTimeField()
+#     end = models.DateTimeField()
 
-    def __str__(self):
-        return '({0}) {1} {2} - {3}'.format(
-            self.doctor, self.service, self.start, self.end)
+#     def __str__(self):
+#         return '({0}) {1} {2} - {3}'.format(
+#             self.doctor, self.service, self.start, self.end)
 
 
 class Event(TimeStampedModel):
@@ -51,7 +51,7 @@ class Event(TimeStampedModel):
     start = models.DateTimeField()
     end = models.DateTimeField()
     all_day = models.BooleanField(default=False)
-    users = models.ManyToManyField('users.User')
+    users = models.ManyToManyField('myusers.User')
 
     def __str__(self):
         return '{0} {1} - {2}'.format(
