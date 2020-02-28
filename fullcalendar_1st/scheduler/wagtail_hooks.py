@@ -13,6 +13,9 @@ class UserIndexView(ModelAdmin):
     model = User
     list_display = ['username', 'is_doctor']
 
-
+class PatientIndexView(ModelAdmin):
+    model = Patient
+    list_filter = ['is_confirmed']
 
 modeladmin_register(UserIndexView)
+modeladmin_register(PatientIndexView)

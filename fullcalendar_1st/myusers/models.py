@@ -10,7 +10,6 @@ class User(AbstractUser):
     is_owner = models.BooleanField(default=False) # is_staff + full authorization
     is_doctor = models.BooleanField(default=False) # is_staff + some authorization
     is_administrator = models.BooleanField(default=False) # is_staff + some authorization
-    # is_patient = models.BooleanField(default=False) # no authorization
     phone_regex = RegexValidator(
         regex=r'^\+?1?\d{9,15}$',
         message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
@@ -23,7 +22,6 @@ class Doctor(models.Model):
 
 
 class Patient(models.Model):
-    # user =  models.OneToOneField(User, on_delete='CASCADE', primary_key=True)
     first_name = models.CharField(max_length=100, null=False, blank=False)
     last_name = models.CharField(max_length=100, null=False, blank=False)
     email_address = models.EmailField(max_length=100, null=False, blank=False)
@@ -42,9 +40,6 @@ def create_user_type(sender, instance, created, **kwargs):
             Doctor.objects.create(user=instance,)
             #TODO: add in services (also in edit)
 
-        # # if not elif: a doctor **could** become a patient
-        # if instance.is_patient:
-        #     Patient.objects.create(user=instance,)
 
 @receiver(post_save, sender=User)
 def edit_user_type(sender, instance, created, **kwargs):
@@ -55,11 +50,3 @@ def edit_user_type(sender, instance, created, **kwargs):
     except Doctor.DoesNotExist:
         if instance.is_doctor:
             Doctor.objects.create(user=instance)
-
-    # try:
-    #     patient = Patient.objects.get(user=instance)
-    #     if not instance.is_doctor:
-    #         patient.delete()
-    # except Patient.DoesNotExist:
-    #     if instance.is_doctor:
-    #         Patient.objects.create(user=instance)
