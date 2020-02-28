@@ -11,6 +11,7 @@ from wagtail.contrib.modeladmin.views import IndexView
 
 class UserIndexView(ModelAdmin):
     model = User
+    list_display = ['username', 'is_doctor']
 
 modeladmin_register(UserIndexView)
 

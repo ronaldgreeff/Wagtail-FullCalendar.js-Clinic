@@ -3,6 +3,8 @@ from django.db import models
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import AbstractUser
 
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class User(AbstractUser):
     is_owner = models.BooleanField(default=False) # is_staff + full authorization
@@ -24,3 +26,33 @@ class Patient(models.Model):
     user =  models.OneToOneField(User, on_delete='CASCADE', primary_key=True)
     is_confirmed = models.BooleanField(default=False)
     # documents = wagtail.docs # ! review security considerations ! #
+
+
+@receiver(post_save, sender=User)
+def create_user_type(sender, instance, created, **kwargs):
+    if created:
+        if instance.is_doctor:
+            Doctor.objects.create(user=instance,)
+            #TODO: add in services (also in edit)
+
+        # if not elif: a doctor **could** become a patient
+        if instance.is_patient:
+            Patient.objects.create(user=instance,)
+
+@receiver(post_save, sender=User)
+def edit_user_type(sender, instance, created, **kwargs):
+    try:
+        doctor = Doctor.objects.get(user=instance)
+        if not instance.is_doctor:
+            doctor.delete()
+    except Doctor.DoesNotExist:
+        if instance.is_doctor:
+            Doctor.objects.create(user=instance)
+
+    try:
+        patient = Patient.objects.get(user=instance)
+        if not instance.is_doctor:
+            patient.delete()
+    except Patient.DoesNotExist:
+        if instance.is_doctor:
+            Patient.objects.create(user=instance)
