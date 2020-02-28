@@ -1,0 +1,9 @@
+{% extends "wagtailusers/users/create.html" %}
+
+{% block extra_fields %}
+    {% include "wagtailadmin/shared/field_as_li.html" with field=form.is_owner %}
+    {% include "wagtailadmin/shared/field_as_li.html" with field=form.is_doctor %}
+    {% include "wagtailadmin/shared/field_as_li.html" with field=form.is_administrator %}
+    {% include "wagtailadmin/shared/field_as_li.html" with field=form.is_patient %}
+    {% include "wagtailadmin/shared/field_as_li.html" with field=form.phone_number %}
+{% endblock extra_fields %}
