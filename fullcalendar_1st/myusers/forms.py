@@ -10,7 +10,7 @@ class CustomUserEditForm(UserEditForm):
     is_owner = forms.BooleanField(required=False)
     is_doctor = forms.BooleanField(required=False)
     is_administrator = forms.BooleanField(required=False)
-    is_patient = forms.BooleanField(required=False)
+    # is_patient = forms.BooleanField(required=False)
     phone_number = forms.CharField(required=False)
 
     def clean(self):
@@ -21,12 +21,13 @@ class CustomUserCreationForm(UserCreationForm):
     is_owner = forms.BooleanField(required=False)
     is_doctor = forms.BooleanField(required=False)
     is_administrator = forms.BooleanField(required=False)
-    is_patient = forms.BooleanField(required=False)
+    # is_patient = forms.BooleanField(required=False)
     phone_number = forms.CharField(required=False)
 
     def clean(self):
         if not any(self.is_owner, self.is_doctor, self.is_administrator, self.is_patient):
             raise ValidationError("User must have at least one role.")
+
 
 # TODO for customer user models, need to implement custom forms
 # i.e. to create associated user when creating doctors

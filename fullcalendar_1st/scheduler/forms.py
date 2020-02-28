@@ -55,7 +55,7 @@ class BaseEventForm(forms.Form):
 class AppointmentForm(BaseEventForm):
     service = forms.ModelChoiceField(queryset=Service.objects.all())
     doctor = forms.ModelChoiceField(queryset=User.objects.filter(is_doctor=True))
-    patient = forms.ModelChoiceField(queryset=User.objects.filter(is_patient=True))
+    # patient = forms.ModelChoiceField(queryset=User.objects.filter(is_patient=True))
 
 
 class EventForm(BaseEventForm):

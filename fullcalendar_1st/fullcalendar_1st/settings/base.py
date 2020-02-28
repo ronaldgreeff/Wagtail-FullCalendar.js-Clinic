@@ -93,7 +93,7 @@ TEMPLATES = [
 
 WAGTAIL_USER_EDIT_FORM = 'myusers.forms.CustomUserEditForm'
 WAGTAIL_USER_CREATION_FORM = 'myusers.forms.CustomUserCreationForm'
-WAGTAIL_USER_CUSTOM_FIELDS = ['is_owner', 'is_doctor', 'is_administrator', 'is_patient', 'phone_number']
+WAGTAIL_USER_CUSTOM_FIELDS = ['is_owner', 'is_doctor', 'is_administrator', 'phone_number']
 
 WSGI_APPLICATION = 'fullcalendar_1st.wsgi.application'
 
