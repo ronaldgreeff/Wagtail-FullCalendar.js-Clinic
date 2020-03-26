@@ -1,6 +1,6 @@
 from django import forms
 
-from scheduler.models import Service
+from scheduler.models import Service, Appointment
 from myusers.models import User, Doctor, Patient
 
 from datetime import timedelta
