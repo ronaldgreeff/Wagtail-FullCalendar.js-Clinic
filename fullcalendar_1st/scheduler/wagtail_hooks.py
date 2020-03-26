@@ -17,5 +17,9 @@ class PatientIndexView(ModelAdmin):
     model = Patient
     list_filter = ['is_confirmed']
 
+class ServiceIndexView(ModelAdmin):
+    model = Service
+
 modeladmin_register(UserIndexView)
 modeladmin_register(PatientIndexView)
+modeladmin_register(ServiceIndexView)

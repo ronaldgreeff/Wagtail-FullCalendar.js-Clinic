@@ -9,6 +9,7 @@ from wagtail.admin.edit_handlers import FieldPanel
 
 from django.utils import timezone
 
+# comment for first migration (circular depencies)
 from myusers.models import Doctor, Patient
 
 
@@ -30,8 +31,10 @@ class TimeStampedModel(models.Model):
 
 class Appointment(TimeStampedModel):
     service = models.ForeignKey(Service, on_delete='CASCADE', null=True)
-    doctor = models.OneToOneField(Doctor, on_delete='CASCADE', null=False)
+    # comment for first migration -->
+    doctor = models.OneToOneField(Doctor, on_delete='CASCADE', null=True)
     patient = models.OneToOneField(Patient, on_delete='CASCADE', null=False)
+    # <-- comment for first migration
     start = models.DateTimeField()
     end = models.DateTimeField()
 

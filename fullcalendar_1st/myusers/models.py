@@ -33,13 +33,13 @@ class Patient(models.Model):
     # documents = wagtail.docs # ! review security considerations ! #
 
 
+# create doctor instance automatically
 @receiver(post_save, sender=User)
 def create_user_type(sender, instance, created, **kwargs):
     if created:
         if instance.is_doctor:
             Doctor.objects.create(user=instance,)
-            #TODO: add in services (also in edit)
-
+            #TODO: add in services (and same in edit)
 
 @receiver(post_save, sender=User)
 def edit_user_type(sender, instance, created, **kwargs):

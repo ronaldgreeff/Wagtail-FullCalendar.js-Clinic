@@ -15,15 +15,20 @@ class EnquirerForm(forms.Form):
     first_name = forms.CharField()
     last_name = forms.CharField()
     email =  forms.EmailField()
+    phone_number = forms.RegexField(
+        regex = r'^\+?1?\d{9,15}$', 
+        # message = ("Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
+        )
 
     def save(self, commit=True):
 
         data = self.cleaned_data
 
-        enquirer = Enquirer.objects.create(
+        patient = Patient.objects.create(
             first_name=data['first_name'],
             last_name=data['last_name'],
-            email=data['email'])
+            email_address=data['email'],
+            phone_number=data['phone_number'], )
 
         requested_service_name = getattr(
             data['service'], 'name')
@@ -33,15 +38,15 @@ class EnquirerForm(forms.Form):
         requested_service = Service.objects.get(
             name=requested_service_name)
 
-        new_event = CalendarEvent.objects.create(
-            enquirer = enquirer,
+        unconfirmed_appointment = Appointment.objects.create(
             service = requested_service,
-            title = requested_service_name,
+            # doctor assigned upon confirmation
+            patient = patient,
             start = data['datetime'],
             end = data['datetime'] + timedelta(
-                minutes=requested_service_duration))
+                minutes=requested_service_duration) )
 
-        new_event.save()
+        unconfirmed_appointment.save()
 
 
 class BaseEventForm(forms.Form):
