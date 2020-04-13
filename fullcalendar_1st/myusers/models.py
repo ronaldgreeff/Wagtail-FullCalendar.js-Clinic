@@ -20,6 +20,9 @@ class Doctor(models.Model):
     user = models.OneToOneField(User, on_delete='CASCADE', primary_key=True)
     services = models.ManyToManyField('scheduler.Service')
 
+    def __str__(self):
+        return '{0}, {1}'.format(self.user.last_name, self.user.first_name)
+
 
 class Patient(models.Model):
     first_name = models.CharField(max_length=100, null=False, blank=False)
@@ -31,6 +34,12 @@ class Patient(models.Model):
         message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True)
     # documents = wagtail.docs # ! review security considerations ! #
+
+    def __str__(self):
+        return '{0}, {1} {2}'.format(
+            self.last_name, 
+            self.first_name,
+            ('(unconfirmed)' if not self.is_confirmed else ''))
 
 
 # create doctor instance automatically

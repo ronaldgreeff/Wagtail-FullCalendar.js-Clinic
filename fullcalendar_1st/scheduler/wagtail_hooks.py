@@ -20,6 +20,7 @@ class ServiceIndexView(ModelAdmin):
 class UnconfirmedAppointmentIndexView(ModelAdmin):
     model = Appointment
     menu_label = 'Unconfirmed'
+    list_display = ('doctor',)
     list_filter = ['service', 'doctor']
 
     def get_queryset(self, request):
