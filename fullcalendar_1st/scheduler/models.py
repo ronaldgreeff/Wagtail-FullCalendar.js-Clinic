@@ -9,7 +9,7 @@ from wagtail.admin.edit_handlers import FieldPanel
 
 from django.utils import timezone
 
-# comment for first migration (circular depencies)
+# comment for first migration (circular depencies) - see Appointment below too
 from myusers.models import Doctor, Patient
 
 
@@ -39,8 +39,11 @@ class Appointment(TimeStampedModel):
     end = models.DateTimeField()
 
     def __str__(self):
-        return '({0}) {1} {2} - {3}'.format(
-            self.doctor, self.service, self.start, self.end)
+        return '{0} | {1} | {2} - {3}'.format(
+            (self.doctor if self.doctor else 'Unconfirmed'),
+            self.service,
+            self.start.strftime('%d/%m@%H:%M'),
+            self.end.strftime('%d/%m@%H:%M'))
 
 
 class Event(TimeStampedModel):

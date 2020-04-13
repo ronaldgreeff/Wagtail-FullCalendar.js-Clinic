@@ -10,19 +10,15 @@ from search import views as search_views
 
 # DRF
 from rest_framework import routers
-# from scheduler import views
 from . api import api_router
 
 router = routers.DefaultRouter()
-# router.register(r'load', views.LoadEventsView)
 
 
 urlpatterns = [
     # DRF's
     url(r'^api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-
-    # API Views
 
     # Wagtail's:
     url(r'^api/v2/', api_router.urls),
