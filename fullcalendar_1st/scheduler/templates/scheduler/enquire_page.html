@@ -1,37 +1,15 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags %}
-{% load static %}
+
+{% load scheduler_tags %}
 
 {% block body_class %}template-suggest{% endblock %}
-
-
-{% block extra_css %}
-  <link href="{% static 'scheduler/css/jquery.datetimepicker.css' %}" rel='stylesheet' />
-{% endblock %}
-
-{% block extra_js %}
-  <script src="{% static 'scheduler/js/jquery.datetimepicker.full.js' %}"></script>
-{% endblock %}
 
 {% block content %}
     <h1>{{ page.title }}</h1>
 
     {{ page.intro | richtext }}
 
-    <form action="." method="POST">
-        {% csrf_token %}
-
-        {{ form.as_p }}
-
-        <p><input type="submit" value="Schedule"></p>
-    </form>
-
-<script>
-  $(function () {
-    $("#id_datetime").datetimepicker({
-      format: 'd/m/Y H:i',
-    });
-  });
-</script>
+    {% load_enquiry_form %}
 
 {% endblock %}

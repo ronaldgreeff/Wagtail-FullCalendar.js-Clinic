@@ -16,13 +16,12 @@ router = routers.DefaultRouter()
 
 
 urlpatterns = [
-    # DRF's
+    # For checking data, temporary
     url(r'^api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
-    # Wagtail's:
+    # Wagtail's API
     url(r'^api/v2/', api_router.urls),
-
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
     url(r'^search/$', search_views.search, name='search'),

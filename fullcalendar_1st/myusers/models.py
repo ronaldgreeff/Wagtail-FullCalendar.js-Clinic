@@ -6,6 +6,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+
 class User(AbstractUser):
     is_owner = models.BooleanField(default=False) # is_staff + full authorization
     is_doctor = models.BooleanField(default=False) # is_staff + some authorization
