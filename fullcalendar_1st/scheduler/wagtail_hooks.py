@@ -1,7 +1,7 @@
 from scheduler.models import Service, Event, Appointment
 from myusers.models import User, Doctor, Patient
 
-from django.db import models
+# from django.db import models
 from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register
 # from wagtail.contrib.modeladmin.views import IndexView
 
@@ -42,7 +42,6 @@ class ServiceIndexView(ModelAdmin):
 class UnconfirmedAppointmentIndexView(ModelAdmin):
     model = Appointment
     menu_label = 'Unconfirmed'
-    list_display = ('doctor',)
     list_filter = ['service', 'doctor']
 
     def get_queryset(self, request):

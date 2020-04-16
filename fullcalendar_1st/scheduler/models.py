@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.shortcuts import render
+# from django.shortcuts import render
 
 from wagtail.core.models import Page
 from wagtail.core.fields import RichTextField
@@ -57,27 +57,7 @@ class Event(TimeStampedModel):
         return '{0} {1} - {2}'.format(
             self.title, self.start, self.end)
 
-# from wagtail.snippets.models import register_snippet
-# @register_snippet
-# class EnquiryForm(models.Model):
-#     def serve(self, request):
-#         from scheduler.forms import EnquirerForm
 
-#         if request.method == 'POST':
-#             form = EnquirerForm(request.POST)
-#             if form.is_valid():
-#                 saved_form = form.save()
-#                 return render(request, 'scheduler/appointment_confirmation.html', {
-#                     'page': self,
-#                     'saved_form': saved_form,
-#                 })
-#         else:
-#             form = EnquirerForm()
-
-#         return render(request, 'scheduler/enquire_page.html', {
-#             'page': self,
-#             'form': form,
-#         })
 
 class EnquirePage(Page):
     intro = RichTextField(blank=True)
@@ -90,35 +70,3 @@ class EnquirePage(Page):
         FieldPanel('guidance', classname="guidance_text"),
         FieldPanel('thankyou_page_title'),
     ]
-
-    # def serve(self, request):
-    # #     from scheduler.forms import EnquirerForm
-
-    # #     if request.method == 'POST':
-    # #         form = EnquirerForm(request.POST)
-    # #         if form.is_valid():
-    # #             saved_form = form.save()
-    # #             return render(request, 'scheduler/appointment_confirmation.html', {
-    # #                 'page': self,
-    # #                 'saved_form': saved_form,
-    # #             })
-    # #     else:
-    # #         form = EnquirerForm()
-
-    #     return render(request, 'scheduler/enquire_page.html', {
-    #         'page': self,
-    #         'form': form,
-    #     })
-
-
-# class SecretarySchedulePage(Page):
-
-#     def serve(self, request):
-
-#         return render(request, 'scheduler/secretary_schedule.html', {
-#                     'calendar_config_options': 0,
-#                 })
-
-
-# class DoctorSchedulePage(Page):
-#     pass
