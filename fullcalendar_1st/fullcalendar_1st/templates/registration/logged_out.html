@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% load static %}
+{% block body_class %}template-suggest{% endblock %}
+
+{% block extra_css %}
+{% endblock %}
+
+{% block extra_js %}
+{% endblock %}
+
+{% block content %}
+
+  <p>Logged out!</p>  
+  <a href="{% url 'login'%}">Click here to login again.</a>
+  
+{% endblock %}

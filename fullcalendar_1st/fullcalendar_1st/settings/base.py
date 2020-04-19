@@ -165,6 +165,10 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+# Redirect to home URL after login (Default redirects to /accounts/profile/)
+LOGIN_REDIRECT_URL = '/'
+# # Log email messages to console
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Wagtail settings
 
