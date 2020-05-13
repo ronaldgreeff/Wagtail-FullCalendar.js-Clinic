@@ -8,4 +8,5 @@ from scheduler.models import Event, Appointment
 
 def admin_schedule(request):
 	events = Event.objects.all()
-	return render(request, 'scheduler/admin_schedule.html', {'data': events})
+	appointments = Appointment.objects.all()
+	return render(request, 'scheduler/admin_schedule.html', {'data': (events, appointments)})

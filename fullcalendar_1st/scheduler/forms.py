@@ -48,20 +48,19 @@ class EnquirerForm(forms.Form):
 
         unconfirmed_appointment.save()
 
-
-class BaseEventForm(forms.Form):
-    title = forms.CharField()
-    start = forms.DateField()
-    end = forms.DateField()
-    recurring = forms.BooleanField()
-    recurrance= forms.IntegerField()
-
-
-class AppointmentForm(BaseEventForm):
-    service = forms.ModelChoiceField(queryset=Service.objects.all())
-    doctor = forms.ModelChoiceField(queryset=Doctor.objects.all())
-    patient = forms.ModelChoiceField(queryset=Patient.objects.all())
+# class BaseEventForm(forms.Form):
+#     title = forms.CharField()
+#     start = forms.DateField()
+#     end = forms.DateField()
+#     recurring = forms.BooleanField()
+#     recurrance= forms.IntegerField()
 
 
-class EventForm(BaseEventForm):
-    users = forms.MultipleChoiceField(choices=[])
+# class AppointmentForm(BaseEventForm):
+#     service = forms.ModelChoiceField(queryset=Service.objects.all())
+#     doctor = forms.ModelChoiceField(queryset=Doctor.objects.all())
+#     patient = forms.ModelChoiceField(queryset=Patient.objects.all())
+
+
+# class EventForm(BaseEventForm):
+#     users = forms.MultipleChoiceField(choices=[])
