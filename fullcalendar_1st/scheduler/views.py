@@ -7,5 +7,5 @@ from scheduler.models import Event, Appointment
 
 
 def admin_schedule(request):
-	return render(request, 'scheduler/admin_schedule.html', {'test': 1})
-
+	events = Event.objects.all()
+	return render(request, 'scheduler/admin_schedule.html', {'data': events})

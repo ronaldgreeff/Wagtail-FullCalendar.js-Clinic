@@ -4,12 +4,12 @@ from scheduler.models import Service, Event, Appointment
 from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register
 # from wagtail.contrib.modeladmin.views import IndexView
 
-
 from wagtail.core import hooks
 from wagtail.admin.menu import MenuItem
-from django.urls import re_path, include
+from django.urls import re_path#, include
 from django.urls import reverse
 from .views import admin_schedule
+
 
 @hooks.register('register_admin_urls')
 def register_admin_urls():
@@ -25,6 +25,7 @@ def register_styleguide_menu_item():
         classnames='icon icon-snippet',
         order=1000
     )
+
 
 class ServiceIndexView(ModelAdmin):
     model = Service
