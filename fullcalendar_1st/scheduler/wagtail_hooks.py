@@ -1,5 +1,4 @@
 from scheduler.models import Service, Event, Appointment
-from myusers.models import User, Doctor, Patient
 
 # from django.db import models
 from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register
@@ -27,15 +26,6 @@ def register_styleguide_menu_item():
         order=1000
     )
 
-
-class UserIndexView(ModelAdmin):
-    model = User
-    list_display = ['username', 'is_doctor']
-
-class PatientIndexView(ModelAdmin):
-    model = Patient
-    list_filter = ['is_confirmed']
-
 class ServiceIndexView(ModelAdmin):
     model = Service
 
@@ -48,8 +38,5 @@ class UnconfirmedAppointmentIndexView(ModelAdmin):
         qs = super().get_queryset(request)
         return qs.filter(doctor__isnull=True)
 
-
-modeladmin_register(UserIndexView)
-modeladmin_register(PatientIndexView)
 modeladmin_register(ServiceIndexView)
 modeladmin_register(UnconfirmedAppointmentIndexView)
