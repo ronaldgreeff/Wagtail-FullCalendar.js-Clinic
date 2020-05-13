@@ -32,12 +32,8 @@ class ServiceIndexView(ModelAdmin):
 
 class UnconfirmedAppointmentIndexView(ModelAdmin):
     model = Appointment
-    menu_label = 'Unconfirmed'
+    menu_label = 'Appointments'
     list_filter = ['service', 'doctor']
-
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        return qs.filter(doctor__isnull=True)
 
 modeladmin_register(ServiceIndexView)
 modeladmin_register(UnconfirmedAppointmentIndexView)

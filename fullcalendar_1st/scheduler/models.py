@@ -32,7 +32,7 @@ class TimeStampedModel(models.Model):
 class Appointment(TimeStampedModel):
     service = models.ForeignKey(Service, on_delete='CASCADE', null=True)
     # comment for first migration -->
-    doctor = models.OneToOneField(Doctor, on_delete='CASCADE', null=True)
+    doctor = models.OneToOneField(Doctor, on_delete='CASCADE', null=True, blank=True)
     patient = models.OneToOneField(Patient, on_delete='CASCADE', null=False)
     # <-- comment for first migration
     start = models.DateTimeField()
