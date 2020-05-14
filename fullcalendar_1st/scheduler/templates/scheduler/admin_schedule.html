@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags %}
 {% load static %}
+{% load scheduler_tags %}
 {% block body_class %}template-suggest{% endblock %}
 
 {% block extra_css %}
@@ -27,6 +28,7 @@
   <div>
     <h4>data for this page</h4>
     <p>{{ data }}</p>
+    {% load_enquiry_form %}
   </div>
 
 {% endblock %}
