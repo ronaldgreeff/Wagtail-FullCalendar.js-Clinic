@@ -45,6 +45,13 @@ class Appointment(TimeStampedModel):
             self.start.strftime('%d/%m@%H:%M'),
             self.end.strftime('%d/%m@%H:%M'))
 
+@receiver(post_save, sender=Appointment)
+def confirm_appointment(sender, instance, created, **kwargs):
+    if instance.doctor:
+        confirmed_patient = Patient.objects.get(instance.patient)
+        confirmed_patient.is_confirmed = True
+        confirmed_patient.save()
+
 
 class Event(TimeStampedModel):
     title = models.CharField(max_length=255)
