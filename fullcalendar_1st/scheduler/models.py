@@ -9,6 +9,9 @@ from wagtail.admin.edit_handlers import FieldPanel
 
 from django.utils import timezone
 
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 # comment for first migration (circular depencies) - see Appointment below too
 from myusers.models import Doctor, Patient
 
@@ -48,9 +51,8 @@ class Appointment(TimeStampedModel):
 @receiver(post_save, sender=Appointment)
 def confirm_appointment(sender, instance, created, **kwargs):
     if instance.doctor:
-        confirmed_patient = Patient.objects.get(instance.patient)
-        confirmed_patient.is_confirmed = True
-        confirmed_patient.save()
+        instance.patient.is_confirmed = True
+        instance.patient.save()
 
 
 class Event(TimeStampedModel):
