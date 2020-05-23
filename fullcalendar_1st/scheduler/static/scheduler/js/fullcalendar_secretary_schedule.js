@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
 
+
+
   $.ajaxSetup({
     headers: {
       'X-CSRF-TOKEN': getCookie('csrftoken')
@@ -12,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // OPTIONS
     plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
     defaultView: 'dayGridMonth',
-    defaultDate: '2020-01-01',
+    defaultDate: '2020-05-20',
     header: {
       left: 'prev,next today',
       center: 'title',
@@ -23,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
       startTime: '10:00',
       endTime: '18:00',
     },
-    events: '../api/load/',
+    events: 'http://127.0.0.1:8000/api/events/',
     editable: true,
     selectable: true,
     // eventRender: function (event, element, view) {
@@ -79,7 +81,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       }
     }
-    console.log(cookieValue)
     return cookieValue;
   }
 

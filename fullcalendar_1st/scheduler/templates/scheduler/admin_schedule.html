@@ -22,12 +22,13 @@
 
 {% block content %}
   <h1>{{ page.title }}</h1>
+  <hr>
+  {{ data }}
+  <hr>
 
   <div id="calendar"></div>
 
   <div>
-    <h4>data for this page</h4>
-    <p>{{ data }}</p>
     {% load_enquiry_form %}
   </div>
 

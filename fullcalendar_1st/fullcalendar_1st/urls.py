@@ -11,16 +11,17 @@ from search import views as search_views
 # DRF
 from rest_framework import routers
 from . api import api_router
+from scheduler import views
 
 router = routers.DefaultRouter()
-
+router.register(r'events', views.EventsViewSet)
 
 urlpatterns = [
     url('accounts/', include('django.contrib.auth.urls')),
 
     # For checking data, temporary
     url(r'^api/', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    # url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
     # Wagtail's API
     url(r'^api/v2/', api_router.urls),
