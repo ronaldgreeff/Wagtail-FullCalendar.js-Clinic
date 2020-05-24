@@ -13,14 +13,15 @@ from rest_framework import routers
 from . api import api_router
 from scheduler import views
 
-router = routers.DefaultRouter()
-router.register(r'events', views.EventsViewSet)
+# router = routers.DefaultRouter()
+# router.register(r'events', views.EventsViewSet)
 
 urlpatterns = [
     url('accounts/', include('django.contrib.auth.urls')),
 
     # For checking data, temporary
-    url(r'^api/', include(router.urls)),
+    # url(r'^api/', include(router.urls)),
+    url(r'^api/', views.EventsViewSet.as_view(), name='api'),
     # url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
     # Wagtail's API
