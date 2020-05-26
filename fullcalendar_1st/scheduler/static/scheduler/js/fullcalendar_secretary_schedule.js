@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   $.ajaxSetup({
     headers: {
-      'X-CSRF-TOKEN': getCookie('csrftoken')
+      'X-CSRFToken': getCookie('csrftoken')
     }
   });
 
@@ -25,6 +25,8 @@ document.addEventListener('DOMContentLoaded', function() {
       startTime: '10:00',
       endTime: '18:00',
     },
+    // TODO: use attr to pass in events URL -
+    // https://simpleisbetterthancomplex.com/tutorial/2016/08/29/how-to-work-with-ajax-request-with-django.html
     events: 'http://127.0.0.1:8000/api/events/',
     editable: true,
     selectable: true,
@@ -36,28 +38,39 @@ document.addEventListener('DOMContentLoaded', function() {
     //   }
     // },
     select: function(info) {
-      console.log(info);
       var title = prompt('Enter event title');
+      // https://fullcalendar.io/docs/date-formatting
+      // console.log(info);
+      // console.log(FullCalendar.formatDate(info.start, {
+      //   month: 'numeric',
+      //   year: 'numeric',
+      //   day: 'numeric',
+      // }));
       if (title) {
         var start = FullCalendar.formatDate(info.start);
         var end = FullCalendar.formatDate(info.end);
-        
+
         $.ajax({
           method: 'POST',
-          url: '../InsertEventView/',
+          url: 'http://127.0.0.1:8000/api/events/',
           data: {
+            'csrftoken': getCookie('csrftoken'),
             'title': title,
             'start': start,
             'end': end,
             'all_day': info.allDay,
-            'csrftoken': getCookie('csrftoken'),
             success: function (data) {
-                alert(title + " added successfully");
+              // calendar.fullCalendar('refetchEvents');
+            },
+            error: function (xhr, status, error) {
+              // alert('there was an error')
             }
           }
         });
       }
     },
+    // nice examples here
+    // https://www.webslesson.info/2017/12/jquery-fullcalandar-integration-with-php-and-mysql.html
     // eventResize: function(event){},
     // eventDrop: function(event){},
     // eventClick: function(event){},

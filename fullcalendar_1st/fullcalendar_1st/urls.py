@@ -21,7 +21,8 @@ urlpatterns = [
 
     # For checking data, temporary
     # url(r'^api/', include(router.urls)),
-    url(r'^api/', views.EventsViewSet.as_view(), name='api'),
+    url(r'^api/', views.EventsViewSet.as_view(), name='schedule_fetch'),
+    # url(r'^api/insert/', views.InsertEventView.as_view(), name='schedule_insert'),
     # url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
     # Wagtail's API
