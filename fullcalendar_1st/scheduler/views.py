@@ -18,9 +18,9 @@ from rest_framework.permissions import IsAuthenticated
 #     pass
 
 # TODO - better name for EventsViewSet
-class EventsViewSet(APIView):
+class GetCreateSchedule(APIView):
     """
-    View a list of events and appointments, or create an event or appointment
+    Get a list of events and appointments
 
     * Requires token authentication.
     * Only admin users are able to access this view.
@@ -29,12 +29,19 @@ class EventsViewSet(APIView):
     # authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [IsAuthenticated] #[permissions.IsAdminUser]
 
-    def get(self, request, format=None):
+    def CollectSchedule(self):
         events = EventSerializer(Event.objects.all(), many=True)
         appointments = AppointmentSerializer(Appointment.objects.all(), many=True)
-        return Response(list(chain(events.data, appointments.data)))
+        return list(chain(events.data, appointments.data))
+
+    def get(self, request, format=None):
+        schedule = self.CollectSchedule()
+        return Response(schedule)
 
     def post(self, request, format=None):
+        """
+        if Event elif Appointment
+        """
         serializer = EventSerializer(data=request.data)
         if serializer.is_valid():
             print('post serializer valid')

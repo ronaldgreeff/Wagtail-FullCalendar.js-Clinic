@@ -1,7 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-
-
   $.ajaxSetup({
     headers: {
       'X-CSRFToken': getCookie('csrftoken')
@@ -15,8 +13,10 @@ document.addEventListener('DOMContentLoaded', function() {
     plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
     defaultView: 'dayGridMonth',
     defaultDate: '2020-05-20',
+    eventTimeFormat: { hour12: false, hour: '2-digit', minute: '2-digit' },
+    titleFormat: { year: 'numeric', month: 'long' },
     header: {
-      left: 'prev,next today',
+      left: 'prev, next today',
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,timeGridDay'
     },
@@ -41,14 +41,17 @@ document.addEventListener('DOMContentLoaded', function() {
       var title = prompt('Enter event title');
       // https://fullcalendar.io/docs/date-formatting
       // console.log(info);
-      // console.log(FullCalendar.formatDate(info.start, {
+      // var str = FullCalendar.formatDate(info.start, {
+      //   day: 'numeric',
       //   month: 'numeric',
       //   year: 'numeric',
-      //   day: 'numeric',
-      // }));
+      //   hour: '2-digit',
+      // });
       if (title) {
         var start = FullCalendar.formatDate(info.start);
         var end = FullCalendar.formatDate(info.end);
+
+        console.log(start, end);
 
         $.ajax({
           method: 'POST',
@@ -56,8 +59,8 @@ document.addEventListener('DOMContentLoaded', function() {
           data: {
             'csrftoken': getCookie('csrftoken'),
             'title': title,
-            'start': start,
-            'end': end,
+            // 'start': start,
+            // 'end': end,
             'all_day': info.allDay,
             success: function (data) {
               // calendar.fullCalendar('refetchEvents');

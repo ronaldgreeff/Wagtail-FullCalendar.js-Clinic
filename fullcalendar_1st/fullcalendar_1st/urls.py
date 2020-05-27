@@ -13,15 +13,10 @@ from rest_framework import routers
 from . api import api_router
 from scheduler import views
 
-# router = routers.DefaultRouter()
-# router.register(r'events', views.EventsViewSet)
-
 urlpatterns = [
     url('accounts/', include('django.contrib.auth.urls')),
 
-    # For checking data, temporary
-    # url(r'^api/', include(router.urls)),
-    url(r'^api/', views.EventsViewSet.as_view(), name='schedule_fetch'),
+    url(r'^api/', views.GetCreateSchedule.as_view(), name='get_create_scheduler'),
     # url(r'^api/insert/', views.InsertEventView.as_view(), name='schedule_insert'),
     # url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 

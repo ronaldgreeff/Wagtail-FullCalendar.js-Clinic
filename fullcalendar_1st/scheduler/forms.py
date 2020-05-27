@@ -1,6 +1,6 @@
 from django import forms
 
-from scheduler.models import Service, Appointment
+from scheduler.models import Service, Appointment, Event
 from myusers.models import User, Doctor, Patient
 
 from datetime import timedelta
@@ -47,6 +47,16 @@ class EnquirerForm(forms.Form):
                 minutes=requested_service_duration) )
 
         unconfirmed_appointment.save()
+
+class EventForm(forms.ModelForm):
+    class Meta:
+        model = Event
+        fields = '__all__'
+
+class AppointmentForm(forms.ModelForm):
+    class Meta:
+        model = Appointment
+        fields = '__all__'
 
 # class BaseEventForm(forms.Form):
 #     title = forms.CharField()

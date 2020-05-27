@@ -3,11 +3,10 @@ from scheduler.models import TimeStampedModel, Event, Appointment, Service
 from myusers.models import Doctor, Patient, User
 
 
-# TODO: need to prefix or suffix the ids for events and appointments
-
 class UserField(serializers.RelatedField):
     def to_representation(self, value):
         return '{}'.format(value.first_name)
+
 
 class EventSerializer(serializers.ModelSerializer):
     users = UserField(queryset=User.objects.all(), many=True)
@@ -15,6 +14,7 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = '__all__'
+
 
 
 class ServiceField(serializers.RelatedField):
@@ -28,6 +28,7 @@ class DoctorField(serializers.RelatedField):
 class PatientField(serializers.RelatedField):
     def to_representation(self, value):
         return '{}'.format(value.first_name)
+
 
 class AppointmentSerializer(serializers.ModelSerializer):
     # adding title, which doesn't exist in model, to be consistent with events
