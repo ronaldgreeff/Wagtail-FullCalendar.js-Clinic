@@ -12,12 +12,14 @@
 {% endblock %}
 
 {% block extra_js %}
+  <script src="{% static 'scheduler/js/moment.js' %}"></script>
   <script src="{% static 'fullcalendar/packages/core/main.js' %}"></script>
   <script src="{% static 'fullcalendar/packages/daygrid/main.js' %}"></script>
   <script src="{% static 'fullcalendar/packages/interaction/main.js' %}"></script>
   <script src="{% static 'fullcalendar/packages/timeGrid/main.js' %}"></script>
-  <!-- <script src="{% static 'fullcalendar/packages/list/main.js' %}"></script> -->
-  <!-- <script src="{% static 'fullcalendar/packages/moment/main.js' %}"></script> -->
+  <script src="{% static 'fullcalendar/packages/list/main.js' %}"></script>
+<!--   <script src="{% static 'fullcalendar/packages/moment/main.js' %}"></script> -->
+  <!-- <script src="{% static 'fullcalendar/packages/moment-timezone/main.js' %}"></script> -->
   <script src="{% static 'scheduler/js/fullcalendar_secretary_schedule.js' %}"></script>
 {% endblock %}
 

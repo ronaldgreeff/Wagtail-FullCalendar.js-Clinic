@@ -48,10 +48,10 @@ document.addEventListener('DOMContentLoaded', function() {
       //   hour: '2-digit',
       // });
       if (title) {
-        var start = FullCalendar.formatDate(info.start);
-        var end = FullCalendar.formatDate(info.end);
-
-        console.log(start, end);
+        // use moment for time format:
+        //  YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z]
+        var start = moment(info.start).format("YYYY-MM-DDThh:mm");
+        var end = moment(info.end).format("YYYY-MM-DDThh:mm");
 
         $.ajax({
           method: 'POST',
@@ -59,8 +59,8 @@ document.addEventListener('DOMContentLoaded', function() {
           data: {
             'csrftoken': getCookie('csrftoken'),
             'title': title,
-            // 'start': start,
-            // 'end': end,
+            'start': start,
+            'end': end,
             'all_day': info.allDay,
             success: function (data) {
               // calendar.fullCalendar('refetchEvents');
