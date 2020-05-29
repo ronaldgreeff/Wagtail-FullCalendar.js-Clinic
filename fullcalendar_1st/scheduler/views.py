@@ -73,5 +73,5 @@ class GetCreateSchedule(APIView):
 
 def admin_schedule(request):
     """ Render the html which contains FullCalendar JS code.
-    FullCalendar calls a url to EventsViewSet """
+    FullCalendar calls EventsViewSet """
     return render(request, 'scheduler/admin_schedule.html')

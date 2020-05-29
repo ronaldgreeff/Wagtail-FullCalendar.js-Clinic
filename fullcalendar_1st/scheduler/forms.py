@@ -51,12 +51,20 @@ class EnquirerForm(forms.Form):
 class EventForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = '__all__'
+        fields = ['title', 'all_day', 'users']
 
 class AppointmentForm(forms.ModelForm):
+    patient_first_name = forms.CharField()
+    patient_last_name = forms.CharField()
+    patient_email = forms.EmailField()
+    patient_phone_number = forms.RegexField(
+        regex = r'^\+?1?\d{9,15}$', 
+        # message = ("Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
+        )
+
     class Meta:
         model = Appointment
-        fields = '__all__'
+        fields = ['service', 'doctor']
 
 # class BaseEventForm(forms.Form):
 #     title = forms.CharField()
