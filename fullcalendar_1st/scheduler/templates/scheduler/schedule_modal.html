@@ -1,0 +1,37 @@
+{% load static %}
+
+{% block extra_css %}
+  <link href="{% static 'scheduler/css/jquery.datetimepicker.css' %}" rel='stylesheet' />
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'scheduler/js/jquery.datetimepicker.full.js' %}"></script>
+{% endblock %}
+
+
+
+<form action="." method="POST">
+    {% csrf_token %}
+
+    {{ forms.event.as_p }}
+
+    <p><input type="submit" value="Schedule"></p>
+</form>
+
+<form action="." method="POST">
+    {% csrf_token %}
+
+    {{ forms.appointment.as_p }}
+
+    <p><input type="submit" value="Schedule"></p>
+</form>
+
+
+
+<script>
+  $(function () {
+    $("#id_datetime").datetimepicker({
+      format: 'd/m/Y H:i',
+    });
+  });
+</script>

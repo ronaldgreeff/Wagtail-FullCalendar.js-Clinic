@@ -48,12 +48,24 @@ class EnquirerForm(forms.Form):
 
         unconfirmed_appointment.save()
 
+
 class EventForm(forms.ModelForm):
+
+    form_type = forms.CharField(
+        initial='event',
+        widget=forms.HiddenInput())
+
     class Meta:
         model = Event
         fields = ['title', 'all_day', 'users']
 
+
 class AppointmentForm(forms.ModelForm):
+
+    form_type = forms.CharField(
+        initial='appointment',
+        widget=forms.HiddenInput())
+
     patient_first_name = forms.CharField()
     patient_last_name = forms.CharField()
     patient_email = forms.EmailField()

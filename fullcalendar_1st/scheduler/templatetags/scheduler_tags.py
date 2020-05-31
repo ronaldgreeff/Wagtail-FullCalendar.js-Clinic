@@ -22,38 +22,66 @@ def load_enquiry_form(context):
     	'form': form,
     }
 
-@register.inclusion_tag('scheduler/event_form.html', takes_context=True)
-def load_event_form(context):
+
+@register.inclusion_tag('scheduler/schedule_modal.html', takes_context=True)
+def load_schedule_modal(context):
+
+    get_form = {'event': EventForm,
+        'appointment': AppointmentForm}
+
     request = context['request']
 
     if request.method == 'POST':
-        form = EventForm(request.POST)
+        form_type = request.POST.get('form_type')
+        form = get_form[form_type](request.POST)
+
         if form.is_valid():
             saved_form = form.save()
+
             return {
                 'saved_form': saved_form,
             }
     else:
-        form = EventForm()
+        # form = get_form[form_type](request.POST)
+        forms = {'event': EventForm(),
+        'appointment': AppointmentForm()}
 
     return {
-        'form': form,
+        'forms': forms,
     }
 
-@register.inclusion_tag('scheduler/appointment_form.html', takes_context=True)
-def load_appointment_form(context):
-    request = context['request']
+# @register.inclusion_tag('scheduler/event_form.html', takes_context=True)
+# def load_event_form(context):
+#     request = context['request']
 
-    if request.method == 'POST':
-        form = AppointmentForm(request.POST)
-        if form.is_valid():
-            saved_form = form.save()
-            return {
-                'saved_form': saved_form,
-            }
-    else:
-        form = AppointmentForm()
+#     if request.method == 'POST':
+#         form = EventForm(request.POST)
+#         if form.is_valid():
+#             saved_form = form.save()
+#             return {
+#                 'saved_form': saved_form,
+#             }
+#     else:
+#         form = EventForm()
 
-    return {
-        'form': form,
-    }
+#     return {
+#         'form': form,
+#     }
+
+# @register.inclusion_tag('scheduler/appointment_form.html', takes_context=True)
+# def load_appointment_form(context):
+#     request = context['request']
+
+#     if request.method == 'POST':
+#         form = AppointmentForm(request.POST)
+#         if form.is_valid():
+#             saved_form = form.save()
+#             return {
+#                 'saved_form': saved_form,
+#             }
+#     else:
+#         form = AppointmentForm()
+
+#     return {
+#         'form': form,
+#     }
