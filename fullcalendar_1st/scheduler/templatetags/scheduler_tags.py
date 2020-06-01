@@ -25,6 +25,8 @@ def load_enquiry_form(context):
 
 @register.inclusion_tag('scheduler/schedule_modal.html', takes_context=True)
 def load_schedule_modal(context):
+    """ Loads two forms (Event and Appointment) to allow the user to easily
+    switch between the two. form_type passed in via data-* attribute """
 
     get_form = {'event': EventForm,
         'appointment': AppointmentForm}
@@ -49,39 +51,3 @@ def load_schedule_modal(context):
     return {
         'forms': forms,
     }
-
-# @register.inclusion_tag('scheduler/event_form.html', takes_context=True)
-# def load_event_form(context):
-#     request = context['request']
-
-#     if request.method == 'POST':
-#         form = EventForm(request.POST)
-#         if form.is_valid():
-#             saved_form = form.save()
-#             return {
-#                 'saved_form': saved_form,
-#             }
-#     else:
-#         form = EventForm()
-
-#     return {
-#         'form': form,
-#     }
-
-# @register.inclusion_tag('scheduler/appointment_form.html', takes_context=True)
-# def load_appointment_form(context):
-#     request = context['request']
-
-#     if request.method == 'POST':
-#         form = AppointmentForm(request.POST)
-#         if form.is_valid():
-#             saved_form = form.save()
-#             return {
-#                 'saved_form': saved_form,
-#             }
-#     else:
-#         form = AppointmentForm()
-
-#     return {
-#         'form': form,
-#     }

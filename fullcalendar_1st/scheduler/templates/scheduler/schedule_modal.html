@@ -1,24 +1,50 @@
 {% load static %}
 
-<button data-formType="appointment" id="switch_form">Schedule Event</button>
+{% block extra_css %}
+  <link href="{% static 'scheduler/css/jquery.datetimepicker.css' %}" rel='stylesheet' />
+{% endblock %}
 
-  <form id="appointment_form" class="active" action="." method="POST">
-      {% csrf_token %}
+{% block extra_js %}
+  <script src="{% static 'scheduler/js/jquery.datetimepicker.full.js' %}"></script>
+{% endblock %}
 
-      {{ forms.appointment.as_p }}
+  <!-- Modal Trigger -->
+  <!-- <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a> -->
 
-      <p><input type="submit" value="Schedule"></p>
-  </form>
+  <!-- Modal Structure -->
+<!--   <div id="modal1" class="modal">
+    <div class="modal-content">
+ -->
+      <button data-formType="appointment" id="switch_form">Schedule Event</button>
 
-  <form id="event_form" class="hidden" action="." method="POST">
-      {% csrf_token %}
+        <form id="appointment_form" class="active" action="." method="POST">
+            {% csrf_token %}
 
-      {{ forms.event.as_p }}
+            {{ forms.appointment.as_p }}
 
-      <p><input type="submit" value="Schedule"></p>
-  </form>
+            <p><input type="submit" value="Schedule"></p>
+        </form>
 
+        <form id="event_form" class="hidden" action="." method="POST">
+            {% csrf_token %}
 
+            {{ forms.event.as_p }}
+
+            <p><input type="submit" value="Schedule"></p>
+        </form>
+
+<!--     </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+  </div> -->
+
+<!-- TODO: start/end for event should be conditional
+  if all day unchecked, show start / end
+https://www.fusionbox.com/blog/detail/creating-conditionally-required-fields-in-django-forms/577/
+-->
+
+<!-- TODO: place CSS and Scripts in folders. Use \{\% extra js \%\} in this template -->
 <style type="text/css">
   .hidden {
     height: 0px;
@@ -29,6 +55,13 @@
   }
 </style>
 
+<script>
+  $(function () {
+    $("#id_datetime").datetimepicker({
+      format: 'd/m/Y H:i',
+    });
+  });
+</script>
 
 <script type="text/javascript">
   document.getElementById('switch_form').addEventListener('click', function() {
@@ -44,16 +77,12 @@
     this.dataset.formtype = inactive_form;
     this.innerHTML = 'Schedule ' + active_form.charAt(0).toUpperCase() + active_form.slice(1);
   });
-  // function switchForm(form_type) {
-  //   var form_container = form_type + '_form_container';
-  //   var element = document.getElementById(form_container);
-  //   element.classList.remove('active');
-  //   element.classList.add('hidden');
-  // }
+</script>
 
-//   $(document).ready(function() {
-//   $(".toggle-button").on("click", function() {
-//     $(this).closest(".testimonial-wrap").toggleClass("active");
-//   });
-// });
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', function() {
+    var options = {};
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems, options);
+  })
 </script>

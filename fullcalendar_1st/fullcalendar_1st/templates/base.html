@@ -32,6 +32,9 @@
         <script type="text/javascript" src="{% static 'js/jquery-3.4.1.js' %}"></script>
 
         {# Global stylesheets #}
+        <!-- TODO: Save locally -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
         <link rel="stylesheet" type="text/css" href="{% static 'css/fullcalendar_1st.css' %}">
 
         {% block extra_css %}
@@ -47,6 +50,8 @@
         {% block content %}{% endblock %}
 
         {# Global javascript #}
+        <!-- TODO: Save locally -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
         {% block extra_js %}
             {# Override this in templates to add extra javascript #}
