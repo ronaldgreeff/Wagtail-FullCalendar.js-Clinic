@@ -15,6 +15,8 @@
 <!--   <div id="modal1" class="modal">
     <div class="modal-content">
  -->
+ <div id="modal1">
+   
       <button data-formType="appointment" id="switch_form">Schedule Event</button>
 
         <form id="appointment_form" class="active" action="." method="POST">
@@ -32,6 +34,7 @@
 
             <p><input type="submit" value="Schedule"></p>
         </form>
+ </div>
 
 <!--     </div>
     <div class="modal-footer">
@@ -63,19 +66,25 @@ https://www.fusionbox.com/blog/detail/creating-conditionally-required-fields-in-
   });
 </script>
 
+
 <script type="text/javascript">
+  var reverse_of = {'appointment': 'event', 'event': 'appointment'};
+  var active_form = 'appointment';
+  var inactive_form = 'event';
+
   document.getElementById('switch_form').addEventListener('click', function() {
-    var reverse_of = {'appointment': 'event', 'event': 'appointment'};
-    var active_form = this.dataset.formtype;
-    var inactive_form = reverse_of[this.dataset.formtype];
+    console.log(this.dataset.formtype);
 
-    document.getElementById(active_form + '_form').classList.remove('active');
-    document.getElementById(active_form + '_form').classList.add('hidden');
-    document.getElementById(inactive_form + '_form').classList.remove('hidden');
-    document.getElementById(inactive_form + '_form').classList.add('active');
+    inactive_form = this.dataset.formtype;
+    active = reverse_of[this.dataset.formtype];
 
-    this.dataset.formtype = inactive_form;
-    this.innerHTML = 'Schedule ' + active_form.charAt(0).toUpperCase() + active_form.slice(1);
+    document.getElementById(inactive_form + '_form').classList.remove('active');
+    document.getElementById(inactive_form + '_form').classList.add('hidden');
+    document.getElementById(active_form + '_form').classList.remove('hidden');
+    document.getElementById(active_form + '_form').classList.add('active');
+
+    this.dataset.formtype = active_form;
+    this.innerHTML = 'Schedule ' + inactive_form.charAt(0).toUpperCase() + inactive_form.slice(1);
   });
 </script>
 

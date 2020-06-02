@@ -38,40 +38,50 @@ document.addEventListener('DOMContentLoaded', function() {
     //   }
     // },
     select: function(info) {
-      var title = prompt('Enter event title');
+      // Format set for Datepicker: DD/MM/YYYY hh:mm
+      // Format for Django: YYYY-MM-DD hh:mm *[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z]
       // https://fullcalendar.io/docs/date-formatting
       // console.log(info);
-      // var str = FullCalendar.formatDate(info.start, {
-      //   day: 'numeric',
-      //   month: 'numeric',
-      //   year: 'numeric',
-      //   hour: '2-digit',
-      // });
-      if (title) {
-        // use moment for time format:
-        //  YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z]
-        var start = moment(info.start).format("YYYY-MM-DDThh:mm");
-        var end = moment(info.end).format("YYYY-MM-DDThh:mm");
 
-        $.ajax({
-          method: 'POST',
-          url: 'http://127.0.0.1:8000/api/events/',
-          data: {
-            'csrftoken': getCookie('csrftoken'),
-            'title': title,
-            'start': start,
-            'end': end,
-            'all_day': info.allDay,
-            success: function (data) {
-              // calendar.fullCalendar('refetchEvents');
-            },
-            error: function (xhr, status, error) {
-              // alert('there was an error')
-            }
-          }
-        });
+      var modal = document.getElementById("modal1");
+
+      // Set Start and End on both forms based on FullCalendar selection
+      var start_fields = document.querySelectorAll('.schedule_start_field');
+      for (var i = start_fields.length - 1; i >= 0; i--) {
+        // using Fomat
+        start_fields[i].value = moment(info.start).format("DD/MM/YYYY hh:mm");
       }
-    },
+
+      var end_fields = document.querySelectorAll('.schedule_end_field');
+      for (var i = end_fields.length - 1; i >= 0; i--) {
+        // using Fomat
+        end_fields[i].value = moment(info.end).format("DD/MM/YYYY hh:mm");
+      }
+
+
+      // get active form
+
+
+      // use ajax to validate that the event isn't already scheduled
+      // then use form.save to save the data and refetch events -
+      //    calendar.fullCalendar('refetchEvents');
+      $.ajax({
+        method: 'POST',
+        url: 'http://127.0.0.1:8000/api/events/',
+        data: {
+          'csrftoken': getCookie('csrftoken'),
+          'start': moment(info.start).format("YYYY-MM-DD hh:mm"),
+          success: function (data) {
+            console.log(data)
+            // calendar.fullCalendar('refetchEvents');
+          },
+          error: function (xhr, status, error) {
+            console.log(xhr, status, error)
+            // alert('there was an error')
+          }
+        }
+      });
+    }
     // nice examples here
     // https://www.webslesson.info/2017/12/jquery-fullcalandar-integration-with-php-and-mysql.html
     // eventResize: function(event){},

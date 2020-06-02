@@ -40,32 +40,16 @@ class GetCreateSchedule(APIView):
 
     def post(self, request, format=None):
         """
-        if Event elif Appointment
+        POST should just check if the start date is valid
+        and return the "end time" based on service selected
         """
         serializer = EventSerializer(data=request.data)
+        print(request.data)
         if serializer.is_valid():
-            print('post serializer valid')
-            serializer.save()
+            print('post serializer valid\n{}\n'.format(request.data))
             return Response(serializer.data)
  
         print('post serializer invalid\n{}\n---\n{}'.format(request.data, serializer.errors))
-
-        # post serializer invalid
-        # <QueryDict: {
-        # 'csrftoken': ['EV2SgggyZWWFRD0sFV4ddeSy5W57MNYC6mLVgECrDQekuPIKpOCtPUpOxe9mIpYH'],
-        # 'title': ['sdf'],
-        # 'start': ['5/6/2020'],
-        # 'end': ['5/7/2020'],
-        # 'all_day': ['true'],
-        # 'success': [''],
-        # 'error': ['']}>
-        # ---
-        # {'start': [ErrorDetail(
-        #     string='Datetime has wrong format. Use one of these formats instead:
-        #     YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z].', code='invalid')],
-        # 'end': [ErrorDetail(
-        #     string='Datetime has wrong format. Use one of these formats instead:
-        #     YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z].', code='invalid')]}
 
         return Response(serializer.errors)
 

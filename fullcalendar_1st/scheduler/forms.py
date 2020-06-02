@@ -57,10 +57,12 @@ class EventForm(forms.ModelForm):
 
     start = forms.DateTimeField(
         input_formats=['%d/%m/%Y %H:%M'],
-        widget=XDSoftDateTimePickerInput())
+        widget=XDSoftDateTimePickerInput(
+            attrs={'class': "schedule_start_field"}))
     end = forms.DateTimeField(
         input_formats=['%d/%m/%Y %H:%M'],
-        widget=XDSoftDateTimePickerInput())
+        widget=XDSoftDateTimePickerInput(
+            attrs={'class': "schedule_end_field"}))
 
     class Meta:
         model = Event
@@ -75,10 +77,12 @@ class AppointmentForm(forms.ModelForm):
 
     start = forms.DateTimeField(
         input_formats=['%d/%m/%Y %H:%M'],
-        widget=XDSoftDateTimePickerInput())
+        widget=XDSoftDateTimePickerInput(
+            attrs={'class': "schedule_start_field"}))
     end = forms.DateTimeField(
         input_formats=['%d/%m/%Y %H:%M'],
-        widget=XDSoftDateTimePickerInput())
+        widget=XDSoftDateTimePickerInput(
+            attrs={'class': "schedule_end_field"}))
 
     patient_first_name = forms.CharField()
     patient_last_name = forms.CharField()
