@@ -48,21 +48,26 @@ document.addEventListener('DOMContentLoaded', function() {
       // Set Start and End on both forms based on FullCalendar selection
       var start_fields = document.querySelectorAll('.schedule_start_field');
       for (var i = start_fields.length - 1; i >= 0; i--) {
-        // using Fomat
-        start_fields[i].value = moment(info.start).format("DD/MM/YYYY hh:mm");
+        start_fields[i].value = moment(info.start).format('YYYY-MM-DD hh:mm');
       }
 
       var end_fields = document.querySelectorAll('.schedule_end_field');
       for (var i = end_fields.length - 1; i >= 0; i--) {
-        // using Fomat
-        end_fields[i].value = moment(info.end).format("DD/MM/YYYY hh:mm");
+        end_fields[i].value = moment(info.end).format('YYYY-MM-DD hh:mm');
       }
 
+      // get data from active_form
+      // active form is referenced the button '.switch_form' data attr
+      var active_form_type = document.getElementById('switch_form').dataset.formtype;
+      var active_form = document.getElementById(active_form_type + '_form');
+      var active_form_start = active_form.querySelector('#id_start');
+      // convert value from DatePicker format to Django's required one
+      var afs_value = active_form_start.value;
+      console.log(afs_value);
+      var conv = moment(afs_value, 'YYYY-MM-DD hh:mm').format('DD/MM/YYYY hh:mm');
+      console.log(conv);
 
-      // get active form
-
-
-      // use ajax to validate that the event isn't already scheduled
+      // use ajax to validate that the event/appointment doesn't clash
       // then use form.save to save the data and refetch events -
       //    calendar.fullCalendar('refetchEvents');
       $.ajax({
@@ -70,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
         url: 'http://127.0.0.1:8000/api/events/',
         data: {
           'csrftoken': getCookie('csrftoken'),
-          'start': moment(info.start).format("YYYY-MM-DD hh:mm"),
+          'start': moment(info.start).format('YYYY-MM-DD hh:mm'),
           success: function (data) {
             console.log(data)
             // calendar.fullCalendar('refetchEvents');

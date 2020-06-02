@@ -66,25 +66,19 @@ https://www.fusionbox.com/blog/detail/creating-conditionally-required-fields-in-
   });
 </script>
 
-
 <script type="text/javascript">
-  var reverse_of = {'appointment': 'event', 'event': 'appointment'};
-  var active_form = 'appointment';
-  var inactive_form = 'event';
-
   document.getElementById('switch_form').addEventListener('click', function() {
-    console.log(this.dataset.formtype);
+    var reverse_of = {'appointment': 'event', 'event': 'appointment'};
+    var active_form = this.dataset.formtype;
+    var inactive_form = reverse_of[this.dataset.formtype];
 
-    inactive_form = this.dataset.formtype;
-    active = reverse_of[this.dataset.formtype];
+    document.getElementById(active_form + '_form').classList.remove('active');
+    document.getElementById(active_form + '_form').classList.add('hidden');
+    document.getElementById(inactive_form + '_form').classList.remove('hidden');
+    document.getElementById(inactive_form + '_form').classList.add('active');
 
-    document.getElementById(inactive_form + '_form').classList.remove('active');
-    document.getElementById(inactive_form + '_form').classList.add('hidden');
-    document.getElementById(active_form + '_form').classList.remove('hidden');
-    document.getElementById(active_form + '_form').classList.add('active');
-
-    this.dataset.formtype = active_form;
-    this.innerHTML = 'Schedule ' + inactive_form.charAt(0).toUpperCase() + inactive_form.slice(1);
+    this.dataset.formtype = inactive_form;
+    this.innerHTML = 'Schedule ' + active_form.charAt(0).toUpperCase() + active_form.slice(1);
   });
 </script>
 
