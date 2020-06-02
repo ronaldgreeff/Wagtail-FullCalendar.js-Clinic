@@ -15,6 +15,8 @@ from django.dispatch import receiver
 # comment for first migration (circular depencies) - see Appointment below too
 from myusers.models import Doctor, Patient
 
+import datetime
+
 
 class Service(models.Model):
     name = models.CharField(default='Appointment', max_length=50)
@@ -40,6 +42,11 @@ class Appointment(TimeStampedModel):
     # <-- comment for first migration
     start = models.DateTimeField()
     end = models.DateTimeField()
+
+    def get_service_end(self):
+        """ start time + service duration """
+        return (self.start + datetime.timedelta(
+            minutes=self.service.duration))
 
     def __str__(self):
         return '{0} | {1} | {2} - {3}'.format(
