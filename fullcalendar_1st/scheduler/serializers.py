@@ -3,39 +3,53 @@ from scheduler.models import TimeStampedModel, Event, Appointment, Service
 from myusers.models import Doctor, Patient, User
 
 
-# class UserField(serializers.RelatedField):
-#     def to_representation(self, value):
-#         return '{}'.format(value.first_name)
+class UserField(serializers.RelatedField):
+    def to_representation(self, value):
+        return '{}'.format(value.first_name)
 
 
 class EventSerializer(serializers.ModelSerializer):
-    # users = UserField(queryset=User.objects.all(), many=True)
+    users = UserField(queryset=User.objects.all(), many=True)
 
     class Meta:
         model = Event
-        fields = ['start']
+        fields = ['start',  'users']
 
 
 
-# class ServiceField(serializers.RelatedField):
-#     def to_representation(self, value):
-#         return '{}'.format(value.name)
+class ServiceField(serializers.RelatedField):
+    def to_representation(self, value):
+        return '{}'.format(value.name)
 
-# class DoctorField(serializers.RelatedField):
-#     def to_representation(self, value):
-#         return '{}'.format(value.user.first_name)
+class DoctorField(serializers.RelatedField):
+    def to_representation(self, value):
+        return '{}'.format(value.user.first_name)
 
-# class PatientField(serializers.RelatedField):
-#     def to_representation(self, value):
-#         return '{}'.format(value.first_name)
+class PatientField(serializers.RelatedField):
+    def to_representation(self, value):
+        return '{}'.format(value.first_name)
 
 
 class AppointmentSerializer(serializers.ModelSerializer):
-    # adding title, which doesn't exist in model, to be consistent with events
-    # doctor = DoctorField(queryset=Doctor.objects.all())
-    # patient = PatientField(queryset=Patient.objects.all())
-    # title = ServiceField(queryset=Service.objects.all(), source='service')
+    title = ServiceField(queryset=Service.objects.all(),
+        source='service')
+    service = ServiceField(queryset=Service.objects.all())
+    doctor = DoctorField(queryset=Doctor.objects.all())
+    patient = PatientField(queryset=Patient.objects.all())
 
     class Meta:
         model = Appointment
-        fields = ['start']
+        fields = ['title', 'start', 'end',
+        'doctor', 'patient', 'service']
+
+
+class AppointmentValidSerializer(serializers.Serializer):
+    start = serializers.DateTimeField(
+        format="%Y-%m-%d %H:%M:%S",
+        required=False, read_only=True)
+
+
+class EventValidSerializer(serializers.Serializer):
+    start = serializers.DateTimeField(
+        format="%Y-%m-%d %H:%M:%S",
+        required=False, read_only=True)

@@ -17,6 +17,7 @@ urlpatterns = [
     url('accounts/', include('django.contrib.auth.urls')),
 
     url(r'^api/', views.GetCreateSchedule.as_view(), name='get_create_scheduler'),
+    url(r'^ajax/event_service_duration/$', views.event_service_duration, name='event_service_duration'),
     # url(r'^api/insert/', views.InsertEventView.as_view(), name='schedule_insert'),
     # url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 

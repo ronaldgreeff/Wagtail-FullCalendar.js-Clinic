@@ -15,26 +15,26 @@
 <!--   <div id="modal1" class="modal">
     <div class="modal-content">
  -->
- <div id="modal1">
-   
-      <button data-formType="appointment" id="switch_form">Schedule Event</button>
+<div id="modal1">
+ 
+  <button data-formType="appointment" id="switch_form">Schedule Event</button>
 
-        <form id="appointment_form" class="active" action="." method="POST">
-            {% csrf_token %}
+  <form id="appointment_form" class="active" action="." method="POST">
+    {% csrf_token %}
 
-            {{ forms.appointment.as_p }}
+    {{ forms.appointment.as_p }}
 
-            <p><input type="submit" value="Schedule"></p>
-        </form>
+    <p><input type="submit" value="Schedule"></p>
+  </form>
 
-        <form id="event_form" class="hidden" action="." method="POST">
-            {% csrf_token %}
+  <form id="event_form" class="hidden" action="." method="POST">
+    {% csrf_token %}
 
-            {{ forms.event.as_p }}
+    {{ forms.event.as_p }}
 
-            <p><input type="submit" value="Schedule"></p>
-        </form>
- </div>
+    <p><input type="submit" value="Schedule"></p>
+  </form>
+</div>
 
 <!--     </div>
     <div class="modal-footer">
@@ -83,9 +83,28 @@ https://www.fusionbox.com/blog/detail/creating-conditionally-required-fields-in-
 </script>
 
 <script type="text/javascript">
+  $('#id_service').change(function() {
+    var service_id = $(this).val();
+
+    $.ajax({
+      url: 'ajax/event_service_duration/',
+      data: {
+        'service_id': service_id
+      },
+      success: function (data) {
+        console.log(data.duration)
+      },
+      error: function (xhr, status, error) {
+        console.log(xhr, status, error)
+      }
+    })
+  })
+</script>
+
+<!-- <script type="text/javascript">
   document.addEventListener('DOMContentLoaded', function() {
     var options = {};
     var elems = document.querySelectorAll('.modal');
     var instances = M.Modal.init(elems, options);
   })
-</script>
+</script> -->

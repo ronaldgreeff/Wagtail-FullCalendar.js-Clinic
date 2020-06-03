@@ -56,36 +56,33 @@ document.addEventListener('DOMContentLoaded', function() {
         end_fields[i].value = moment(info.end).format('YYYY-MM-DD hh:mm');
       }
 
-      // get data from active_form
-      // active form is referenced the button '.switch_form' data attr
-      var active_form_type = document.getElementById('switch_form').dataset.formtype;
-      var active_form = document.getElementById(active_form_type + '_form');
-      var active_form_start = active_form.querySelector('#id_start');
-      // convert value from DatePicker format to Django's required one
-      var afs_value = active_form_start.value;
-      console.log(afs_value);
-      var conv = moment(afs_value, 'YYYY-MM-DD hh:mm').format('DD/MM/YYYY hh:mm');
-      console.log(conv);
+      // // active_form referenced in <button id='.switch_form' data-formType="Evnt/Apt">
+      // var active_form_type = document.getElementById('switch_form').dataset.formtype;
+      // var active_form = document.getElementById(active_form_type + '_form');
+      // var active_form_start = active_form.querySelector('#id_start');
 
-      // use ajax to validate that the event/appointment doesn't clash
-      // then use form.save to save the data and refetch events -
-      //    calendar.fullCalendar('refetchEvents');
-      $.ajax({
-        method: 'POST',
-        url: 'http://127.0.0.1:8000/api/events/',
-        data: {
-          'csrftoken': getCookie('csrftoken'),
-          'start': moment(info.start).format('YYYY-MM-DD hh:mm'),
-          success: function (data) {
-            console.log(data)
-            // calendar.fullCalendar('refetchEvents');
-          },
-          error: function (xhr, status, error) {
-            console.log(xhr, status, error)
-            // alert('there was an error')
-          }
-        }
-      });
+      // // use ajax to validate that the event/appointment doesn't clash
+      // // then use form.save to save the data and refetch events -
+      // //    calendar.fullCalendar('refetchEvents');
+      // $.ajax({
+      //   method: 'POST',
+      //   url: 'http://127.0.0.1:8000/api/events/',
+      //   data: {
+      //     'csrftoken': getCookie('csrftoken'),
+      //     // DatePicker format to Django format
+      //     'start': moment(info.start).format('YYYY-MM-DD hh:mm'),
+      //     'form_type': active_form_type,
+      //     success: function (data) {
+      //       console.log(data)
+      //       // calendar.fullCalendar('refetchEvents');
+      //     },
+      //     error: function (xhr, status, error) {
+      //       console.log(xhr, status, error)
+      //       // alert('there was an error')
+      //     }
+      //   }
+      // });
+
     }
     // nice examples here
     // https://www.webslesson.info/2017/12/jquery-fullcalandar-integration-with-php-and-mysql.html

@@ -66,7 +66,8 @@ class EventForm(forms.ModelForm):
 
     class Meta:
         model = Event
-        fields = ['title', 'all_day', 'users']
+        fields = ['form_type', 'title', 'all_day',
+            'start', 'end', 'users']
 
 
 class AppointmentForm(forms.ModelForm):
@@ -94,7 +95,12 @@ class AppointmentForm(forms.ModelForm):
 
     class Meta:
         model = Appointment
-        fields = ['service', 'doctor']
+        fields = ['form_type', 'start', 'end',
+            'service', 'doctor',
+            'patient_first_name',
+            'patient_last_name',
+            'patient_email',
+            'patient_phone_number']
 
 # class BaseEventForm(forms.Form):
 #     title = forms.CharField()

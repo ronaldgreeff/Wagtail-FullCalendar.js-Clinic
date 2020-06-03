@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
-from scheduler.serializers import EventSerializer, AppointmentSerializer
+from scheduler.serializers import EventSerializer, AppointmentSerializer, AppointmentValidSerializer, EventValidSerializer
 from scheduler.models import Event, Appointment
 
 from itertools import chain
@@ -11,6 +11,8 @@ from rest_framework.response import Response
 from rest_framework import authentication, permissions
 
 from rest_framework.permissions import IsAuthenticated
+
+from django.http import JsonResponse
 # TODO: cleanup imports ^
 
 
@@ -43,7 +45,13 @@ class GetCreateSchedule(APIView):
         POST should just check if the start date is valid
         and return the "end time" based on service selected
         """
-        serializer = EventSerializer(data=request.data)
+        # AppointmentValidSerializer, EventValidSerializer
+        form_type = request.data.pop('form_type')
+        if form_type == 'appointment':
+            serializer = AppointmentSerializer(request.data)
+        elif form_type == 'event':
+            serializer = EventSerializer(request.data)
+
         print(request.data)
         if serializer.is_valid():
             print('post serializer valid\n{}\n'.format(request.data))
@@ -53,6 +61,12 @@ class GetCreateSchedule(APIView):
 
         return Response(serializer.errors)
 
+
+def event_service_duration(request):
+    service_id = request.GET.get('service_id', None)
+    service = Service.objects.get(id=service_id)
+    data = {'duration': service.duration}
+    return JsonResponse(data)
 
 
 def admin_schedule(request):
