@@ -2,8 +2,8 @@ from django.shortcuts import render
 
 # from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
-from scheduler.serializers import EventSerializer, AppointmentSerializer, AppointmentValidSerializer, EventValidSerializer
-from scheduler.models import Event, Appointment
+from scheduler.serializers import EventSerializer, AppointmentSerializer
+from scheduler.models import Event, Appointment, Service
 
 from itertools import chain
 from rest_framework.views import APIView
@@ -15,12 +15,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.http import JsonResponse
 # TODO: cleanup imports ^
 
-
-# class InsertEventView(APIView):
-#     pass
-
-# TODO - better name for EventsViewSet
-class GetCreateSchedule(APIView):
+class GetSchedule(APIView):
     """
     Get a list of events and appointments
 
@@ -40,33 +35,34 @@ class GetCreateSchedule(APIView):
         schedule = self.CollectSchedule()
         return Response(schedule)
 
-    def post(self, request, format=None):
-        """
-        POST should just check if the start date is valid
-        and return the "end time" based on service selected
-        """
-        # AppointmentValidSerializer, EventValidSerializer
-        form_type = request.data.pop('form_type')
-        if form_type == 'appointment':
-            serializer = AppointmentSerializer(request.data)
-        elif form_type == 'event':
-            serializer = EventSerializer(request.data)
+    # def post(self, request, format=None):
+    #     """
+    #     POST should just check if the start date is valid
+    #     and return the "end time" based on service selected
+    #     """
+    #     # AppointmentValidSerializer, EventValidSerializer
+    #     form_type = request.data.pop('form_type')
+    #     if form_type == 'appointment':
+    #         serializer = AppointmentSerializer(request.data)
+    #     elif form_type == 'event':
+    #         serializer = EventSerializer(request.data)
 
-        print(request.data)
-        if serializer.is_valid():
-            print('post serializer valid\n{}\n'.format(request.data))
-            return Response(serializer.data)
+    #     print(request.data)
+    #     if serializer.is_valid():
+    #         print('post serializer valid\n{}\n'.format(request.data))
+    #         return Response(serializer.data)
  
-        print('post serializer invalid\n{}\n---\n{}'.format(request.data, serializer.errors))
+    #     print('post serializer invalid\n{}\n---\n{}'.format(request.data, serializer.errors))
 
-        return Response(serializer.errors)
+    #     return Response(serializer.errors)
 
 
 def event_service_duration(request):
-    service_id = request.GET.get('service_id', None)
-    service = Service.objects.get(id=service_id)
-    data = {'duration': service.duration}
-    return JsonResponse(data)
+    if request.is_ajax and request.method == 'GET':
+        service_id = request.GET.get('service_id', None)
+        service = Service.objects.get(id=service_id)
+        data = {'duration': service.duration}
+        return JsonResponse(data)
 
 
 def admin_schedule(request):

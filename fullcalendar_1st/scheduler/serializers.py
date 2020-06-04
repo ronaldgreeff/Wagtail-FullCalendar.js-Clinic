@@ -43,13 +43,13 @@ class AppointmentSerializer(serializers.ModelSerializer):
         'doctor', 'patient', 'service']
 
 
-class AppointmentValidSerializer(serializers.Serializer):
-    start = serializers.DateTimeField(
-        format="%Y-%m-%d %H:%M:%S",
-        required=False, read_only=True)
+# class AppointmentValidSerializer(serializers.Serializer):
+#     start = serializers.DateTimeField(
+#         format="%Y-%m-%d %H:%M:%S",
+#         required=False, read_only=True)
 
 
-class EventValidSerializer(serializers.Serializer):
-    start = serializers.DateTimeField(
-        format="%Y-%m-%d %H:%M:%S",
-        required=False, read_only=True)
+# class EventValidSerializer(serializers.Serializer):
+#     start = serializers.DateTimeField(
+#         format="%Y-%m-%d %H:%M:%S",
+#         required=False, read_only=True)

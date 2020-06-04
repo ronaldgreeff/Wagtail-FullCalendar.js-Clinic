@@ -25,7 +25,7 @@ def load_enquiry_form(context):
 
 @register.inclusion_tag('scheduler/schedule_modal.html', takes_context=True)
 def load_schedule_modal(context):
-    """ Loads two forms (Event and Appointment) to allow the user to easily
+    """ Loads modal containing forms (Event and Appointment) to allow the user to easily
     switch between the two. form_type passed in via data-* attribute """
 
     get_form = {'event': EventForm,
