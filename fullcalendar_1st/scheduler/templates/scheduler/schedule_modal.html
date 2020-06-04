@@ -58,15 +58,8 @@ https://www.fusionbox.com/blog/detail/creating-conditionally-required-fields-in-
   }
 </style>
 
-<script>
-  $(function () {
-    $("#id_datetime").datetimepicker({
-      format: 'd/m/Y H:i',
-    });
-  });
-</script>
-
 <script type="text/javascript">
+  // addEventListener to switch_form button
   document.getElementById('switch_form').addEventListener('click', function() {
     var reverse_of = {'appointment': 'event', 'event': 'appointment'};
     var active_form = this.dataset.formtype;
@@ -77,37 +70,54 @@ https://www.fusionbox.com/blog/detail/creating-conditionally-required-fields-in-
     document.getElementById(inactive_form + '_form').classList.remove('hidden');
     document.getElementById(inactive_form + '_form').classList.add('active');
 
+    // change what the button displays
     this.dataset.formtype = inactive_form;
-    this.innerHTML = 'Schedule ' + active_form.charAt(0).toUpperCase() + active_form.slice(1);
+    this.innerHTML = "Schedule " + active_form.charAt(0).toUpperCase() + active_form.slice(1);
   });
 </script>
 
 <script type="text/javascript">
   $('#id_service').change(function() {
+
     var service_id = $(this).val();
-    var active_form = $(this).closest('form');
-    var service_end = $(active_form).find('.schedule_end_field');
 
-    $.ajax({
-      type: 'GET',
-      url: 'http://127.0.0.1:8000/ajax/event_service_duration/', // TODO - add as data-attr
-      data: {
-        'service_id': service_id
-      },
-      success: function (response) {
-        console.log('success');
-        var duration = JSON.parse(response["duration"]);
-        var start = moment($(service_end).attr('data-start'));
-        var end = moment(start).add(duration, 'minutes');
-        $(service_end).val(end.format('DD/MM/YYYY hh:mm')); // TODO: store the format as a global variable
+    // only bother with ajax if an option selected
+    if (service_id) {
 
-      },
-      error: function (xhr, status, error) {
-        console.log('error')
-      }
-    })
+      var active_form = $(this).closest('form');
+      var service_start = $(active_form).find('.schedule_start_field');
+      var service_end = $(active_form).find('.schedule_end_field');
+
+      $.ajax({
+        type: 'GET',
+        // TODO - add below as data-attr
+        url: 'http://127.0.0.1:8000/ajax/event_service_duration/',
+        data: {
+          'service_id': service_id
+        },
+        success: function (response) {
+          var duration = JSON.parse(response['duration']);
+          // var start = moment($(service_end).attr('data-start'));
+          var s = $(service_start).val();
+          var dt = moment(s, 'DD/MM/YY HH:mm');
+          var end = dt.add(duration, 'minutes');
+          // TODO: store the formats as a global variable
+          $(service_end).val(end.format('DD/MM/YYYY HH:mm'));
+
+        },
+        error: function (xhr, status, error) {
+          console.log("error");
+          console.log(status, error);
+        }
+      });
+    }
   })
 </script>
+
+<!--       // var end_fields = document.querySelectorAll('.schedule_end_field');
+      // for (var i = end_fields.length - 1; i >= 0; i--) {
+      //   end_fields[i].setAttribute('data-start', moment(info.end).toISOString());
+      // } -->
 
 <!-- <script type="text/javascript">
   document.addEventListener('DOMContentLoaded', function() {

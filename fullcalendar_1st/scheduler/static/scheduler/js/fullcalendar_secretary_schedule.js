@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
     //   }
     // },
     select: function(info) {
+
       // Format set for Datepicker: DD/MM/YYYY hh:mm
       // Format for Django: YYYY-MM-DD hh:mm *[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z]
       // https://fullcalendar.io/docs/date-formatting
@@ -51,37 +52,10 @@ document.addEventListener('DOMContentLoaded', function() {
         start_fields[i].value = moment(info.start).format('DD/MM/YYYY hh:mm');
       }
 
-      var end_fields = document.querySelectorAll('.schedule_end_field');
-      for (var i = end_fields.length - 1; i >= 0; i--) {
-        end_fields[i].setAttribute('data-start', moment(info.end).toISOString());
-      }
-
-      // // active_form referenced in <button id='.switch_form' data-formType="Evnt/Apt">
-      // var active_form_type = document.getElementById('switch_form').dataset.formtype;
-      // var active_form = document.getElementById(active_form_type + '_form');
-      // var active_form_start = active_form.querySelector('#id_start');
-
-      // // use ajax to validate that the event/appointment doesn't clash
-      // // then use form.save to save the data and refetch events -
-      // //    calendar.fullCalendar('refetchEvents');
-      // $.ajax({
-      //   method: 'POST',
-      //   url: 'http://127.0.0.1:8000/api/events/',
-      //   data: {
-      //     'csrftoken': getCookie('csrftoken'),
-      //     // DatePicker format to Django format
-      //     'start': moment(info.start).format('YYYY-MM-DD hh:mm'),
-      //     'form_type': active_form_type,
-      //     success: function (data) {
-      //       console.log(data)
-      //       // calendar.fullCalendar('refetchEvents');
-      //     },
-      //     error: function (xhr, status, error) {
-      //       console.log(xhr, status, error)
-      //       // alert('there was an error')
-      //     }
-      //   }
-      // });
+      // var end_fields = document.querySelectorAll('.schedule_end_field');
+      // for (var i = end_fields.length - 1; i >= 0; i--) {
+      //   end_fields[i].setAttribute('data-start', moment(info.end).toISOString());
+      // }
 
     }
     // nice examples here
@@ -89,6 +63,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // eventResize: function(event){},
     // eventDrop: function(event){},
     // eventClick: function(event){},
+
+    // TODO: once event/appointment form submitted, should refetch events
+    // calendar.fullCalendar('refetchEvents');
   });
 
   // HANDLERS
