@@ -85,7 +85,8 @@ https://www.fusionbox.com/blog/detail/creating-conditionally-required-fields-in-
 <script type="text/javascript">
   $('#id_service').change(function() {
     var service_id = $(this).val();
-    var service_end = $(this).closest('form').find('.schedule_end_field')
+    var active_form = $(this).closest('form');
+    var service_end = $(active_form).find('.schedule_end_field');
 
     $.ajax({
       type: 'GET',
@@ -96,7 +97,10 @@ https://www.fusionbox.com/blog/detail/creating-conditionally-required-fields-in-
       success: function (response) {
         console.log('success');
         var duration = JSON.parse(response["duration"]);
-        var end_time = moment()
+        var start = moment($(service_end).attr('data-start'));
+        var end = moment(start).add(duration, 'minutes');
+        $(service_end).val(end.format('DD/MM/YYYY hh:mm')); // TODO: store the format as a global variable
+
       },
       error: function (xhr, status, error) {
         console.log('error')

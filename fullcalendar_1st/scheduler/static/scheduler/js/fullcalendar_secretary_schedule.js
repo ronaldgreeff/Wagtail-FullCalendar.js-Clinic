@@ -45,15 +45,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
       var modal = document.getElementById("modal1");
 
-      // Set Start and End on both forms based on FullCalendar selection
+      // Set Start on both forms based on FullCalendar selection
       var start_fields = document.querySelectorAll('.schedule_start_field');
       for (var i = start_fields.length - 1; i >= 0; i--) {
-        start_fields[i].value = moment(info.start).format('YYYY-MM-DD hh:mm');
+        start_fields[i].value = moment(info.start).format('DD/MM/YYYY hh:mm');
       }
 
       var end_fields = document.querySelectorAll('.schedule_end_field');
       for (var i = end_fields.length - 1; i >= 0; i--) {
-        end_fields[i].value = moment(info.end).format('YYYY-MM-DD hh:mm');
+        end_fields[i].setAttribute('data-start', moment(info.end).toISOString());
       }
 
       // // active_form referenced in <button id='.switch_form' data-formType="Evnt/Apt">
