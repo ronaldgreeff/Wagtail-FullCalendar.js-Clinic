@@ -59,6 +59,16 @@ https://www.fusionbox.com/blog/detail/creating-conditionally-required-fields-in-
 </style>
 
 <script type="text/javascript">
+  // keep create obj to keep track of initial object + any changes + conversion
+  function testin(info) {
+    x = new Object;
+    x.start = info.start;
+    x.end = info.end;
+    x.allDay = info.allDay;
+  }
+</script>
+
+<script type="text/javascript">
   // addEventListener to switch_form button
   document.getElementById('switch_form').addEventListener('click', function() {
     var reverse_of = {'appointment': 'event', 'event': 'appointment'};

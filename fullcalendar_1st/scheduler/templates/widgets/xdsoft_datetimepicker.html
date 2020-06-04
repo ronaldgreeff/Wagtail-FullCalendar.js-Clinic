@@ -1,26 +1,11 @@
 {% include "django/forms/widgets/input.html" %}
 
 <script>
+
   $(function () {
     $("input[name='{{ widget.name }}']").datetimepicker({
-      format: 'd/m/Y H:m',
+      // format: 'd/m/Y H:i',
     });
   });
+
 </script>
-
-<!-- 
-https://github.com/xdan/datetimepicker/issues/216#issuecomment-70843560
-
-Date.parseDate = function( input, format ){
-  return moment(input,format).toDate();
-};
-Date.prototype.dateFormat = function( format ){
-  return moment(this).format(format);
-};
-
-element.datetimepicker({
-  format:      'YYYY-MM-DDTHH:mm:ssZ',
-  formatTime:  'HH:mm',
-  formatDate:  'YYYY-MM-DD',
-})
- -->
