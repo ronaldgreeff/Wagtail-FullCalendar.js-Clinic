@@ -59,39 +59,53 @@ https://www.fusionbox.com/blog/detail/creating-conditionally-required-fields-in-
 </style>
 
 <script type="text/javascript">
-  // keep create obj to keep track of initial object + any changes + conversion
+
+  // format conversion helpers
+  function formatDateTimeMoment(time, format='DD/MM/YYYY hh:mm') {
+    return moment(time).format(format);
+  }
+  function formatDateTimeDisplay() {
+  }
+
+  // keep create obj to keep track of initial object + any changes
   class ScheduleModalManager {
-    // manages updating of start and end times
+    // manages updating of start and end times (in ISO 8601)
     constructor(event_start=null) {
-      // start and end use ISO 8601
-      this.schedule_modal_id = 'modal1';
       this.event_start = event_start;
     }
     populateEventStartField(active_form_id) {
       if (active_form_id) {
         // populate specific form
+        console.log('// populate specific form')
+        var service_start = $('#' + active_form_id).find('.schedule_start_field').first();
+        console.log(active_form_id)
 
-        // var service_start = $('#' + active_form_id).find('.schedule_start_field');
-        // var service_end = $('#' + active_form_id).find('.schedule_end_field');
+        service_start.value = formatDateTimeMoment(this.event_start);
+
+        // var s = $(service_start).val();
+        // var ms = moment(s, 'DD/MM/YY HH:mm');
 
       } else {
-        // populate all start
-        console.log('no forms');
+        // pre-populate all start fields
+        console.log('// pre-populate all start fields')
+        $.each( $('.schedule_start_field'), function(i, v) {
+          v.value = formatDateTimeMoment(this.event_start);
+        });
       }
     }
     updateEventStart(new_start) {
-      this.event_start = new_start;
+      console.log('new_start', new_start)
+      console.log('formatDateTimeMoment.new_start', moment(new_start, 'DD/MM/YYYY HH:mm'));
+      console.log('moment newstart toisostring', moment(new_start, 'DD/MM/YYYY HH:mm').toISOString())
+      // this.event_start = moment(new_start).toISOString();
     }
     updateEventStartField(active_form_id, new_start) {
-      console.log('*active_form_id:', active_form_id, '*new_start:', new_start);
+      // console.log('*active_form_id:', active_form_id, '*new_start:', new_start);
       if (new_start) {
         this.updateEventStart(new_start);
+        console.log('new_start = ', new_start)
       }
       this.populateEventStartField(active_form_id);
-    }
-    formatDateTimeMoment() {
-    }
-    formatDateTimeDisplay() {
     }
     addTime() {
     }

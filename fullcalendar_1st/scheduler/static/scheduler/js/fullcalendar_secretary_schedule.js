@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
     //   }
     // },
     select: function(info) {
+      console.log('info.start', info.start);
       var new_start = moment(info.start).format('DD/MM/YYYY hh:mm');
       SMM.updateEventStartField('', new_start);
 
