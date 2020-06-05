@@ -60,12 +60,54 @@ https://www.fusionbox.com/blog/detail/creating-conditionally-required-fields-in-
 
 <script type="text/javascript">
   // keep create obj to keep track of initial object + any changes + conversion
-  function testin(info) {
-    x = new Object;
-    x.start = info.start;
-    x.end = info.end;
-    x.allDay = info.allDay;
+  class ScheduleModalManager {
+    // manages updating of start and end times
+    constructor(event_start=null) {
+      // start and end use ISO 8601
+      this.schedule_modal_id = 'modal1';
+      this.event_start = event_start;
+    }
+    populateEventStartField(active_form_id) {
+      if (active_form_id) {
+        // populate specific form
+
+        // var service_start = $('#' + active_form_id).find('.schedule_start_field');
+        // var service_end = $('#' + active_form_id).find('.schedule_end_field');
+
+      } else {
+        // populate all start
+        console.log('no forms');
+      }
+    }
+    updateEventStart(new_start) {
+      this.event_start = new_start;
+    }
+    updateEventStartField(active_form_id, new_start) {
+      console.log('*active_form_id:', active_form_id, '*new_start:', new_start);
+      if (new_start) {
+        this.updateEventStart(new_start);
+      }
+      this.populateEventStartField(active_form_id);
+    }
+    formatDateTimeMoment() {
+    }
+    formatDateTimeDisplay() {
+    }
+    addTime() {
+    }
   }
+
+  var SMM = new ScheduleModalManager();
+  // var active_form = $(this).closest('form');
+  // var service_start = $(active_form).find('.schedule_start_field');
+  // var service_end = $(active_form).find('.schedule_end_field');
+
+  // // var start = moment($(service_end).attr('data-start'));
+  // var s = $(service_start).val();
+  // var dt = moment(s, 'DD/MM/YY HH:mm');
+  // var end = dt.add(duration, 'minutes');
+  // // TODO: store the formats as a global variable
+  // $(service_end).val(end.format('DD/MM/YYYY HH:mm'));
 </script>
 
 <script type="text/javascript">
@@ -90,13 +132,10 @@ https://www.fusionbox.com/blog/detail/creating-conditionally-required-fields-in-
   $('#id_service').change(function() {
 
     var service_id = $(this).val();
+    var active_form_id = $(this).closest('form')[0].id;
 
     // only bother with ajax if an option selected
     if (service_id) {
-
-      var active_form = $(this).closest('form');
-      var service_start = $(active_form).find('.schedule_start_field');
-      var service_end = $(active_form).find('.schedule_end_field');
 
       $.ajax({
         type: 'GET',
@@ -107,13 +146,7 @@ https://www.fusionbox.com/blog/detail/creating-conditionally-required-fields-in-
         },
         success: function (response) {
           var duration = JSON.parse(response['duration']);
-          // var start = moment($(service_end).attr('data-start'));
-          var s = $(service_start).val();
-          var dt = moment(s, 'DD/MM/YY HH:mm');
-          var end = dt.add(duration, 'minutes');
-          // TODO: store the formats as a global variable
-          $(service_end).val(end.format('DD/MM/YYYY HH:mm'));
-
+          SMM.updateEventStartField(active_form_id, '');
         },
         error: function (xhr, status, error) {
           console.log("error");

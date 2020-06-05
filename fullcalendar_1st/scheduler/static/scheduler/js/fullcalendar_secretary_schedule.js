@@ -38,7 +38,8 @@ document.addEventListener('DOMContentLoaded', function() {
     //   }
     // },
     select: function(info) {
-      testin(info)
+      var new_start = moment(info.start).format('DD/MM/YYYY hh:mm');
+      SMM.updateEventStartField('', new_start);
 
       // // Format set for Datepicker: d/m/Y H:i (DD/MM/YYYY HH:mm)
       // // Format for Django: YYYY-MM-DD hh:mm *[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z]
