@@ -38,28 +38,9 @@ document.addEventListener('DOMContentLoaded', function() {
     //   }
     // },
     select: function(info) {
-      console.log('info.start', info.start);
-      var new_start = moment(info.start).format('DD/MM/YYYY hh:mm');
-      SMM.updateEventStartField('', new_start);
-
-      // // Format set for Datepicker: d/m/Y H:i (DD/MM/YYYY HH:mm)
-      // // Format for Django: YYYY-MM-DD hh:mm *[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z]
-      // // https://fullcalendar.io/docs/date-formatting
-      // // console.log(info);
-
-      // var modal = document.getElementById("modal1");
-
-      // // Set Start on both forms based on FullCalendar selection
-      // var start_fields = document.querySelectorAll('.schedule_start_field');
-      // for (var i = start_fields.length - 1; i >= 0; i--) {
-      //   start_fields[i].value = moment(info.start).format('DD/MM/YYYY hh:mm');
-      // }
-      // console.log(info)
-
-      // // var end_fields = document.querySelectorAll('.schedule_end_field');
-      // // for (var i = end_fields.length - 1; i >= 0; i--) {
-      // //   end_fields[i].setAttribute('data-start', moment(info.end).toISOString());
-      // // }
+      // console.log('info.start', info.start);
+      SMM.setScheduleEventStart( moment(info.start).toISOString() );
+      SMM.setAllStartFields();
 
     }
     // nice examples here
