@@ -18,6 +18,7 @@ urlpatterns = [
 
     url(r'^api/', views.GetSchedule.as_view(), name='get_schedule'),
     url(r'^ajax/event_service_duration/$', views.event_service_duration, name='event_service_duration'),
+    url(r'^ajax/patient_lookup/$', views.patient_lookup, name='patient_lookup'),
     # url(r'^api/insert/', views.InsertEventView.as_view(), name='schedule_insert'),
     # url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 

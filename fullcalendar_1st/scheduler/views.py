@@ -13,6 +13,8 @@ from rest_framework import authentication, permissions
 from rest_framework.permissions import IsAuthenticated
 
 from django.http import JsonResponse
+
+from myusers.models import Patient
 # TODO: cleanup imports ^
 
 class GetSchedule(APIView):
@@ -63,6 +65,27 @@ def event_service_duration(request):
         service = Service.objects.get(id=service_id)
         data = {'duration': service.duration}
         return JsonResponse(data)
+
+
+def patient_lookup(request):
+    if request.is_ajax and request.method == 'GET':
+        query_basis = request.GET.get('query_basis')
+        query_value = request.GET.get('query_value')
+        context = {}
+
+        print(query_basis, query_value)
+
+        if query_value:
+            patients = Patient.objects.filter()
+        else:
+            patients = Patient.objects.all()
+
+        # patient first name
+        # patient last name
+        # patient email
+        # patient phone number
+
+        return render(request, 'scheduler/patient_list.html', context=context)
 
 
 def admin_schedule(request):

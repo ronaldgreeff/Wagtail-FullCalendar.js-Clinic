@@ -149,6 +149,16 @@ https://www.fusionbox.com/blog/detail/creating-conditionally-required-fields-in-
       });
     }
   })
+
+  var lookupPatient = function(by) {
+    console.log(by);
+  }
+
+  $('#id_patient_last_name').change( function() { lookupPatient('patient_last_name'); });
+  $('#id_patient_phone_number').change( function() { lookupPatient('patient_phone_number'); });
+  $('#id_patient_first_name').change( function() { lookupPatient('patient_first_name'); });
+  $('#id_patient_email').change( function() { lookupPatient('patient_email'); });
+
 </script>
 
 <!--       // var end_fields = document.querySelectorAll('.schedule_end_field');

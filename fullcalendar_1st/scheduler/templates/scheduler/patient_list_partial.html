@@ -1,0 +1,9 @@
+{% if patients %}
+  <ul>
+  {% for patient in patients %}
+    <li>{{ artist.name }}</li>
+  {% endfor %}
+  </ul>
+{% else %}
+  <p>No patients found.</p>
+{% endif %}
