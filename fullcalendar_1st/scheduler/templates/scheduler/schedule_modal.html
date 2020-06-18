@@ -16,6 +16,10 @@
     <div class="modal-content">
  -->
 <div id="modal1">
+
+  <div id="replaceable-content" class="col-6">
+    {% include 'scheduler/patient_list_partial.html' %}
+  </div>
  
   <button data-formType="appointment" id="switch_form">Schedule Event</button>
 
@@ -150,14 +154,32 @@ https://www.fusionbox.com/blog/detail/creating-conditionally-required-fields-in-
     }
   })
 
-  var lookupPatient = function(by) {
-    console.log(by);
+
+  var lookupPatient = function(qb, v) {
+    var query_basis = qb;
+    var query_value = v;
+
+    $.ajax({
+      type: 'GET',
+      url: 'http://127.0.0.1:8000/ajax/patient_lookup/',
+      data: {
+        'query_basis': query_basis,
+        'query_value': query_value,
+      },
+      success: function (response) {
+        console.log(response);
+      },
+      error: function (xhr, status, error) {
+        console.log("error");
+        console.log(status, error);
+      }
+    });
   }
 
-  $('#id_patient_last_name').change( function() { lookupPatient('patient_last_name'); });
-  $('#id_patient_phone_number').change( function() { lookupPatient('patient_phone_number'); });
-  $('#id_patient_first_name').change( function() { lookupPatient('patient_first_name'); });
-  $('#id_patient_email').change( function() { lookupPatient('patient_email'); });
+  $('#id_patient_last_name').keyup( function() { lookupPatient('last_name', $(this).val()); });
+  $('#id_patient_phone_number').keyup( function() { lookupPatient('phone', $(this).val()); });
+  $('#id_patient_first_name').keyup( function() { lookupPatient('first_name', $(this).val()); });
+  $('#id_patient_email').keyup( function() { lookupPatient('email', $(this).val()); });
 
 </script>
 

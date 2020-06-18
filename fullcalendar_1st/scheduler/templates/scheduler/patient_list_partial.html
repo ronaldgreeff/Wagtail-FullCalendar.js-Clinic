@@ -1,7 +1,7 @@
 {% if patients %}
   <ul>
   {% for patient in patients %}
-    <li>{{ artist.name }}</li>
+    <li>{{ patient.last_name }}, {{ patient.first_name }}</li>
   {% endfor %}
   </ul>
 {% else %}

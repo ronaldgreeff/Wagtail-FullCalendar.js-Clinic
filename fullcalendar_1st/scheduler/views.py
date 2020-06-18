@@ -15,6 +15,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.http import JsonResponse
 
 from myusers.models import Patient
+from django.template.loader import render_to_string
 # TODO: cleanup imports ^
 
 class GetSchedule(APIView):
@@ -60,7 +61,9 @@ class GetSchedule(APIView):
 
 
 def event_service_duration(request):
+
     if request.is_ajax and request.method == 'GET':
+
         service_id = request.GET.get('service_id', None)
         service = Service.objects.get(id=service_id)
         data = {'duration': service.duration}
@@ -68,24 +71,34 @@ def event_service_duration(request):
 
 
 def patient_lookup(request):
+
     if request.is_ajax and request.method == 'GET':
+
         query_basis = request.GET.get('query_basis')
         query_value = request.GET.get('query_value')
-        context = {}
 
-        print(query_basis, query_value)
-
+        p = Patient.objects
+        
         if query_value:
-            patients = Patient.objects.filter()
+
+            if query_basis == 'first_name':
+                patients = p.filter(first_name__icontains=query_value)
+            elif query_basis == 'last_name':
+                patients = p.filter(last_name__icontains=query_value)
+            elif query_basis == 'email':
+                patients = p.filter(email_address__icontains=query_value)
+            elif query_basis == 'phone':
+                patients = p.filter(phone_number__icontains=query_value)
+
         else:
-            patients = Patient.objects.all()
+            patients = p.all()
 
-        # patient first name
-        # patient last name
-        # patient email
-        # patient phone number
+        html = render_to_string(
+            template_name = 'scheduler/patient_list_partial.html',
+            context = {'patients': patients},
+            )
 
-        return render(request, 'scheduler/patient_list.html', context=context)
+        return JsonResponse(html, safe=False)
 
 
 def admin_schedule(request):
