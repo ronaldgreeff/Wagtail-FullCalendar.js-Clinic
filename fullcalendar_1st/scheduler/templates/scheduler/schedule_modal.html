@@ -15,29 +15,47 @@
 <!--   <div id="modal1" class="modal">
     <div class="modal-content">
  -->
+
+  <div style="width: 100%; overflow: hidden;">
+    <div style="width: 50%; float: left;">
+      <div id="replaceable-content" class="col-6">
+        {% include 'scheduler/patient_list_partial.html' %}
+      </div>
+    </div>
+    <div style="margin-left: 50%;">
+    </div>
+  </div>
+
 <div id="modal1">
 
-  <div id="replaceable-content" class="col-6">
-    {% include 'scheduler/patient_list_partial.html' %}
-  </div>
- 
   <button data-formType="appointment" id="switch_form">Schedule Event</button>
 
-  <form id="appointment_form" class="active" action="." method="POST">
-    {% csrf_token %}
+  <div id="appointment_form_container" class="active form_container">
 
-    {{ forms.appointment.as_p }}
+    <div style="width: 100%; overflow: hidden;">
+      <div style="width: 50%; float: left;">
+        <form id="appointment_form" action="." method="POST">
+          {% csrf_token %}
+          {{ forms.appointment.as_p }}
+          <p><input type="submit" value="Schedule"></p>
+        </form>
+      </div>
+      <div style="margin-left: 50%;">
+        <div id="replaceable-content" class="col-6">
+          {% include 'scheduler/patient_list_partial.html' %}
+        </div>
+      </div>
+    </div>
 
-    <p><input type="submit" value="Schedule"></p>
-  </form>
+  </div>
 
-  <form id="event_form" class="hidden" action="." method="POST">
-    {% csrf_token %}
-
-    {{ forms.event.as_p }}
-
-    <p><input type="submit" value="Schedule"></p>
-  </form>
+  <div id="event_form_container" class="hidden form_container">
+    <form id="event_form" action="." method="POST">
+      {% csrf_token %}
+      {{ forms.event.as_p }}
+      <p><input type="submit" value="Schedule"></p>
+    </form>
+  </div>
 </div>
 
 <!--     </div>
@@ -114,10 +132,10 @@ https://www.fusionbox.com/blog/detail/creating-conditionally-required-fields-in-
     var active_form = this.dataset.formtype;
     var inactive_form = reverse_of[this.dataset.formtype];
 
-    document.getElementById(active_form + '_form').classList.remove('active');
-    document.getElementById(active_form + '_form').classList.add('hidden');
-    document.getElementById(inactive_form + '_form').classList.remove('hidden');
-    document.getElementById(inactive_form + '_form').classList.add('active');
+    document.getElementById(active_form + '_form_container').classList.remove('active');
+    document.getElementById(active_form + '_form_container').classList.add('hidden');
+    document.getElementById(inactive_form + '_form_container').classList.remove('hidden');
+    document.getElementById(inactive_form + '_form_container').classList.add('active');
 
     // change what the button displays
     this.dataset.formtype = inactive_form;
