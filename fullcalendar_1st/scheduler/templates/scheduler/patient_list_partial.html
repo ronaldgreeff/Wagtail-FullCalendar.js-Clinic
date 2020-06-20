@@ -1,9 +1,23 @@
 {% if patients %}
-  <ul>
+   <ul>
   {% for patient in patients %}
-    <li>{{ patient.last_name }}, {{ patient.first_name }}</li>
+    <a class="patient_result" data-patient="{{ patient }}">{{ patient }}</li></a>
   {% endfor %}
   </ul>
 {% else %}
   <p>No patients found.</p>
 {% endif %}
+
+<script type="text/javascript">
+  pr = $('.patient_result');
+  for (var i = pr.length - 1; i >= 0; i--) {
+    pr[i].addEventListener('click', function() {
+      var patient_data = this.dataset.patient;
+      console.log(patient_data, typeof(patient_data))
+      var inputs = $('#appointment_form_container :input');
+      inputs.each(function() {
+
+      });
+    });
+  }
+</script>

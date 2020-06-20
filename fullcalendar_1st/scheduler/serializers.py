@@ -43,11 +43,13 @@ class AppointmentSerializer(serializers.ModelSerializer):
         'doctor', 'patient', 'service']
 
 
+# TODO: should be under myuser.serializers
 class PatientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
         fields = ['first_name', 'last_name',
         'email_address', 'phone_number']
+
 
 # class AppointmentValidSerializer(serializers.Serializer):
 #     start = serializers.DateTimeField(

@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
-from scheduler.serializers import EventSerializer, AppointmentSerializer
+from scheduler.serializers import EventSerializer, AppointmentSerializer, PatientSerializer
 from scheduler.models import Event, Appointment, Service
 
 from itertools import chain
@@ -16,6 +16,7 @@ from django.http import JsonResponse
 
 from myusers.models import Patient
 from django.template.loader import render_to_string
+import json
 # TODO: cleanup imports ^
 
 class GetSchedule(APIView):
@@ -92,6 +93,14 @@ def patient_lookup(request):
 
         else:
             patients = p.all()
+
+        l = []
+        for patient in patients:
+            pd = PatientSerializer(patient).data;
+            l.append({
+                'pd': pd,
+                'pds': json.dumps(pd)
+                })
 
         html = render_to_string(
             template_name = 'scheduler/patient_list_partial.html',
