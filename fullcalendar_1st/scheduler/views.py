@@ -104,7 +104,7 @@ def patient_lookup(request):
 
         html = render_to_string(
             template_name = 'scheduler/patient_list_partial.html',
-            context = {'patients': patients},
+            context = {'patients': l},
             )
 
         return JsonResponse(html, safe=False)

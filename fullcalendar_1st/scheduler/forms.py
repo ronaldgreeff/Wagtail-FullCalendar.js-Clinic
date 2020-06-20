@@ -85,10 +85,10 @@ class AppointmentForm(forms.ModelForm):
         widget=XDSoftDateTimePickerInput(
             attrs={'class': "schedule_end_field"}))
 
-    patient_first_name = forms.CharField()
-    patient_last_name = forms.CharField()
-    patient_email = forms.EmailField()
-    patient_phone_number = forms.RegexField(
+    first_name = forms.CharField()
+    last_name = forms.CharField()
+    email_address = forms.EmailField()
+    phone_number = forms.RegexField(
         regex = r'^\+?1?\d{9,15}$', 
         # message = ("Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
         )
@@ -96,11 +96,9 @@ class AppointmentForm(forms.ModelForm):
     class Meta:
         model = Appointment
         fields = ['form_type', 'start', 'end',
-            'service', 'doctor',
-            'patient_first_name',
-            'patient_last_name',
-            'patient_email',
-            'patient_phone_number']
+            'service', 'doctor', 'first_name',
+            'last_name', 'email_address',
+            'phone_number']
 
 # class BaseEventForm(forms.Form):
 #     title = forms.CharField()

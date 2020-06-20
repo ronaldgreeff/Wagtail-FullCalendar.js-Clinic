@@ -1,7 +1,7 @@
 {% if patients %}
    <ul>
   {% for patient in patients %}
-    <a class="patient_result" data-patient="{{ patient }}">{{ patient }}</li></a>
+    <a class="patient_result" data-patient="{{ patient.pds }}">{{ patient.pd }}</li></a>
   {% endfor %}
   </ul>
 {% else %}
@@ -9,15 +9,13 @@
 {% endif %}
 
 <script type="text/javascript">
-  pr = $('.patient_result');
-  for (var i = pr.length - 1; i >= 0; i--) {
-    pr[i].addEventListener('click', function() {
-      var patient_data = this.dataset.patient;
-      console.log(patient_data, typeof(patient_data))
-      var inputs = $('#appointment_form_container :input');
-      inputs.each(function() {
-
-      });
+  $('.patient_result').each(function() {
+    $(this).on('click', function() {
+      var patient_data = JSON.parse(this.dataset.patient);
+      var appointment_form = $('#appointment_form');
+      for (let [key, val] of Object.entries(patient_data)) {
+        $(appointment_form).find('[name="' + key + '"]').val(val)
+      };
     });
-  }
+  });
 </script>
