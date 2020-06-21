@@ -9,6 +9,7 @@
 {% endif %}
 
 <script type="text/javascript">
+  // on click, populate patient details on form
   $('.patient_result').each(function() {
     $(this).on('click', function() {
       var patient_data = JSON.parse(this.dataset.patient);

@@ -99,20 +99,3 @@ class AppointmentForm(forms.ModelForm):
             'service', 'doctor', 'first_name',
             'last_name', 'email_address',
             'phone_number']
-
-# class BaseEventForm(forms.Form):
-#     title = forms.CharField()
-#     start = forms.DateField()
-#     end = forms.DateField()
-#     recurring = forms.BooleanField()
-#     recurrance= forms.IntegerField()
-
-
-# class AppointmentForm(BaseEventForm):
-#     service = forms.ModelChoiceField(queryset=Service.objects.all())
-#     doctor = forms.ModelChoiceField(queryset=Doctor.objects.all())
-#     patient = forms.ModelChoiceField(queryset=Patient.objects.all())
-
-
-# class EventForm(BaseEventForm):
-#     users = forms.MultipleChoiceField(choices=[])

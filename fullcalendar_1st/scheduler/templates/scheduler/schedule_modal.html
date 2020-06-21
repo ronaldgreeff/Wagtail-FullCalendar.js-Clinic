@@ -73,9 +73,9 @@ https://www.fusionbox.com/blog/detail/creating-conditionally-required-fields-in-
 <script type="text/javascript">
 
   // format conversion helpers
-  function formatDateTimeMoment(time) {
-    return moment(time).format(format);
-  }
+  // function formatDateTimeMoment(time) {
+  //   return moment(time).format(format);
+  // }
 
   // keep create obj to keep track of initial object + any changes
   class ScheduleModalManager {
@@ -90,7 +90,7 @@ https://www.fusionbox.com/blog/detail/creating-conditionally-required-fields-in-
 
     setAllStartFields() {
       var val_to_display = moment(this.schedule_event_start).format(
-        'DD-MM-YYYY hh:mm');
+        'DD-MM-YYYY HH:mm');
 
       $.each( $('.schedule_start_field'), function(i, v) {
         v.value = val_to_display;
@@ -99,7 +99,7 @@ https://www.fusionbox.com/blog/detail/creating-conditionally-required-fields-in-
 
     setEventEndField(active_form_id) {
       var end_display_val = moment(this.schedule_event_start).add(
-        this.appointmentDuration, 'minutes').format('DD-MM-YYYY hh:mm');
+        this.appointmentDuration, 'minutes').format('DD-MM-YYYY HH:mm');
 
       var end_field_selector = '#' + active_form_id + ' #id_end';
 

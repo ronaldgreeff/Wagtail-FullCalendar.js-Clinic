@@ -7,15 +7,14 @@
       // format: 'd/m/Y H:i',
       format: 'd-m-Y H:i',
 
-      onChangeDateTime: function (dp, $input) {
-
-        var newEventStart = moment(dp);
-
-        SMM.setScheduleEventStart(newEventStart);
-        SMM.setAllStartFields();
-        if (SMM.appointmentDuration) {
-            // TODO: update appointment end field
-            console.log(SMM.appointmentDuration);
+      onChangeDateTime: function (dp, input) {
+        if (input[0].id == 'id_start') {
+          var newEventStart = moment(dp);
+          SMM.setScheduleEventStart(newEventStart);
+          SMM.setAllStartFields();
+        } else if (input[0].id == 'id_end') {
+          console.log(dp)
+          // SMM.updateStart()
         }
       }
     });
