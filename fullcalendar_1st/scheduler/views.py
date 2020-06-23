@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
-from scheduler.serializers import EventSerializer, AppointmentSerializer, PatientSerializer
+from scheduler.serializers import PatientSerializer
 from scheduler.models import Event, Appointment, Service
 
 from itertools import chain
@@ -30,15 +30,16 @@ class GetSchedule(APIView):
     # authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [IsAuthenticated] #[permissions.IsAdminUser]
 
-    def CollectSchedule(self):
+    def collect_schedule(self):
         events = EventSerializer(Event.objects.all(), many=True)
         appointments = AppointmentSerializer(Appointment.objects.all(), many=True)
         return list(chain(events.data, appointments.data))
 
     def get(self, request, format=None):
-        schedule = self.CollectSchedule()
+        schedule = self.collect_schedule()
         return Response(schedule)
 
+    # putting this in scheduler_tags
     # def post(self, request, format=None):
     #     """
     #     POST should just check if the start date is valid
