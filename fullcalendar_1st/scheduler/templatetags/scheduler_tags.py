@@ -29,8 +29,6 @@ def load_schedule_modal(context):
     """ Loads modal containing forms (Event and Appointment) to allow the user to easily
     switch between the two. form_type passed in via data-* attribute """
 
-
-
     ## old form save method
     # request = context['request']
     # get_form = {'event': EventForm, 'appointment': AppointmentForm}

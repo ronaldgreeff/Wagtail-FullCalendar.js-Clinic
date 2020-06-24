@@ -6,17 +6,21 @@
     $("input[name='{{ widget.name }}']").datetimepicker({
       // format: 'd/m/Y H:i',
       format: 'd-m-Y H:i',
-
       onChangeDateTime: function (dp, input) {
-        if (input[0].id == 'id_start') {
-          var newEventStart = moment(dp);
-          SMM.setScheduleEventStart(newEventStart);
-          SMM.setAllStartFields();
-        } else if (input[0].id == 'id_end') {
-          console.log(dp)
-          // SMM.updateStart()
-        }
+        var s = moment(dp).toISOString();
+        $(input).attr('info', s);
       }
+
+      // onChangeDateTime: function (dp, input) {
+      //   if (input[0].id == 'id_start') {
+      //     var newEventStart = moment(dp);
+      //     SMM.setScheduleEventStart(newEventStart);
+      //     SMM.setAllStartFields();
+      //   } else if (input[0].id == 'id_end') {
+      //     console.log(dp)
+      //     // SMM.updateStart()
+      //   }
+      // }
     });
   });
 

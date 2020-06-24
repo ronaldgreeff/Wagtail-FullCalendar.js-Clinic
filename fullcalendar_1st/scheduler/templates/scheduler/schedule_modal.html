@@ -78,40 +78,80 @@ https://www.fusionbox.com/blog/detail/creating-conditionally-required-fields-in-
   // }
 
   // keep create obj to keep track of initial object + any changes
-  class ScheduleModalManager {
-    // event_start = event_start; // ISO 8601 string
+  // class ScheduleModalManager {
 
-    setScheduleEventStart(new_start) {
-      this.schedule_event_start = new_start;
-    }
-    setAppointmentDuration(duration) {
-      this.appointmentDuration = duration;
-    }
+  //   setScheduleEventStart(new_start) {
+  //     this.schedule_event_start = new_start;
+  //   }
+  //   setAppointmentDuration(duration) {
+  //     this.appointmentDuration = duration;
+  //   }
 
-    setAllStartFields() {
-      var val_to_display = moment(this.schedule_event_start).format(
-        'DD-MM-YYYY HH:mm');
+  //   setAllStartFields() {
+  //     var val_to_display = moment(this.schedule_event_start).format(
+  //       'DD-MM-YYYY HH:mm');
 
-      $.each( $('.schedule_start_field'), function(i, v) {
-        v.value = val_to_display;
+  //     $.each( $('.schedule_start_field'), function(i, v) {
+  //       v.value = val_to_display;
+  //     });
+  //   }
+
+  //   setEventEndField(active_form_id) {
+  //     var end_display_val = moment(this.schedule_event_start).add(
+  //       this.appointmentDuration, 'minutes').format('DD-MM-YYYY HH:mm');
+
+  //     var end_field_selector = '#' + active_form_id + ' #id_end';
+
+  //     var service_end = $(end_field_selector)[0];
+  //     console.log(service_end)
+  //     console.log(end_display_val)
+
+  //     service_end.value = end_display_val;
+  //   }
+  // }
+
+  // var SMM = new ScheduleModalManager();
+
+  $('#id_service').change( function() {
+
+    var service_id = $(this).val();
+    var active_form_id = $(this).closest('form')[0].id;
+
+    // only bother with ajax if an option selected
+    if (service_id) {
+
+      $.ajax({
+        type: 'GET',
+        // TODO - add below as data-attr
+        url: 'http://127.0.0.1:8000/ajax/event_service_duration/',
+        data: {
+          'service_id': service_id
+        },
+        success: function (response) {
+          var duration = JSON.parse(response['duration']);
+
+          SMM.setAppointmentDuration(duration);
+          // instead, set data attribute on service field
+
+          SMM.setEventEndField(active_form_id);
+        },
+        error: function (xhr, status, error) {
+          console.log("error");
+          console.log(status, error);
+        }
       });
     }
+  })
 
-    setEventEndField(active_form_id) {
-      var end_display_val = moment(this.schedule_event_start).add(
-        this.appointmentDuration, 'minutes').format('DD-MM-YYYY HH:mm');
+  // $('#id_start').change( function() {
+  //   var newEventStart = moment(dp);
+  //   SMM.setScheduleEventStart(newEventStart);
+  //   SMM.setAllStartFields();
+  // });
 
-      var end_field_selector = '#' + active_form_id + ' #id_end';
-
-      var service_end = $(end_field_selector)[0];
-      console.log(service_end)
-      console.log(end_display_val)
-
-      service_end.value = end_display_val;
-    }
-  }
-
-  var SMM = new ScheduleModalManager();
+  // $('#id_end').change( function() {
+  //   SMM.updateStart();
+  // });
 
 </script>
 
@@ -134,34 +174,6 @@ https://www.fusionbox.com/blog/detail/creating-conditionally-required-fields-in-
 </script>
 
 <script type="text/javascript">
-  $('#id_service').change( function() {
-
-    var service_id = $(this).val();
-    var active_form_id = $(this).closest('form')[0].id;
-
-    // only bother with ajax if an option selected
-    if (service_id) {
-
-      $.ajax({
-        type: 'GET',
-        // TODO - add below as data-attr
-        url: 'http://127.0.0.1:8000/ajax/event_service_duration/',
-        data: {
-          'service_id': service_id
-        },
-        success: function (response) {
-          var duration = JSON.parse(response['duration']);
-          SMM.setAppointmentDuration(duration);
-          SMM.setEventEndField(active_form_id);
-        },
-        error: function (xhr, status, error) {
-          console.log("error");
-          console.log(status, error);
-        }
-      });
-    }
-  })
-
 
   var lookupPatient = function(qb, v) {
     var query_basis = qb;

@@ -38,12 +38,14 @@ document.addEventListener('DOMContentLoaded', function() {
     //   }
     // },
     select: function(info) {
-      // console.log('info.start', info.start);
-      SMM.setScheduleEventStart( moment(info.start).toISOString() );
-      SMM.setAllStartFields();
-
+      // set data attributes and values in form fields
+      var m = moment(info.start);
+      $.each( $('.schedule_start_field'), function(i, v) {
+          $(v).attr('info', m.toISOString());
+          v.value = m.format('DD-MM-YYYY HH:mm');
+        });
     }
-    // nice examples here
+    // nice examples here for expanding fullcalendar
     // https://www.webslesson.info/2017/12/jquery-fullcalandar-integration-with-php-and-mysql.html
     // eventResize: function(event){},
     // eventDrop: function(event){},

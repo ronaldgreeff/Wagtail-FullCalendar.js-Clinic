@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
-from scheduler.serializers import PatientSerializer
+from scheduler.serializers import PatientSerializer, EventSerializer, AppointmentSerializer
 from scheduler.models import Event, Appointment, Service
 
 from itertools import chain
@@ -38,28 +38,6 @@ class GetSchedule(APIView):
     def get(self, request, format=None):
         schedule = self.collect_schedule()
         return Response(schedule)
-
-    # putting this in scheduler_tags
-    # def post(self, request, format=None):
-    #     """
-    #     POST should just check if the start date is valid
-    #     and return the "end time" based on service selected
-    #     """
-    #     # AppointmentValidSerializer, EventValidSerializer
-    #     form_type = request.data.pop('form_type')
-    #     if form_type == 'appointment':
-    #         serializer = AppointmentSerializer(request.data)
-    #     elif form_type == 'event':
-    #         serializer = EventSerializer(request.data)
-
-    #     print(request.data)
-    #     if serializer.is_valid():
-    #         print('post serializer valid\n{}\n'.format(request.data))
-    #         return Response(serializer.data)
- 
-    #     print('post serializer invalid\n{}\n---\n{}'.format(request.data, serializer.errors))
-
-    #     return Response(serializer.errors)
 
 
 def event_service_duration(request):
