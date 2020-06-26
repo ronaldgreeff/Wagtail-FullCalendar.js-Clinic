@@ -72,50 +72,11 @@ https://www.fusionbox.com/blog/detail/creating-conditionally-required-fields-in-
 
 <script type="text/javascript">
 
-  // format conversion helpers
-  // function formatDateTimeMoment(time) {
-  //   return moment(time).format(format);
-  // }
-
-  // keep create obj to keep track of initial object + any changes
-  // class ScheduleModalManager {
-
-  //   setScheduleEventStart(new_start) {
-  //     this.schedule_event_start = new_start;
-  //   }
-  //   setAppointmentDuration(duration) {
-  //     this.appointmentDuration = duration;
-  //   }
-
-  //   setAllStartFields() {
-  //     var val_to_display = moment(this.schedule_event_start).format(
-  //       'DD-MM-YYYY HH:mm');
-
-  //     $.each( $('.schedule_start_field'), function(i, v) {
-  //       v.value = val_to_display;
-  //     });
-  //   }
-
-  //   setEventEndField(active_form_id) {
-  //     var end_display_val = moment(this.schedule_event_start).add(
-  //       this.appointmentDuration, 'minutes').format('DD-MM-YYYY HH:mm');
-
-  //     var end_field_selector = '#' + active_form_id + ' #id_end';
-
-  //     var service_end = $(end_field_selector)[0];
-  //     console.log(service_end)
-  //     console.log(end_display_val)
-
-  //     service_end.value = end_display_val;
-  //   }
-  // }
-
-  // var SMM = new ScheduleModalManager();
-
   $('#id_service').change( function() {
 
-    var service_id = $(this).val();
-    var active_form_id = $(this).closest('form')[0].id;
+    var el = $(this)
+    var service_id = el.val();
+    var active_form_id = el.closest('form')[0].id;
 
     // only bother with ajax if an option selected
     if (service_id) {
@@ -129,11 +90,13 @@ https://www.fusionbox.com/blog/detail/creating-conditionally-required-fields-in-
         },
         success: function (response) {
           var duration = JSON.parse(response['duration']);
+          var start = moment( $('#id_start').attr('info') );
+          var end = start.add( duration, 'minutes' );
 
-          SMM.setAppointmentDuration(duration);
-          // instead, set data attribute on service field
+          var end_el = $('#id_end');
+          end_el.val( end.format('DD-MM-YYYY HH:mm') );
+          end_el.attr('info', end.toISOString());
 
-          SMM.setEventEndField(active_form_id);
         },
         error: function (xhr, status, error) {
           console.log("error");
