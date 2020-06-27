@@ -12,7 +12,7 @@ from rest_framework import authentication, permissions
 
 from rest_framework.permissions import IsAuthenticated
 
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 
 from myusers.models import Patient
 from django.template.loader import render_to_string
@@ -92,4 +92,40 @@ def patient_lookup(request):
 def admin_schedule(request):
     """ Render the html which contains FullCalendar JS code.
     FullCalendar calls EventsViewSet """
+
+    ser = {'event': EventSerializer, 'appointment': AppointmentSerializer}
+
+    if request.method == 'POST':
+
+        form_type = request.POST.get('form_type')
+        ser_form = ser[form_type](data=request.POST)
+
+        print('\nform_type: {}\ndata: {}\n'.format(form_type, request.POST))
+        print('ser_form: {}\n'.format(ser_form))
+
+        # response_data = {'test': 'test'}
+
+        # # return JsonResponse(response_data)
+
+        # return HttpResponse(
+        #     json.dumps(response_data),
+        #     content_type='application/json'
+        #     )
+
+        if ser_form.is_valid():
+            # TODO: Create
+            return JsonResponse({'created': ser_form.data})
+            # return HttpResponse(
+            #     json.dumps(ser_form.data),
+            #     content_type='application/json'
+            #     )
+        else:
+            return JsonResponse({'errors': ser_form.errors})
+            # return HttpResponse(
+            #     json.dumps(ser_form.errors),
+            #     content_type='application/json'
+            #     )
+
+        # return JsonResponse(response_data)
+
     return render(request, 'scheduler/admin_schedule.html')

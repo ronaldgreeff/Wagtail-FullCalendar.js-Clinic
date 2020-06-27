@@ -1,6 +1,9 @@
 from django import template
 from scheduler.forms import EnquirerForm, EventForm, AppointmentForm
-from scheduler.serializers import EventSerializer, AppointmentSerializer
+# from scheduler.serializers import EventSerializer, AppointmentSerializer
+# from rest_framework.response import Response
+# from django.http import JsonResponse #HttpResponse
+# import json
 # from django.shortcuts import render
 
 register = template.Library()
@@ -29,47 +32,47 @@ def load_schedule_modal(context):
     """ Loads modal containing forms (Event and Appointment) to allow the user to easily
     switch between the two. form_type passed in via data-* attribute """
 
-    ## old form save method
     # request = context['request']
-    # get_form = {'event': EventForm, 'appointment': AppointmentForm}
+    # ser = {'event': EventSerializer, 'appointment': AppointmentSerializer}
 
     # if request.method == 'POST':
     #     form_type = request.POST.get('form_type')
-    #     form = get_form[form_type](request.POST)
+    #     ser_form = ser[form_type](data=request.POST)
+    #     print('\nform_type: {}\ndata: {}\n'.format(form_type, request.POST))
+    #     print('ser_form: {}\n'.format(ser_form))
 
-    #     if form.is_valid():
-    #         forms = form.save()
+    #     response_data = {'test': 'test'}
 
-    #         return {
-    #             'saved_form': saved_form,
-    #         }
+    #     return JsonResponse(response_data)
 
-    # print(request.POST)
-    # <QueryDict: {'csrfmiddlewaretoken': ['DMe2zSZNjRZNTkkSycuXYWFGgPDMWEPoeIo5vlXYNa7LWURkUT62OW1RYBYvm2JM'],
-    # 'start': ['08-05-2020 00:00'], 'end': ['08-05-2020 01:00'], 'service': ['1'], 'doctor': [''], 'first_name': ['asd'], 'last_name': ['asd'],
-    # 'email_address': ['sdfsd@sadfa.com'], 'phone_number': ['asdas@asd.com'], 'form_type': ['appointment']}>
+    #     # return HttpResponse(
+    #     #     json.dumps(response_data),
+    #     #     content_type='application/json'
+    #     #     )
 
-    request = context['request']
-    ser = {'event': EventSerializer, 'appointment': AppointmentSerializer}
+    #     # if ser_form.is_valid():
+    #     #     print('*valid:\n', ser_form.data)
+    #     #     return HttpResponse(
+    #     #         json.dumps(ser_form.data),
+    #     #         content_type='application/json'
+    #     #         )
+    #     # else:
+    #     #     print('*invalid:\n', json.dumps(ser_form.errors))
+    #     #     return HttpResponse(
+    #     #         json.dumps(ser_form.errors),
+    #     #         content_type='application/json'
+    #     #         )
 
-    if request.method == 'POST':
+    # else:
 
-        form_type = request.POST.pop('form_type')
-        # todo - put data in a dict
-        ser_form = ser[form_type](data=request.POST)
-
-        if ser_form.is_valid():
-            return Response(ser_form.data)
-        else:
-            return Response(ser_form.errors)
-
-    else:
-        # form = get_form[form_type](request.POST)
-        forms = {'event': EventForm(),
-        'appointment': AppointmentForm()}
+    # if request.method == 'GET':
+    #     # form = get_form[form_type](request.POST)
+    #     forms = {'event': EventForm(),
+    #     'appointment': AppointmentForm()}
 
     return {
-        'forms': forms,
+        'forms': {'event': EventForm(),
+            'appointment': AppointmentForm()},
     }
 
     ## from views / serializer

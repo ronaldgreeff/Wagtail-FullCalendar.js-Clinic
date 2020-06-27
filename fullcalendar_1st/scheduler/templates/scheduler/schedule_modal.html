@@ -27,7 +27,7 @@
         <form id="appointment_form" action="." method="POST">
           {% csrf_token %}
           {{ forms.appointment.as_p }}
-          <p><input type="submit" value="Schedule"></p>
+          <p><input id="id_submit_appointment" class="schedule_submit_btn" type="submit" value="Schedule"></p>
         </form>
       </div>
       <div style="margin-left: 50%;">
@@ -43,7 +43,7 @@
     <form id="event_form" action="." method="POST">
       {% csrf_token %}
       {{ forms.event.as_p }}
-      <p><input type="submit" value="Schedule"></p>
+      <p><input id="id_submit_event" class="schedule_submit_btn" type="submit" value="Schedule"></p>
     </form>
   </div>
 </div>
@@ -71,6 +71,37 @@ https://www.fusionbox.com/blog/detail/creating-conditionally-required-fields-in-
 </style>
 
 <script type="text/javascript">
+  $('#event_form').on('submit', function(event) {
+
+    event.preventDefault();
+    var event_form = $(this);
+    console.log(event_form)
+    console.log(event_form.serializeArray())
+
+    for (var i = event_form.length - 1; i >= 0; i--) {
+      if (event_form[i].info) {
+
+      }
+    }
+
+    // schedule_event( $(this).serializeArray() );
+  });
+</script>
+
+<script type="text/javascript">
+
+  function schedule_event(serialized_array) {
+
+    $.ajax({
+      url : '.',
+      type: 'POST',
+      data: serialized_array,
+      success: function(json) {
+        console.log('*success:\n')
+        console.log(json)
+      }
+    })
+  }
 
   $('#id_service').change( function() {
 
@@ -84,6 +115,7 @@ https://www.fusionbox.com/blog/detail/creating-conditionally-required-fields-in-
       $.ajax({
         type: 'GET',
         // TODO - add below as data-attr
+        // endpoint should be "event_service_duration/"
         url: 'http://127.0.0.1:8000/ajax/event_service_duration/',
         data: {
           'service_id': service_id

@@ -4,16 +4,40 @@ from myusers.models import Doctor, Patient, User
 
 
 class UserField(serializers.RelatedField):
-    def to_representation(self, value):
-        return '{}'.format(value.first_name)
+    def to_representation(self, instance):
+        return '{}'.format(instance.first_name)
+        # return {
+        #     'first_name': instance.first_name,
+        #     'last_name': instance.last_name
+        # }
+
+    # def to_internal_value(self, value):
+    #     user = User.objects.filter(id=value)
+    #     if user:
+    #         return 
+    #     return
+
+#         try:
+#             try:
+#                 obj_id = data['id']
+#                 return User.objects.get(id=int(obj_id))
+#             except KeyError:
+#                 raise serializers.ValidationError(
+#                     'id is required.')
+#             except ValueError:
+#                 raise serializers.ValidationError(
+#                     'id must be an integer.')
+#         except User.DoesNotExist:
+#             raise serializers.ValidationError(
+#                 'User does not exist.')
 
 
 class EventSerializer(serializers.ModelSerializer):
-    users = UserField(queryset=User.objects.all(), many=True)
+    # users = UserField(queryset=User.objects.all(), many=True)
 
     class Meta:
         model = Event
-        fields = ['start',  'users']
+        fields = ['start', 'users']
 
 
 
@@ -41,6 +65,7 @@ class AppointmentSerializer(serializers.ModelSerializer):
         model = Appointment
         fields = ['title', 'start', 'end',
         'doctor', 'patient', 'service']
+
 
 
 # TODO: should be under myuser.serializers
