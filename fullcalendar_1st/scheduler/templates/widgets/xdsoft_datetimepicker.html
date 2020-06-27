@@ -7,20 +7,25 @@
       // format: 'd/m/Y H:i',
       format: 'd-m-Y H:i',
       onChangeDateTime: function (dp, input) {
-        var s = moment(dp).toISOString();
-        $(input).attr('info', s);
-      }
+        // if any datetime change
+        var m = moment(dp);
+        var s = m.toISOString();
+        input.attr('info', s);
 
-      // onChangeDateTime: function (dp, input) {
-      //   if (input[0].id == 'id_start') {
-      //     var newEventStart = moment(dp);
-      //     SMM.setScheduleEventStart(newEventStart);
-      //     SMM.setAllStartFields();
-      //   } else if (input[0].id == 'id_end') {
-      //     console.log(dp)
-      //     // SMM.updateStart()
-      //   }
-      // }
+        // TODO: since datetimepicker is used outside of event/appointment form,
+        // this code block should be moved to secretary_schedule.js
+        if (input.attr('id') == 'id_start') {
+          var selected_service_duration = $('#id_service').attr('info');
+          if ( selected_service_duration ) {
+            var end_el = $('#id_end');
+            var n = m.add(selected_service_duration, 'minutes');
+
+            end_el.val( n.format('DD-MM-YYYY HH:mm') );
+            end_el.attr( 'info', n.toISOString() );
+          }
+        }
+
+      }
     });
   });
 
