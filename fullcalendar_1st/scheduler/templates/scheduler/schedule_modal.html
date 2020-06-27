@@ -75,22 +75,49 @@ https://www.fusionbox.com/blog/detail/creating-conditionally-required-fields-in-
 
     event.preventDefault();
     var event_form = $(this);
-    console.log(event_form)
-    console.log(event_form.serializeArray())
 
-    for (var i = event_form.length - 1; i >= 0; i--) {
-      if (event_form[i].info) {
-
-      }
+    serialized_data = {
+      'csrfmiddlewaretoken': event_form.find("[name='csrfmiddlewaretoken']").val(),
+      'title': event_form.find('#id_title').val(),
+      'start': event_form.find('#id_start').attr('info'),
+      'end': event_form.find('#id_end').attr('info'),
+      'users': event_form.find('#id_users').val(),
+      'form_type': event_form.find('#id_form_type').val(),
     }
 
-    // schedule_event( $(this).serializeArray() );
+    schedule_event( serialized_data );
+
   });
+
+  $('#appointment_form').on('submit', function(event) {
+
+    event.preventDefault();
+    var appointment_form = $(this);
+
+    serialized_data = {
+      'csrfmiddlewaretoken': appointment_form.find("[name='csrfmiddlewaretoken']").val(),
+      'start': appointment_form.find('#id_start').attr('info'),
+      'end': appointment_form.find('#id_end').attr('info'),
+      'service': appointment_form.find('#id_service').val(),
+      'doctor': appointment_form.find('#id_doctor').val(),
+      'first_name': appointment_form.find('#id_first_name').val(),
+      'last_name': appointment_form.find('#id_last_name').val(),
+      'email_address': appointment_form.find('#id_email_address').val(),
+      'phone_number': appointment_form.find('#id_phone_number').val(),
+      'form_type': appointment_form.find('#id_form_type').val(),
+    }
+
+    schedule_event( serialized_data );
+
+  });
+
 </script>
 
 <script type="text/javascript">
 
   function schedule_event(serialized_array) {
+
+    console.log(serialized_data)
 
     $.ajax({
       url : '.',

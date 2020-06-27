@@ -66,7 +66,7 @@ class Event(TimeStampedModel):
     title = models.CharField(max_length=255)
     start = models.DateTimeField()
     end = models.DateTimeField()
-    all_day = models.BooleanField(default=False)
+    # all_day = models.BooleanField(default=False)
     users = models.ManyToManyField('myusers.User')
 
     def __str__(self):

@@ -66,7 +66,7 @@ class EventForm(forms.ModelForm):
 
     class Meta:
         model = Event
-        fields = ['form_type', 'title', 'all_day',
+        fields = ['form_type', 'title',
             'start', 'end', 'users']
 
 
