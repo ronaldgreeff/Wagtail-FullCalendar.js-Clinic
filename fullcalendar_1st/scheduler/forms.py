@@ -76,6 +76,7 @@ class AppointmentForm(forms.ModelForm):
         initial='appointment',
         widget=forms.HiddenInput())
 
+
     start = forms.DateTimeField(
         input_formats=['%d/%m/%Y %H:%M'],
         widget=XDSoftDateTimePickerInput(
@@ -84,6 +85,10 @@ class AppointmentForm(forms.ModelForm):
         input_formats=['%d/%m/%Y %H:%M'],
         widget=XDSoftDateTimePickerInput(
             attrs={'class': "schedule_end_field"}))
+
+    patient_id = forms.CharField(
+        initial='',
+        widget=forms.HiddenInput())
 
     first_name = forms.CharField()
     last_name = forms.CharField()
@@ -96,6 +101,6 @@ class AppointmentForm(forms.ModelForm):
     class Meta:
         model = Appointment
         fields = ['form_type', 'start', 'end',
-            'service', 'doctor', 'first_name',
+            'service', 'doctor', 'patient_id', 'first_name',
             'last_name', 'email_address',
             'phone_number']

@@ -13,6 +13,7 @@
   $('.patient_result').each(function() {
     $(this).on('click', function() {
       var patient_data = JSON.parse(this.dataset.patient);
+      console.log('patient_partial_list.html', patient_data )
       var appointment_form = $('#appointment_form');
       for (let [key, val] of Object.entries(patient_data)) {
         $(appointment_form).find('[name="' + key + '"]').val(val)
