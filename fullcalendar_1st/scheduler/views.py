@@ -97,7 +97,42 @@ def admin_schedule(request):
     if request.method == 'POST':
 
         form_type = request.POST.get('form_type')
-        ser_form = ser[form_type](data=request.POST)
+        # ser_form = ser[form_type](data=request.POST)
+        if form_type == 'appointment':
+
+            patient_id = request.POST.get('patient_id')
+            patient_first_name = request.POST.get('form_type')
+            patient_last_name = request.POST.get('form_type')
+            patient_email_address = request.POST.get('form_type')
+            patient_phone_number = request.POST.get('form_type')
+
+            if patient_id:
+                # TODO: add button to allow user to 
+                # update patient details in the same form
+                patient = Patient.objects.get(id=patient_id)
+                patient.is_confirmed=True
+                patient.save()
+
+            else:
+                patient = Patient.objects.create(
+                    first_name = patient_first_name,
+                    last_name = patient_last_name,
+                    email_address = patient_email_address,
+                    is_confirmed = True,
+                    phone_number = patient_phone_number,
+                    )
+
+            ser_form = AppointmentSerializer(
+                data={
+                    'start':request.POST.get('start'),
+                    'end':request.POST.get('end'),
+                    'doctor':request.POST.get('doctor'),
+                    'service':request.POST.get('service'),
+                    'patient':patient.id,
+                })
+
+        elif form_type == 'event':
+            ser_form = EventSerializer(data=request.POST)
 
         # print('\nform_type: {}\ndata: {}\n'.format(form_type, request.POST))
         # print('ser_form: {}\n'.format(ser_form))

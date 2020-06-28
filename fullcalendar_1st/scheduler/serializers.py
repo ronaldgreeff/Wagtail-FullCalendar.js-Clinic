@@ -38,27 +38,31 @@ class EventSerializer(serializers.ModelSerializer):
 #     def to_internal_value(self, value):
 #         print(value, 'value')
 
+
+# TODO: should be under myuser.serializers
+# class PatientIdField(serializers.RelatedField):
+#     def to_internal_value(self, value):
+#         return int(value)
+
+#     def to_representation(self, value):
+#         return str(value)
+class PatientSerializer(serializers.ModelSerializer):
+    patient_id = serializers.IntegerField(read_only=True, source='id')
+
+    class Meta:
+        model = Patient
+        fields = ['patient_id', 'first_name', 'last_name',
+        'email_address', 'phone_number']
+
 class AppointmentSerializer(serializers.ModelSerializer):
     # title = ServiceField(queryset=Service.objects.all(),
     #     source='service')
     # service = ServiceField(queryset=Service.objects.all())
     # doctor = DoctorField(queryset=Doctor.objects.all())
     # patient = PatientField(queryset=Patient.objects.all())
-    # patient = PatientField()
+    # patient = PatientSerializer()
 
     class Meta:
         model = Appointment
         fields = ['start', 'end',
         'doctor', 'patient', 'service']
-
-
-
-# TODO: should be under myuser.serializers
-class PatientSerializer(serializers.ModelSerializer):
-    patient_id = serializers.RelatedField(queryset=Patient.objects.all(),
-        source='id')
-
-    class Meta:
-        model = Patient
-        fields = ['patient_id', 'first_name', 'last_name',
-        'email_address', 'phone_number']
