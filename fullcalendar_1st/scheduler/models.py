@@ -13,7 +13,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 # comment for first migration (circular depencies) - see Appointment below too
-from myusers.models import Doctor, Patient
+# from myusers.models import Doctor#, Patient
 
 import datetime
 
@@ -37,8 +37,8 @@ class TimeStampedModel(models.Model):
 class Appointment(TimeStampedModel):
     service = models.ForeignKey(Service, on_delete='CASCADE', null=True)
     # comment for first migration -->
-    doctor = models.OneToOneField(Doctor, on_delete='CASCADE', null=True, blank=True)
-    patient = models.OneToOneField(Patient, on_delete='CASCADE', null=False)
+    # doctor = models.OneToOneField(Doctor, on_delete='CASCADE', null=True, blank=True)
+    # patient = models.OneToOneField(Patient, on_delete='CASCADE', null=False)
     # <-- comment for first migration
     start = models.DateTimeField()
     end = models.DateTimeField()

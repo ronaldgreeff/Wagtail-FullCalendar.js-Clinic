@@ -6,6 +6,8 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from scheduler.models import Appointment, Event
+
 
 class User(AbstractUser):
     is_owner = models.BooleanField(default=False) # is_staff + full authorization
@@ -19,7 +21,9 @@ class User(AbstractUser):
 
 class Doctor(models.Model):
     user = models.OneToOneField(User, on_delete='CASCADE', primary_key=True)
-    services = models.ManyToManyField('scheduler.Service')
+    appointments = models.ForeignKey(Appointment, on_delete='CASCADE', null=True)
+    events = models.ForeignKey(Event, on_delete='CASCADE', null=True)
+    # services = models.ManyToManyField('scheduler.Service')
 
     def __str__(self):
         return '{0}, {1}'.format(self.user.last_name, self.user.first_name)
@@ -34,6 +38,9 @@ class Patient(models.Model):
         regex=r'^\+?1?\d{9,15}$',
         message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True)
+
+    appointments = models.ForeignKey(Appointment, on_delete='CASCADE', null=True)
+
     # documents = wagtail.docs # ! review security considerations ! #
 
     def __str__(self):

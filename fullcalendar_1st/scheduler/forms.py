@@ -86,6 +86,8 @@ class AppointmentForm(forms.ModelForm):
         widget=XDSoftDateTimePickerInput(
             attrs={'class': "schedule_end_field"}))
 
+    doctor = forms.ModelChoiceField(queryset=Doctor.objects.all())
+
     patient_id = forms.CharField(
         initial='',
         widget=forms.HiddenInput())
