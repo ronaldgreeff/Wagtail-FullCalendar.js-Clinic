@@ -66,8 +66,8 @@ class EventForm(forms.ModelForm):
 
     class Meta:
         model = Event
-        fields = ['form_type', 'title',
-            'start', 'end', 'users']
+        fields = ['form_type',
+            'title', 'start', 'end', 'users']
 
 
 class AppointmentForm(forms.ModelForm):
@@ -75,7 +75,6 @@ class AppointmentForm(forms.ModelForm):
     form_type = forms.CharField(
         initial='appointment',
         widget=forms.HiddenInput())
-
 
     start = forms.DateTimeField(
         input_formats=['%d/%m/%Y %H:%M'],
@@ -86,7 +85,7 @@ class AppointmentForm(forms.ModelForm):
         widget=XDSoftDateTimePickerInput(
             attrs={'class': "schedule_end_field"}))
 
-    doctor = forms.ModelChoiceField(queryset=Doctor.objects.all())
+    doctor = forms.ModelChoiceField(queryset=Doctor.objects.all(), required=False)
 
     patient_id = forms.CharField(
         initial='',
@@ -102,7 +101,8 @@ class AppointmentForm(forms.ModelForm):
 
     class Meta:
         model = Appointment
-        fields = ['form_type', 'start', 'end',
-            'service', 'doctor', 'patient_id', 'first_name',
-            'last_name', 'email_address',
-            'phone_number']
+        fields = ['form_type',
+            'start', 'end',
+            'service', 'doctor', 'patient_id',
+            'first_name', 'last_name',
+            'email_address', 'phone_number']

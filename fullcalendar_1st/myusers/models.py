@@ -21,6 +21,7 @@ class User(AbstractUser):
 
 class Doctor(models.Model):
     user = models.OneToOneField(User, on_delete='CASCADE', primary_key=True)
+
     appointments = models.ForeignKey(Appointment, on_delete='CASCADE', null=True)
     events = models.ForeignKey(Event, on_delete='CASCADE', null=True)
     # services = models.ManyToManyField('scheduler.Service')
