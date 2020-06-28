@@ -22,12 +22,12 @@ class User(AbstractUser):
 class Doctor(models.Model):
     user = models.OneToOneField(User, on_delete='CASCADE', primary_key=True)
 
-    appointments = models.ForeignKey(Appointment, on_delete='CASCADE', null=True)
-    events = models.ForeignKey(Event, on_delete='CASCADE', null=True)
+    appointments = models.ForeignKey(Appointment, on_delete='CASCADE', null=True, blank=True)
+    events = models.ForeignKey(Event, on_delete='CASCADE', null=True, blank=True)
     # services = models.ManyToManyField('scheduler.Service')
 
     def __str__(self):
-        return '{0}, {1}'.format(self.user.last_name, self.user.first_name)
+        return '{0}'.format(self.user.username)
 
 
 class Patient(models.Model):
@@ -40,7 +40,7 @@ class Patient(models.Model):
         message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True)
 
-    appointments = models.ForeignKey(Appointment, on_delete='CASCADE', null=True)
+    appointments = models.ForeignKey(Appointment, on_delete='CASCADE', null=True, blank=True)
 
     # documents = wagtail.docs # ! review security considerations ! #
 

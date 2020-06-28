@@ -91,35 +91,36 @@ def patient_lookup(request):
 
 def admin_schedule(request):
     """ """
-
-    ser = {'event': EventSerializer, 'appointment': AppointmentSerializer}
+    # TODO: add button to so that user can
+    # update patient details then and there
 
     if request.method == 'POST':
 
         form_type = request.POST.get('form_type')
-        # ser_form = ser[form_type](data=request.POST)
+        print('\nform_type: {}\ndata: {}\n'.format(form_type, request.POST))
+
         if form_type == 'appointment':
 
-            patient_id = request.POST.get('patient_id')
-            patient_first_name = request.POST.get('form_type')
-            patient_last_name = request.POST.get('form_type')
-            patient_email_address = request.POST.get('form_type')
-            patient_phone_number = request.POST.get('form_type')
+            patient = request.POST.get('patient[first_name]')
+
+            patient_id = request.POST.get('patient[patient_id]')
+            first_name = request.POST.get('patient[first_name]')
+            last_name = request.POST.get('patient[last_name]')
+            email_address = request.POST.get('patient[email_address]')
+            phone_number = request.POST.get('patient[phone_number]')
 
             if patient_id:
-                # TODO: add button to allow user to 
-                # update patient details in the same form
                 patient = Patient.objects.get(id=patient_id)
-                patient.is_confirmed=True
+                patient.is_confirmed = True
                 patient.save()
 
             else:
                 patient = Patient.objects.create(
-                    first_name = patient_first_name,
-                    last_name = patient_last_name,
-                    email_address = patient_email_address,
+                    first_name = first_name,
+                    last_name = last_name,
+                    email_address = email_address,
                     is_confirmed = True,
-                    phone_number = patient_phone_number,
+                    phone_number = phone_number,
                     )
 
             ser_form = AppointmentSerializer(
@@ -134,8 +135,7 @@ def admin_schedule(request):
         elif form_type == 'event':
             ser_form = EventSerializer(data=request.POST)
 
-        # print('\nform_type: {}\ndata: {}\n'.format(form_type, request.POST))
-        # print('ser_form: {}\n'.format(ser_form))
+        print('ser_form: {}\n'.format(ser_form))
 
         if ser_form.is_valid():
             ser_form.save()

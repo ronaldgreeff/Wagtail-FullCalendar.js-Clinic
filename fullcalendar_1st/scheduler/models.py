@@ -49,8 +49,8 @@ class Appointment(TimeStampedModel):
             minutes=self.service.duration))
 
     def __str__(self):
-        return '{0} | {1} | {2} - {3}'.format(
-            (self.doctor if self.doctor else 'Unconfirmed'),
+        return '{0} | {1} | {2}'.format(
+            # (self.doctor if self.doctor else 'Unconfirmed'),
             self.service,
             self.start.strftime('%d/%m@%H:%M'),
             self.end.strftime('%d/%m@%H:%M'))

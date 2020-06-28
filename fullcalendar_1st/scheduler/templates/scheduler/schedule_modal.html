@@ -100,11 +100,13 @@ https://www.fusionbox.com/blog/detail/creating-conditionally-required-fields-in-
       'end': appointment_form.find('#id_end').attr('info'),
       'service': appointment_form.find('#id_service').val(),
       'doctor': appointment_form.find('#id_doctor').val(),
-      'first_name': appointment_form.find('#id_first_name').val(),
-      'last_name': appointment_form.find('#id_last_name').val(),
-      'email_address': appointment_form.find('#id_email_address').val(),
-      'phone_number': appointment_form.find('#id_phone_number').val(),
-      'patient_id': appointment_form.find('#id_patient_id').val(),
+      'patient': {
+        'first_name': appointment_form.find('#id_first_name').val(),
+        'last_name': appointment_form.find('#id_last_name').val(),
+        'email_address': appointment_form.find('#id_email_address').val(),
+        'phone_number': appointment_form.find('#id_phone_number').val(),
+        'patient_id': appointment_form.find('#id_patient_id').val(),
+      },
       'form_type': appointment_form.find('#id_form_type').val(),
     }
 
