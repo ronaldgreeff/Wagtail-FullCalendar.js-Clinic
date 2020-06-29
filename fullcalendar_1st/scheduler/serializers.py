@@ -114,6 +114,7 @@ class AppointmentSerializer(serializers.ModelSerializer):
         # 'patient': <Patient: q, t >, 'service': <Service: Appointment (60mins)>}
 
         patient = validated_data.pop('patient')
+        print(type(patient))
         doctor = validated_data.pop('doctor')
 
         # appointment = Appointment.objects.create(**validated_data)

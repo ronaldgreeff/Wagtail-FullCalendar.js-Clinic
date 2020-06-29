@@ -13,7 +13,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 # comment for first migration (circular depencies) - see Appointment below too
-# from myusers.models import Doctor#, Patient
+from myusers.models import Doctor, Patient
 
 import datetime
 
@@ -37,8 +37,8 @@ class TimeStampedModel(models.Model):
 class Appointment(TimeStampedModel):
     service = models.ForeignKey(Service, on_delete='CASCADE', null=True)
     # comment for first migration -->
-    # doctor = models.OneToOneField(Doctor, on_delete='CASCADE', null=True, blank=True)
-    # patient = models.OneToOneField(Patient, on_delete='CASCADE', null=False)
+    doctor = models.ForeignKey(Doctor, on_delete='CASCADE', null=True, blank=True)
+    patient = models.ForeignKey(Patient, on_delete='CASCADE', null=False)
     # <-- comment for first migration
     start = models.DateTimeField()
     end = models.DateTimeField()
@@ -55,18 +55,19 @@ class Appointment(TimeStampedModel):
             self.start.strftime('%d/%m@%H:%M'),
             self.end.strftime('%d/%m@%H:%M'))
 
-@receiver(post_save, sender=Appointment)
-def confirm_appointment(sender, instance, created, **kwargs):
-    if instance.doctor:
-        instance.patient.is_confirmed = True
-        instance.patient.save()
+
+# TODO: Confirm patient if they're booked into appointment
+# @receiver(post_save, sender=Appointment)
+# def confirm_appointment(sender, instance, created, **kwargs):
+#     if instance.doctor:
+#         instance.patient.is_confirmed = True
+#         instance.patient.save()
 
 
 class Event(TimeStampedModel):
     title = models.CharField(max_length=255)
     start = models.DateTimeField()
     end = models.DateTimeField()
-    # all_day = models.BooleanField(default=False)
     users = models.ManyToManyField('myusers.User')
 
     def __str__(self):
