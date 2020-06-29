@@ -133,7 +133,16 @@ def admin_schedule(request):
                 })
 
         elif form_type == 'event':
-            ser_form = EventSerializer(data=request.POST)
+
+            print('\n***\n', request.POST.getlist('users[]'), '\n***\n')
+
+            ser_form = EventSerializer(
+                data={
+                    'title':request.POST.get('title'),
+                    'start':request.POST.get('start'),
+                    'end':request.POST.get('end'),
+                    'users':request.POST.getlist('users[]'),
+                    })
 
         print('ser_form: {}\n'.format(ser_form))
 
