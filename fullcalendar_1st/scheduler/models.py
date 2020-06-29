@@ -35,10 +35,10 @@ class TimeStampedModel(models.Model):
 
 
 class Appointment(TimeStampedModel):
-    service = models.ForeignKey(Service, on_delete='CASCADE', null=True)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE, null=True)
     # comment for first migration -->
-    doctor = models.ForeignKey(Doctor, on_delete='CASCADE', null=True, blank=True)
-    patient = models.ForeignKey(Patient, on_delete='CASCADE', null=False)
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, null=True, blank=True)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=False)
     # <-- comment for first migration
     start = models.DateTimeField()
     end = models.DateTimeField()
@@ -56,12 +56,12 @@ class Appointment(TimeStampedModel):
             self.end.strftime('%d/%m@%H:%M'))
 
 
-# TODO: Confirm patient if they're booked into appointment
-# @receiver(post_save, sender=Appointment)
-# def confirm_appointment(sender, instance, created, **kwargs):
-#     if instance.doctor:
-#         instance.patient.is_confirmed = True
-#         instance.patient.save()
+
+@receiver(post_save, sender=Appointment)
+def confirm_appointment(sender, instance, created, **kwargs):
+    if instance.doctor:
+        instance.patient.is_confirmed = True
+        instance.patient.save()
 
 
 class Event(TimeStampedModel):

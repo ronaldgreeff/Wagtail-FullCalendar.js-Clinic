@@ -214,10 +214,10 @@ https://www.fusionbox.com/blog/detail/creating-conditionally-required-fields-in-
     });
   }
 
+  $('#id_phone_number').keyup( function() { lookupPatient('phone_number', $(this).val()); });
+  $('#id_email_address').keyup( function() { lookupPatient('email_address', $(this).val()); });
   $('#id_last_name').keyup( function() { lookupPatient('last_name', $(this).val()); });
-  $('#id_phone_number').keyup( function() { lookupPatient('phone', $(this).val()); });
   $('#id_first_name').keyup( function() { lookupPatient('first_name', $(this).val()); });
-  $('#id_email').keyup( function() { lookupPatient('email', $(this).val()); });
 
 </script>
 

@@ -3,22 +3,8 @@ from scheduler.models import TimeStampedModel, Event, Appointment, Service
 from myusers.models import Doctor, Patient, User
 
 
-class EventSerializer(serializers.ModelSerializer):
-    users = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True)
-
-    class Meta:
-        model = Event
-        fields = ['title', 'start', 'end', 'users']
-
-    def create(self, validated_data):
-        print('\n*****\nvalidated_data', validated_data)
-
-        return
-
-
-##### THIS IS FOR SERIALIZING THE PATIENT LIST (FOR NOW - TODO: USE NESTED IN APPT)
 class PatientSerializer(serializers.ModelSerializer):
-    # patient_id = PatientIdField(queryset=Patient.objects.all(), source='id')
+
     patient_id = serializers.PrimaryKeyRelatedField(queryset=Patient.objects.all(), source='id')
 
     class Meta:
@@ -28,8 +14,9 @@ class PatientSerializer(serializers.ModelSerializer):
 
 
 class AppointmentSerializer(serializers.ModelSerializer):
+
     patient = serializers.PrimaryKeyRelatedField(queryset=Patient.objects.all())
-    doctor = serializers.PrimaryKeyRelatedField(queryset=Doctor.objects.all())
+    doctor = serializers.PrimaryKeyRelatedField(queryset=Doctor.objects.all(), allow_null=True)
 
     class Meta:
         model = Appointment
@@ -38,8 +25,24 @@ class AppointmentSerializer(serializers.ModelSerializer):
         'service']
 
     def create(self, validated_data):
-        print('\n*****\nvalidated_data', validated_data)
 
         appointment = Appointment.objects.create(**validated_data)
 
         return appointment
+
+
+class EventSerializer(serializers.ModelSerializer):
+
+    users = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True)
+
+    class Meta:
+        model = Event
+        fields = ['title', 'start', 'end', 'users']
+
+    def create(self, validated_data):
+
+        users = validated_data.pop('users')
+        event = Event.objects.create(**validated_data)
+        [event.users.add(user) for user in users]
+
+        return event

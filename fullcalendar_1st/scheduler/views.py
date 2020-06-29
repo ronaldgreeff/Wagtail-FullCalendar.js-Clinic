@@ -65,9 +65,9 @@ def patient_lookup(request):
                 patients = p.filter(first_name__icontains=query_value)
             elif query_basis == 'last_name':
                 patients = p.filter(last_name__icontains=query_value)
-            elif query_basis == 'email':
+            elif query_basis == 'email_address':
                 patients = p.filter(email_address__icontains=query_value)
-            elif query_basis == 'phone':
+            elif query_basis == 'phone_number':
                 patients = p.filter(phone_number__icontains=query_value)
 
         else:
@@ -97,7 +97,7 @@ def admin_schedule(request):
     if request.method == 'POST':
 
         form_type = request.POST.get('form_type')
-        print('\nform_type: {}\ndata: {}\n'.format(form_type, request.POST))
+        # print('\nform_type: {}\ndata: {}\n'.format(form_type, request.POST))
 
         if form_type == 'appointment':
 
@@ -134,17 +134,15 @@ def admin_schedule(request):
 
         elif form_type == 'event':
 
-            print('\n***\n', request.POST.getlist('users[]'), '\n***\n')
-
             ser_form = EventSerializer(
                 data={
                     'title':request.POST.get('title'),
                     'start':request.POST.get('start'),
                     'end':request.POST.get('end'),
                     'users':request.POST.getlist('users[]'),
-                    })
+                })
 
-        print('ser_form: {}\n'.format(ser_form))
+        # print('ser_form: {}\n'.format(ser_form))
 
         if ser_form.is_valid():
             ser_form.save()

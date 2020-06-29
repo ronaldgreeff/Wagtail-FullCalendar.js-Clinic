@@ -101,8 +101,8 @@ class AppointmentForm(forms.ModelForm):
 
     class Meta:
         model = Appointment
-        fields = ['form_type',
-            'start', 'end',
-            'service', 'doctor', 'patient_id',
+        fields = ['form_type', 'patient_id',
+            'start', 'service', 'end',
+            'phone_number', 'email_address',
             'first_name', 'last_name',
-            'email_address', 'phone_number']
+            'doctor',]
