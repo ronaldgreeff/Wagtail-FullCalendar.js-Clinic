@@ -13,9 +13,9 @@ There is a circular dependency between scheduler and myusers, so at initial migr
 
 - in /settings/base.py, comment out these 3 lines:
 
-  'myusers',
-  'scheduler',
-	AUTH_USER_MODEL = 'myusers.User'
+	- 'myusers',
+	- 'scheduler',
+	- AUTH_USER_MODEL = 'myusers.User'
 
 - in scheduler.models comment out lines as specified in the file
 
