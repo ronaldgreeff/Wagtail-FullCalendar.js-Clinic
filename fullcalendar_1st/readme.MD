@@ -1,61 +1,31 @@
-To avoid circular import headaches when running for the first time:
-A custom user model has to be the very first thing, before the rest of the database tables are built. (This is a Django limitation - see the warning at https://docs.djangoproject.com/en/1.10/topics/auth/customizing/#substituting-a-custom-user-model .)
+#Wagtail + FullCalendar.js
+I was taking a look at FullCalendar.js when I thought it would be cool to build a package that a clinic could use to manage their schedule as well as content (through wagtail).
 
+It seemed a bit useless without some sort of user management (myusers), so added that. Then I integrated those components into the Wagtail dashboard.
 
-# STEP1:
+I added an enquiry form in the form of an include (so that it can easily be placed anywhere) and a simple process behind that which allows an admin to convert an enquiry into a patient.
 
-## (make sure there's no existing database)
+It's a blue print that covers the basics a normal clinic might require (managing content, users, patients, a schedule and patient flow), which can be maintained and extended with ease.
 
-## in fullcalendar/settings/base.py, comment out these lines:
+#Getting it running
 
-    'myusers',
-    'scheduler',
+There is a circular dependency between scheduler and myusers, so at initial migrations you need to do the following:
+
+- in /settings/base.py, comment out these 3 lines:
+
+  'myusers',
+  'scheduler',
 	AUTH_USER_MODEL = 'myusers.User'
 
+- in scheduler.models comment out lines as specified in the file
 
-## from myusers.models, comment out Doctor.services:
+- comment out everything in wagtail_hooks
 
-	class Doctor(models.Model):
-	    user = models.OneToOneField(User, on_delete='CASCADE', primary_key=True)
-	    * services = models.ManyToManyField('scheduler.Service') <- this line
+- run makemigrations
 
+- uncomment the lines above again, re-run makemigrations + migrate
 
-## from models.scheduler, comment out Appointment class:
+- create superuser, etc.
 
-	class Appointment(TimeStampedModel):
-	    service = models.ForeignKey(Service, on_delete='CASCADE', null=True)
-	    doctor = models.OneToOneField(Doctor, on_delete='CASCADE', null=False)
-	    patient = models.OneToOneField(Patient, on_delete='CASCADE', null=False)
-	    start = models.DateTimeField()
-	    end = models.DateTimeField()
-	    def __str__(self):
-	        return '({0}) {1} {2} - {3}'.format(
-	            self.doctor, self.service, self.start, self.end)
-
-
-## comment out everything in scheduler/wagtail_hooks.py
-
-## then run makemigrations + migrate
-
-
-# STEP 2:
-
-## from settings/base.py, uncomment
-
-    'myusers',
-    AUTH_USER_MODEL = 'myusers.User'
-
-## then run makemigrations + migrate
-
-
-# STEP 3:
-
-## from myuser.models, uncomment Doctor.servives
-## from scheduler.models, uncomment the Appointment class
-## then run makemigrations + migrate
-
-
-# STEP 4
-
-## create superuser
-## uncomment everything from wagtail_hooks.py
+*To avoid circular import headaches when running for the first time:
+A custom user model has to be the very first thing, before the rest of the database tables are built. (This is a Django limitation - see the warning at https://docs.djangoproject.com/en/1.10/topics/auth/customizing/#substituting-a-custom-user-model).*

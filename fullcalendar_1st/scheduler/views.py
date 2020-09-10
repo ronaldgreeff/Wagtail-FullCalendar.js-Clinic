@@ -41,6 +41,7 @@ class GetSchedule(APIView):
 
 
 def event_service_duration(request):
+    """ Get the duration of a requested service """
 
     if request.is_ajax and request.method == 'GET':
 
@@ -51,6 +52,7 @@ def event_service_duration(request):
 
 
 def patient_lookup(request):
+    """ Use Ajax to lookup a patient name """
 
     if request.is_ajax and request.method == 'GET':
 
@@ -58,7 +60,7 @@ def patient_lookup(request):
         query_value = request.GET.get('query_value')
 
         p = Patient.objects
-        
+
         if query_value:
 
             if query_basis == 'first_name':
@@ -90,7 +92,7 @@ def patient_lookup(request):
 
 
 def admin_schedule(request):
-    """ """
+    """ returns full schedule for an admin user """
     # TODO: add button to so that user can
     # update patient details then and there
 

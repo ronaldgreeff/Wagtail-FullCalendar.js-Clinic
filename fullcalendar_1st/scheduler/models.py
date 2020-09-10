@@ -50,7 +50,7 @@ class Appointment(TimeStampedModel):
 
     def __str__(self):
         return '{0} | {1} | {2}'.format(
-            # (self.doctor if self.doctor else 'Unconfirmed'),
+            # (self.doctor if self.doctor else 'Unconfirmed'), in doctor view
             self.service,
             self.start.strftime('%d/%m@%H:%M'),
             self.end.strftime('%d/%m@%H:%M'))
