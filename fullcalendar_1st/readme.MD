@@ -1,5 +1,5 @@
-# Wagtail + FullCalendar.js (early 2020)
-I was taking a look at FullCalendar.js when I thought it would be cool to build a package that a clinic could use to manage their schedule as well as content (through wagtail).
+# Wagtail + FullCalendar.js
+(early 2020) I was taking a look at FullCalendar.js when I thought it would be cool to build a package that a clinic could use to manage their schedule as well as content (through wagtail).
 
 It seemed a bit useless without some sort of user management (myusers), so added that. I added an enquiry form in the form of an include (so that it can easily be placed anywhere) and a simple process behind that which allows an admin to convert an enquiry into a patient. Then I integrated those components into the Wagtail dashboard.
 
